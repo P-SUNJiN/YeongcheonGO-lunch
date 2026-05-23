@@ -83,6 +83,9 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 .menu-row.warn .menu-row-main:hover{background:rgba(239,68,68,.08)}
 .dish-name{flex:1;font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.01em}
 .dish-name.main-dish{color:var(--accent);font-weight:800;font-size:15px}
+.a-tags{display:flex;gap:3px;flex-wrap:wrap}
+.a-tag{display:none;font-size:9px;font-weight:800;padding:2px 5px;border-radius:3px;background:var(--red-l);color:var(--red)}
+.a-tag.hit{display:inline-block}
 
 /* 별점 미리보기 */
 .star-preview{display:flex;flex-direction:column;align-items:flex-end;gap:1px;min-width:60px}
@@ -154,7 +157,7 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 .wd-none{font-size:11px;color:var(--text3)}
 .wd-loading{font-size:11px;color:var(--text3);padding:13px 16px;text-align:center}
 
-/* 알레르기 설정 패널 */
+/* 알레르기 */
 .allergy-wrap{margin-top:20px;background:var(--surface);border-top:2px solid var(--border2);border-bottom:1px solid var(--border);padding:14px 16px}
 .allergy-hdr{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
 .a-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
@@ -259,7 +262,25 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 </div>
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ★ 여기에 파이어베이스 설정 코드를 붙여넣으세요 ★
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// -----------------------------------------------------
+
 const KEY  = '04b33987e1f94ec598b1835b6756736e';
 const BASE = 'https://open.neis.go.kr/hub';
 const SC   = '8750119';
@@ -277,7 +298,7 @@ let calView   = new Date(cur);
 let mt        = 2;
 let isDark    = false;
 let myA       = new Set(JSON.parse(lsGet('yc_a') || '[]'));
-let ratings   = JSON.parse(lsGet('yc_ratings3') || '{}');
+let ratings   = {}; 
 let lastParsed= [];
 let modalScore= 0;
 let modalKey  = '';
@@ -320,15 +341,14 @@ function drawDate(){
   $('dateSub').textContent=DAYS[cur.getDay()]+'요일';
 }
 
-/* ── 파싱 (괄호 등 기호 완벽 제거) ── */
+/* ── 파싱 ── */
 function parseItems(raw){
   return raw.split(/<br\s*\/>/i).map(s=>s.trim()).filter(Boolean).map(s=>{
     let name=s, nums=[];
-    const m=name.match(/([\d]+(?:\.[\d]+)*)[^\w가-힣]*$/);
+    const m=name.match(/\s*([\d]+(?:\.[\d]+)*)\s*$/);
     if(m){
       nums=m[1].split('.').filter(x=>x&&!isNaN(+x));
-      // 잘라낸 뒤 남은 쓸데없는 특수문자(괄호, 마침표 등)를 모두 제거하고 양쪽 공백 없애기
-      name=name.slice(0,m.index).replace(/[^\w가-힣]+$/, '').trim();
+      name=name.slice(0,m.index).trim();
     }
     return {name,nums};
   });
@@ -384,12 +404,7 @@ function renderMenu(parsed, dateStr, mealType){
     const row=document.createElement('div');
     row.className='menu-row'+(hasA?' warn':'');
 
-    // 사용자가 알레르기를 선택해서 해당 메뉴가 걸렸을 때만 숨겨둔 숫자가 뜸
-    let dishNameHtml = item.name;
-    if(hasA && item.nums.length > 0) {
-      dishNameHtml += ` <span style="font-size:12px; color:var(--text2); font-weight:700; margin-left:4px;">${item.nums.join('.')}</span>`;
-    }
-
+    const tagsHtml=item.nums.map(n=>`<span class="a-tag${myA.has(n)?' hit':''}">${n}</span>`).join('');
     const spHtml=stat
       ?`<div class="star-preview">
           <div class="sp-stars">${starsHtml(stat.avg)}</div>
@@ -398,7 +413,8 @@ function renderMenu(parsed, dateStr, mealType){
       :`<div class="star-preview"><div class="sp-none">★★★★★</div></div>`;
 
     row.innerHTML=`<div class="menu-row-main">
-      <span class="dish-name${i===mainIdx?' main-dish':''}">${dishNameHtml}</span>
+      <span class="dish-name${i===mainIdx?' main-dish':''}">${item.name}</span>
+      <div class="a-tags">${tagsHtml}</div>
       ${spHtml}
     </div>`;
     row.querySelector('.menu-row-main').onclick=()=>openModal(item.name, dateStr, mealType);
@@ -411,7 +427,7 @@ function avgStat(key){
   return {avg:r.total/r.count, count:r.count};
 }
 
-/* ── 모달 ── */
+/* ── 모달 및 리뷰 데이터 처리 ── */
 let modalDateStr='', modalMealType=0;
 function openModal(name, dateStr, mealType){
   modalKey=dishKey(dateStr, mealType, name);
@@ -470,21 +486,64 @@ document.querySelectorAll('.si-star').forEach(s=>{
   s.onclick=()=>{ modalScore=+s.dataset.v; updateStarUI(modalScore); };
 });
 $('starRow').onmouseleave=()=>updateStarUI(modalScore);
-$('btnSubmit').onclick=()=>{
+
+/* 파이어베이스 클라우드 데이터 업로드 연동 */
+$('btnSubmit').onclick=async ()=>{
   if(!modalScore){ showToast('별점을 선택해주세요!'); return; }
   const comment=$('reviewText').value.trim();
-  if(!ratings[modalKey]) ratings[modalKey]={total:0,count:0,reviews:[]};
-  ratings[modalKey].total+=modalScore;
-  ratings[modalKey].count+=1;
-  ratings[modalKey].reviews.push({score:modalScore,comment});
-  lsSet('yc_ratings3',JSON.stringify(ratings));
-  showToast(`★ ${modalScore}점 등록!`);
-  modalScore=0; updateStarUI(0); $('reviewText').value='';
-  renderModalStat(); renderReviewList();
-  renderMenu(lastParsed, toStr(cur), mt);
+  const docRef = doc(db, "ratings", modalKey);
+  const newReview = { score: modalScore, comment: comment };
+
+  try {
+    const docSnap = await getDoc(docRef);
+    if(docSnap.exists()){
+      const data = docSnap.data();
+      await updateDoc(docRef, {
+        total: data.total + modalScore,
+        count: data.count + 1,
+        reviews: arrayUnion(newReview)
+      });
+    } else {
+      await setDoc(docRef, {
+        total: modalScore,
+        count: 1,
+        reviews: [newReview]
+      });
+    }
+
+    if(!ratings[modalKey]) ratings[modalKey]={total:0,count:0,reviews:[]};
+    ratings[modalKey].total += modalScore;
+    ratings[modalKey].count += 1;
+    ratings[modalKey].reviews.push(newReview);
+
+    showToast(`★ ${modalScore}점 등록!`);
+    modalScore=0; updateStarUI(0); $('reviewText').value='';
+    renderModalStat(); renderReviewList();
+    renderMenu(lastParsed, toStr(cur), mt);
+  } catch(e) {
+    showToast('서버 데이터 저장 실패! 규칙을 다시 확인하세요.');
+    console.error(e);
+  }
 };
 $('btnCancel').onclick=closeModal;
 $('modalOverlay').onclick=e=>{ if(e.target===$('modalOverlay')) closeModal(); };
+
+/* Firestore 저장 데이터 불러오기 연동 */
+async function fetchFirebaseRatings(parsed, dateStr, mealType){
+  try {
+    const promises = parsed.map(async (item) => {
+      const key = dishKey(dateStr, mealType, item.name);
+      const docRef = doc(db, "ratings", key);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        ratings[key] = docSnap.data();
+      }
+    });
+    await Promise.all(promises);
+  } catch(e) {
+    console.error("Firebase 로드 실패:", e);
+  }
+}
 
 /* ── API ── */
 async function fetchMeal(snapDate, snapMt, silent){
@@ -511,6 +570,8 @@ async function fetchMeal(snapDate, snapMt, silent){
       if(meal.CAL_INFO){ $('kcalVal').textContent=meal.CAL_INFO.trim(); $('kcalChip').classList.add('show'); }
       else { $('kcalChip').classList.remove('show'); }
       const parsed = parseItems(meal.DDISH_NM||'');
+      
+      await fetchFirebaseRatings(parsed, dateStr, snapMt);
       renderMenu(parsed, dateStr, snapMt);
     }
     return meal;
