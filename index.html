@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영천고 급식</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #f0f7ff;
+  font-family: 'Noto Sans KR', -apple-system, sans-serif;
+  color: #111;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 메인 구조 ── */
+.shell {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0 20px 64px;
+  display: block;
+}
+
+/* ── 헤더 ── */
+.header {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid #d0e4f7;
+  margin-bottom: 24px;
+}
+.header-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #111;
+}
+.title span { color: #1a6bc4; }
+
+/* [수정] 크레딧 투명도를 요청하신 0.3으로 정확하게 지정 */
+.header-credit {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a6bc4;
+  opacity: 0.15; /* 은밀하고 깔끔하게 0.3 */
+}
+.header-meta {
+  font-size: 11px;
+  color: #7ca3cc;
+  margin-top: 4px;
+}
+
+/* ── 날짜 네비 ── */
+.date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #1a6bc4;
+  padding-bottom: 12px;
+  position: relative;
+}
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #7ca3cc;
+  cursor: pointer;
+  padding: 0 10px;
+  line-height: 1;
+  font-weight: 700;
+}
+.nav-btn:hover { color: #1a6bc4; }
+
+.date-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+}
+.date-wrap:hover .date-label { color: #1a6bc4; }
+
+.date-label {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  transition: color 0.15s;
+}
+.date-day-label {
+  font-size: 12px;
+  color: #7ca3cc;
+  font-weight: 400;
+  margin-left: 6px;
+}
+
+.today-btn {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a6bc4;
+  background: none;
+  border: 1px solid #1a6bc4;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.today-btn:hover { background: #1a6bc4; color: #fff; }
+
+/* ── 임의의 달력 팝업 스타일 ── */
+.calendar-popup {
+  display: none;
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #1a6bc4;
+  border-radius: 8px;
+  padding: 14px;
+  box-shadow: 0 6px 24px rgba(26, 107, 196, 0.15);
+  z-index: 1000;
+  width: 280px;
+  margin-top: 8px;
+}
+.calendar-popup.show { display: block; }
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.cal-header button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a6bc4;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+.cal-header span { font-weight: 700; font-size: 14px; color: #111; }
+.cal-weeks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 11px;
+  color: #7ca3cc;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-day {
+  text-align: center;
+  font-size: 12px;
+  padding: 6px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #111;
+  font-weight: 500;
+}
+.cal-day:hover:not(.disabled):not(.empty) { background: #e3f0ff; color: #1a6bc4; font-weight: 700; }
+.cal-day.today { border: 1px solid #1a6bc4; color: #1a6bc4; font-weight: 700; }
+.cal-day.selected { background: #1a6bc4; color: #fff !important; font-weight: 700; }
+.cal-day.disabled { color: #d6e4f0; cursor: not-allowed; background: #fcfdfe; }
+.cal-day.empty { cursor: default; }
+
+/* ── 탭 ── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #d0e4f7;
+  margin-bottom: 20px;
+}
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9ab5d1;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.tab.on {
+  color: #1a6bc4;
+  font-weight: 700;
+  border-bottom-color: #1a6bc4;
+}
+
+/* ── 칼로리 ── */
+.kcal-row {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.kcal-row.show { display: flex; }
+.kcal-label { font-size: 11px; color: #7ca3cc; font-weight: 500; text-transform: uppercase; }
+.kcal-value { font-size: 13px; font-weight: 700; color: #1a6bc4; }
+
+/* ── 메뉴 리스트 ── */
+.menu-list { 
+  margin-bottom: 40px; 
+  min-height: 120px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-bottom: 1px solid #daeaf8;
+  gap: 12px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+.menu-item:first-child { border-top: 1px solid #daeaf8; }
+
+.dish {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+
+.dish.main-dish {
+  color: #e74c3c !important;
+  font-weight: 700;
+}
+
+.menu-item.warn {
+  background-color: #fceae8;
+}
+
+.anums { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+
+.anum {
+  display: none; 
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  text-align: center;
+}
+.anum.hit {
+  display: inline-block;
+  color: #c0392b; 
+  background: #fbcbc7;
+}
+
+.state {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 13px;
+  color: #9ab5d1;
+}
+
+/* ── 알레르기 정보 영역 ── */
+.allergy-section {
+  padding-top: 24px;
+  border-top: 2px dashed #d0e4f7;
+}
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ab5d1;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.allergy-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.a-item {
+  flex: 0 0 calc(33.333% - 4px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 6px;
+  border: 1px solid #d0e4f7;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s;
+}
+.a-item.on { background: #fdecea; border-color: #c0392b; }
+
+.a-n { font-size: 10px; font-weight: 800; color: #aac5df; min-width: 14px; text-align: center; }
+.a-item.on .a-n { color: #c0392b; }
+.a-l { font-size: 11px; font-weight: 500; color: #5a7a9a; }
+.a-item.on .a-l { color: #c0392b; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="header">
+    <div class="header-top">
+      <div class="title">영천고등학교 <span>급식</span></div>
+      <div class="header-credit">sunjin</div>
+    </div>
+    <div class="header-meta">경상북도 영천시 · NEIS 연동</div>
+  </div>
+
+  <div class="date-nav">
+    <button class="nav-btn" id="prev">‹</button>
+    <div class="date-wrap" id="dateWrap">
+      <span class="date-label" id="dateLabel">--</span>
+      <span class="date-day-label" id="dateDayLabel">--</span>
+    </div>
+    <button class="nav-btn" id="next">›</button>
+    <button class="today-btn" id="todayBtn">오늘</button>
+
+    <div id="customCalendar" class="calendar-popup">
+      <div class="cal-header">
+        <button id="calPrevM">‹</button>
+        <span id="calMonthLabel">----.--</span>
+        <button id="calNextM">›</button>
+      </div>
+      <div class="cal-weeks">
+        <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+      </div>
+      <div id="calDays" class="cal-days"></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab" data-t="1">조식</button>
+    <button class="tab on" data-t="2">중식</button>
+    <button class="tab" data-t="3">석식</button>
+  </div>
+
+  <div class="kcal-row" id="kcalRow">
+    <span class="kcal-label">칼로리</span>
+    <span class="kcal-value" id="kcalVal"></span>
+  </div>
+
+  <div class="menu-list" id="menuList">
+    <div class="state" id="stateBox">불러오는 중...</div>
+  </div>
+
+  <div class="allergy-section">
+    <div class="section-title">알레르기 정보 (클릭 시 숫자가 표시됩니다)</div>
+    <div class="allergy-grid" id="allergyGrid"></div>
+  </div>
+
+</div>
+
+<script>
+const KEY  = '1d63ff29704249d9b9074429ceeb7682';
+const BASE = 'https://open.neis.go.kr/hub';
+const DAYS = ['일','월','화','수','목','금','토'];
+const AL   = [
+  ['1','난류'],['2','우유'],['3','메밀'],['4','땅콩'],['5','대두'],['6','밀'],
+  ['7','고등어'],['8','게'],['9','새우'],['10','돼지고기'],['11','복숭아'],['12','토마토'],
+  ['13','아황산류'],['14','호두'],['15','닭고기'],['16','쇠고기'],['17','오징어'],
+  ['18','조개류'],['19','잣']
+];
+
+let cur = new Date();
+if (cur.getDay() === 6) cur.setDate(cur.getDate() + 2);
+if (cur.getDay() === 0) cur.setDate(cur.getDate() + 1);
+
+let calViewDate = new Date(cur);
+let mt = 2;
+let myA = new Set(JSON.parse(localStorage.getItem('yc_a')||'[]'));
+const schoolCode = '7380292';
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2,'0');
+const toStr = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
+
+function drawDate() {
+  const y=cur.getFullYear(), m=cur.getMonth()+1, d=cur.getDate();
+  $('dateLabel').textContent = `${y}.${pad(m)}.${pad(d)}`;
+  $('dateDayLabel').textContent = DAYS[cur.getDay()]+'요일';
+}
+
+function parseItems(raw) {
+  return raw.split('<br/>').filter(Boolean).map(s => {
+    let name = s.trim();
+    let nums = [];
+    const match = name.match(/[\s\(]+([\d\.]+)[^가-힣]*$/);
+    if (match) {
+      name = name.substring(0, match.index).trim();
+      nums = match[1].split('.').filter(x => x.length > 0 && !isNaN(x));
+    }
+    return { name, nums };
+  });
+}
+
+function highlight() {
+  document.querySelectorAll('.menu-item').forEach(row => {
+    let hasActiveAllergy = false;
+    row.querySelectorAll('.anum').forEach(t => {
+      const num = String(t.dataset.n);
+      if (myA.has(num)) {
+        t.classList.add('hit');
+        hasActiveAllergy = true;
+      } else {
+        t.classList.remove('hit');
+      }
+    });
+    row.classList.toggle('warn', hasActiveAllergy);
+  });
+}
+
+function findMainMenuIndex(parsedList) {
+  if (parsedList.length === 0) return -1;
+  const filterOut = /밥|국|탕|찌개|김치|깍두기|단무지|우유|요구르트|주스|과일|푸딩|수제피클|피클|양념|소스|드레싱|잼|버터/;
+  const mainKeywords = [
+    { regex: /볶음|구이|튀김|조림|가스|카츠|찜|스테이크|립|치킨/, score: 10 },
+    { regex: /닭|돈육|우육|돼지|소고기|오리|미트|고기|베이컨|소시지|햄|오징어|새우|낙지|쭈꾸미/, score: 8 },
+    { regex: /파스타|스파게티|면|떡볶이|그라탕|찌개|탕/, score: 5 }
+  ];
+
+  let maxScore = -1;
+  let mainIdx = 0;
+
+  parsedList.forEach((item, idx) => {
+    let score = 0;
+    if (filterOut.test(item.name)) score -= 50;
+    mainKeywords.forEach(k => {
+      if (k.regex.test(item.name)) score += k.score;
+    });
+    score += Math.min(item.name.length, 10) * 0.5;
+
+    if (score > maxScore) {
+      maxScore = score;
+      mainIdx = idx;
+    }
+  });
+
+  if (maxScore < 0 && parsedList.length > 2) return 2;
+  return mainIdx;
+}
+
+async function fetchMeal() {
+  $('menuList').innerHTML = '<div class="state">불러오는 중...</div>';
+  $('kcalRow').classList.remove('show');
+
+  const url = `${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${toStr(cur)}&MMEAL_SC_CODE=${mt}`;
+
+  try {
+    const res = await fetch(url);
+    const json = await res.json();
+
+    if (json.RESULT || !json.mealServiceDietInfo) {
+      $('menuList').innerHTML = '<div class="state">급식 정보가 없습니다</div>';
+      return;
+    }
+    const rows = json.mealServiceDietInfo[1]?.row;
+    if (!rows?.length) {
+      $('menuList').innerHTML = '<div class="state">급식 정보가 없습니다</div>';
+      return;
+    }
+
+    const meal = rows[0];
+    $('menuList').innerHTML = '';
+
+    if (meal.CAL_INFO) {
+      $('kcalVal').textContent = meal.CAL_INFO.trim() + ' 🔥';
+      $('kcalRow').classList.add('show');
+    }
+
+    const parsed = parseItems(meal.DDISH_NM||'');
+    const mainIdx = findMainMenuIndex(parsed);
+
+    parsed.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'menu-item';
+      
+      const tagsHtml = item.nums.map(n=>`<span class="anum" data-n="${n}">${n}</span>`).join('');
+      const isMainClass = (i === mainIdx) ? ' main-dish' : '';
+      
+      div.innerHTML = `<span class="dish${isMainClass}">${item.name}</span><div class="anums">${tagsHtml}</div>`;
+      $('menuList').appendChild(div);
+    });
+
+    highlight();
+  } catch(e) {
+    $('menuList').innerHTML = `<div class="state">데이터를 불러올 수 없습니다.</div>`;
+  }
+}
+
+function renderCustomCalendar() {
+  const y = calViewDate.getFullYear();
+  const m = calViewDate.getMonth();
+  $('calMonthLabel').textContent = `${y}.${pad(m+1)}`;
+
+  const firstDay = new Date(y, m, 1).getDay();
+  const lastDate = new Date(y, m + 1, 0).getDate();
+  const container = $('calDays');
+  container.innerHTML = '';
+
+  for (let i = 0; i < firstDay; i++) {
+    const span = document.createElement('span');
+    span.className = 'cal-day empty';
+    container.appendChild(span);
+  }
+
+  for (let d = 1; d <= lastDate; d++) {
+    const btn = document.createElement('span');
+    btn.className = 'cal-day';
+    btn.textContent = d;
+
+    const thisDate = new Date(y, m, d);
+    const dayOfWeek = thisDate.getDay();
+
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      btn.classList.add('disabled');
+    } else {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        cur = new Date(y, m, d);
+        drawDate();
+        fetchMeal();
+        $('customCalendar').classList.remove('show');
+      };
+    }
+
+    const today = new Date();
+    if (y === today.getFullYear() && m === today.getMonth() && d === today.getDate()) {
+      btn.classList.add('today');
+    }
+    if (y === cur.getFullYear() && m === cur.getMonth() && d === cur.getDate()) {
+      btn.classList.add('selected');
+    }
+
+    container.appendChild(btn);
+  }
+}
+
+function buildAllergy() {
+  const g = $('allergyGrid');
+  g.innerHTML = '';
+  AL.forEach(([n,l]) => {
+    const el = document.createElement('div');
+    el.className = 'a-item' + (myA.has(String(n))?' on':'');
+    el.innerHTML = `<span class="a-n">${n}</span><span class="a-l">${l}</span>`;
+    
+    el.addEventListener('click', () => {
+      if (myA.has(String(n))) {
+        myA.delete(String(n));
+      } else {
+        myA.add(String(n));
+      }
+      el.classList.toggle('on');
+      localStorage.setItem('yc_a', JSON.stringify([...myA]));
+      highlight(); 
+    });
+    g.appendChild(el);
+  });
+}
+
+$('prev').onclick = () => { 
+  cur.setDate(cur.getDate() - 1); 
+  if (cur.getDay() === 0) cur.setDate(cur.getDate() - 2);
+  drawDate(); 
+  fetchMeal(); 
+};
+
+$('next').onclick = () => { 
+  cur.setDate(cur.getDate() + 1); 
+  if (cur.getDay() === 6) cur.setDate(cur.getDate() + 2);
+  drawDate(); 
+  fetchMeal(); 
+};
+
+$('todayBtn').onclick = () => { 
+  cur = new Date(); 
+  if (cur.getDay() === 6) cur.setDate(cur.getDate() + 2); 
+  if (cur.getDay() === 0) cur.setDate(cur.getDate() + 1);
+  drawDate(); 
+  fetchMeal(); 
+};
+
+$('dateWrap').onclick = (e) => {
+  e.stopPropagation();
+  calViewDate = new Date(cur);
+  renderCustomCalendar();
+  $('customCalendar').classList.toggle('show');
+};
+
+$('calPrevM').onclick = (e) => {
+  e.stopPropagation();
+  calViewDate.setMonth(calViewDate.getMonth() - 1);
+  renderCustomCalendar();
+};
+
+$('calNextM').onclick = (e) => {
+  e.stopPropagation();
+  calViewDate.setMonth(calViewDate.getMonth() + 1);
+  renderCustomCalendar();
+};
+
+document.addEventListener('click', () => {
+  $('customCalendar').classList.remove('show');
+});
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on');
+    mt = parseInt(tab.dataset.t);
+    fetchMeal();
+  };
+});
+
+buildAllergy();
+drawDate();
+fetchMeal();
+</script>
+</body>
+</html>
