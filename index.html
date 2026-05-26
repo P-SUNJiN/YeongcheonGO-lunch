@@ -267,7 +267,6 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-// 사용할 기능들을 새 방식에 맞게 교체 (addDoc, query, where 활용)
 import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -296,10 +295,10 @@ const AL   = [
 
 /* ── 상태 ── */
 let cur       = today(); fixWE(cur);
-let calView   = new Date(cur);
+let calView    = new Date(cur);
 let mt        = 2;
 let isDark    = false;
-let myA       = new Set(JSON.parse(lsGet('yc_a') || '[]'));
+let myA        = new Set(JSON.parse(lsGet('yc_a') || '[]'));
 let ratings   = {}; 
 let lastParsed= [];
 let modalScore= 0;
@@ -309,7 +308,7 @@ let modalKey  = '';
 function lsGet(k)     { try{return localStorage.getItem(k)}catch{return null} }
 function lsSet(k,v)   { try{localStorage.setItem(k,v)}catch{} }
 const $  = id => document.getElementById(id);
-const pad= n  => String(n).padStart(2,'0');
+const pad= n   => String(n).padStart(2,'0');
 function today(){ return new Date(); }
 function toStr(d){ return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`; }
 function fixWE(d){
@@ -343,22 +342,28 @@ function drawDate(){
   $('dateSub').textContent=DAYS[cur.getDay()]+'요일';
 }
 
-/* ── 파싱 수정완료 (괄호 및 내용물을 완벽하게 삭제) ── */
+/* ── 💡 파싱 함수 수정 완료 ── */
 function parseItems(raw){
   return raw.split(/<br\s*\/>/i).map(s=>s.trim()).filter(Boolean).map(s=>{
-    let name=s, nums=[];
+    let name = s;
+    let nums = [];
     
-    // 1. 끝에 달린 알레르기 숫자 추출
-    const m = name.match(/([\d]+(?:\.[\d]+)*)[^\w가-힣]*$/);
-    if(m){
-      nums = m[1].split('.').filter(x=>x&&!isNaN(+x));
-      name = name.slice(0, m.index).trim();
+    // 1. 순서 상관없이 모든 괄호 덩어리를 찾아서 내부 문자 확인
+    const bracketRegex = /\(([^)]+)\)/g;
+    let match;
+    while ((match = bracketRegex.exec(s)) !== null) {
+      const inside = match[1];
+      // 괄호 안에 숫자가 있다면 마침표(.)를 기준으로 쪼개서 알레르기 배열 생성
+      const extracted = inside.split('.').map(x => x.trim()).filter(x => x && !isNaN(x));
+      if (extracted.length > 0) {
+        nums.push(...extracted);
+      }
     }
     
-    // 2. 글자 맨 끝에 위치한 (경) 같은 괄호 덩어리를 완벽하게 삭제
-    name = name.replace(/\([^()]*\)?$/, '').trim();
+    // 2. 글자 내 모든 괄호와 그 내용물((중식), (완), (1.2.3) 등)을 완전히 삭제 처리
+    name = name.replace(/\([^)]*\)/g, '').trim();
     
-    return {name,nums};
+    return {name, nums};
   });
 }
 
@@ -501,30 +506,27 @@ document.querySelectorAll('.si-star').forEach(s=>{
 });
 $('starRow').onmouseleave=()=>updateStarUI(modalScore);
 
-// 💡 수정된 부분: updateDoc 대신 무조건 addDoc(create)을 사용하도록 구조 변경
 $('btnSubmit').onclick=async ()=>{
   if(!modalScore){ showToast('별점을 선택해주세요!'); return; }
-  
+   
   const nickname = $('reviewName').value.trim() || '익명';
   const comment = $('reviewText').value.trim();
-  
+   
   const newReview = { 
     dishKey: modalKey, 
     score: modalScore, 
     comment: comment, 
     nickname: nickname,
-    createdAt: Date.now() // 최신순 정렬을 위한 타임스탬프
+    createdAt: Date.now()
   };
 
   try {
-    // 기존 문서를 업데이트하는 게 아니라 항상 '새로운 문서'를 생성 (규칙 우회 통과!)
     await addDoc(collection(db, "ratings"), newReview);
 
-    // 로컬 화면상에도 즉시 반영
     if(!ratings[modalKey]) ratings[modalKey]={total:0,count:0,reviews:[]};
     ratings[modalKey].total+=modalScore;
     ratings[modalKey].count+=1;
-    ratings[modalKey].reviews.unshift(newReview); // 방금 쓴 리뷰를 맨 위로
+    ratings[modalKey].reviews.unshift(newReview);
 
     showToast(`★ ${modalScore}점 등록 완료!`);
     modalScore=0; updateStarUI(0); $('reviewText').value=''; $('reviewName').value='';
@@ -538,20 +540,19 @@ $('btnSubmit').onclick=async ()=>{
 $('btnCancel').onclick=closeModal;
 $('modalOverlay').onclick=e=>{ if(e.target===$('modalOverlay')) closeModal(); };
 
-/* ── 파이어베이스 연동 데이터 비동기 호출 (새로운 구조에 맞춤) ── */
+/* ── 파이어베이스 데이터 호출 ── */
 async function fetchFirebaseRatings(parsed, dateStr, mealType){
   try {
     const promises = parsed.map(async (item) => {
       const key = dishKey(dateStr, mealType, item.name);
-      
-      // dishKey가 일치하는 문서들을 모두 긁어오는 방식 (개별 문서들이 모여 하나의 리뷰를 이룸)
+       
       const q = query(collection(db, "ratings"), where("dishKey", "==", key));
       const querySnapshot = await getDocs(q);
-      
+       
       let total = 0;
       let count = 0;
       let reviews = [];
-      
+       
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         total += data.score;
@@ -559,7 +560,6 @@ async function fetchFirebaseRatings(parsed, dateStr, mealType){
         reviews.push(data);
       });
 
-      // 최신 리뷰가 위로 오도록 정렬
       reviews.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
       if (count > 0) {
@@ -597,7 +597,7 @@ async function fetchMeal(snapDate, snapMt, silent){
       if(meal.CAL_INFO){ $('kcalVal').textContent=meal.CAL_INFO.trim(); $('kcalChip').classList.add('show'); }
       else { $('kcalChip').classList.remove('show'); }
       const parsed = parseItems(meal.DDISH_NM||'');
-      
+       
       await fetchFirebaseRatings(parsed, dateStr, snapMt);
       renderMenu(parsed, dateStr, snapMt);
     }
