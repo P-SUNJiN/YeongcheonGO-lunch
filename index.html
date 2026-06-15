@@ -4,190 +4,194 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>영천고 급식</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <style>
 :root {
-  --bg:#f4f6fb; --surface:#fff; --surface2:#f0f2f7;
-  --border:#e2e6f0; --border2:#cdd3e4;
-  --text:#18202e; --text2:#52617a; --text3:#9aa3bc;
-  --accent:#2563eb; --accent-l:#dbeafe; --accent-d:#1d4ed8;
-  --red:#ef4444; --red-l:#fee2e2;
-  --gold:#f59e0b; --gold-l:#fef3c7;
-  --sh:0 2px 12px rgba(0,0,0,.07);
+  --bg: #f5f7fa; --surface: #ffffff; --surface2: #edf0f5;
+  --border: #e2e6f0; --border2: #cdd3e4;
+  --text: #1a1d24; --text2: #5a6474; --text3: #949db1;
+  --accent: #3b82f6; --accent-l: #eff6ff; --accent-d: #2563eb;
+  --red: #ef4444; --red-l: #fef2f2;
+  --gold: #f59e0b; --gold-l: #fffbeb;
+  --sh: 0 4px 24px rgba(0,0,0,0.04);
+  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px;
 }
 .dark {
-  --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a;
-  --border:#2c3148; --border2:#3a4060;
-  --text:#e8eaf2; --text2:#8b96b4; --text3:#505874;
-  --accent:#4f8ef7; --accent-l:#1e2d52;
-  --red:#f87171; --red-l:#2d1515;
-  --gold:#fbbf24; --gold-l:#2d2008;
-  --sh:0 2px 12px rgba(0,0,0,.3);
+  --bg: #12141a; --surface: #1e212b; --surface2: #2a2e3b;
+  --border: #333848; --border2: #454c60;
+  --text: #f0f2f5; --text2: #9ba4b5; --text3: #6b758a;
+  --accent: #60a5fa; --accent-l: #1e3a5f;
+  --red: #f87171; --red-l: #3f1d1d;
+  --gold: #fbbf24; --gold-l: #3f2e10;
+  --sh: 0 4px 24px rgba(0,0,0,0.4);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
-.wrap{max-width:1000px;margin:0 auto;padding:0 20px 60px}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); font-family: 'Pretendard', sans-serif; color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; transition: background .3s ease, color .3s ease; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px 60px; }
 
 /* 헤더 */
-.hdr{padding:24px 0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--border);margin-bottom:20px}
-.logo{font-size:22px;font-weight:900;letter-spacing:-.04em}
-.logo em{color:var(--accent);font-style:normal}
-.hdr-right{display:flex;align-items:center;gap:8px}
+.hdr { padding: 32px 0 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.logo { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; }
+.logo em { color: var(--accent); font-style: normal; }
+.hdr-right { display: flex; align-items: center; gap: 12px; }
 
 /* 날짜 네비 */
-.date-nav{display:flex;align-items:center;gap:6px;position:relative}
-.nav-btn{background:none;border:none;color:var(--text3);width:32px;height:32px;font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .15s}
-.nav-btn:hover{color:var(--accent)}
-.date-center{cursor:pointer;padding:0 8px;text-align:center;user-select:none}
-.date-main{font-size:16px;font-weight:800;letter-spacing:-.03em}
-.date-sub{font-size:10px;color:var(--text3);margin-top:1px}
-.today-btn{font-family:inherit;font-size:11px;font-weight:700;background:var(--accent-l);color:var(--accent);border:none;padding:5px 11px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.today-btn:hover{background:var(--accent);color:#fff}
-.theme-btn{background:none;border:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
-.theme-btn:hover{opacity:.7}
+.date-nav { display: flex; align-items: center; gap: 4px; position: relative; background: var(--surface); padding: 4px 8px; border-radius: var(--radius-md); box-shadow: var(--sh); border: 1px solid var(--border); }
+.nav-btn { background: none; border: none; color: var(--text3); width: 32px; height: 32px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color .2s; border-radius: var(--radius-sm); }
+.nav-btn:hover { color: var(--accent); background: var(--bg); }
+.date-center { cursor: pointer; padding: 0 12px; text-align: center; user-select: none; }
+.date-main { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.date-sub { font-size: 11px; color: var(--text3); margin-top: 2px; font-weight: 500; }
+.today-btn { font-family: inherit; font-size: 12px; font-weight: 600; background: var(--accent-l); color: var(--accent); border: none; padding: 6px 14px; cursor: pointer; transition: all .2s; border-radius: var(--radius-sm); white-space: nowrap; }
+.today-btn:hover { background: var(--accent); color: #fff; }
+.theme-btn { background: var(--surface); border: 1px solid var(--border); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; border-radius: var(--radius-md); box-shadow: var(--sh); transition: all .2s; }
+.theme-btn:hover { transform: scale(1.05); }
 
 /* 달력 팝업 */
-.cal-popup{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,.13);z-index:999;width:268px}
-.cal-popup.show{display:block}
-.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.cal-top button{background:none;border:none;font-size:15px;font-weight:900;color:var(--accent);cursor:pointer;padding:2px 6px}
-.cal-top span{font-size:13px;font-weight:800}
-.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:var(--text3);margin-bottom:5px;font-weight:700}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.cal-d{text-align:center;font-size:12px;padding:6px 0;border-radius:5px;cursor:pointer;font-weight:500;transition:all .1s}
-.cal-d:hover:not(.off):not(.empty){background:var(--accent-l);color:var(--accent)}
-.cal-d.today{background:var(--gold-l);color:var(--gold);font-weight:800}
-.cal-d.sel{background:var(--accent)!important;color:#fff!important;font-weight:800}
-.cal-d.off{color:var(--text3);cursor:default}
+.cal-popup { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.1); z-index: 999; width: 280px; }
+.cal-popup.show { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.cal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.cal-top button { background: var(--surface2); border: none; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; padding: 4px 10px; border-radius: var(--radius-sm); transition: background .2s; }
+.cal-top button:hover { background: var(--border); }
+.cal-top span { font-size: 14px; font-weight: 700; }
+.cal-dow { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; color: var(--text3); margin-bottom: 8px; font-weight: 600; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-d { text-align: center; font-size: 13px; padding: 8px 0; border-radius: var(--radius-sm); cursor: pointer; font-weight: 500; transition: all .2s; }
+.cal-d:hover:not(.off):not(.empty) { background: var(--surface2); }
+.cal-d.today { background: var(--gold-l); color: var(--gold); font-weight: 700; }
+.cal-d.sel { background: var(--accent) !important; color: #fff !important; font-weight: 700; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+.cal-d.off { color: var(--border2); cursor: default; }
 
-/* 탭 */
-.meal-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px}
-.meal-tab{flex:1;padding:10px 0;border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
-.meal-tab.on{color:var(--accent);font-weight:800;border-bottom-color:var(--accent)}
-.meal-tab:hover:not(.on){color:var(--text2)}
+/* 탭 (모던 Pill 스타일) */
+.meal-tabs { display: flex; background: var(--surface2); padding: 4px; border-radius: var(--radius-md); margin-bottom: 24px; gap: 4px; }
+.meal-tab { flex: 1; padding: 12px 0; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--text2); cursor: pointer; border-radius: calc(var(--radius-md) - 4px); transition: all .25s cubic-bezier(0.4, 0, 0.2, 1); }
+.meal-tab.on { background: var(--surface); color: var(--text); font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.meal-tab:hover:not(.on) { color: var(--text); }
 
 /* 칼로리 */
-.kcal-chip{display:flex;align-items:center;gap:6px;padding:0 0 14px 2px;font-size:13px;font-weight:700;color:var(--gold);opacity:0;visibility:hidden;max-height:0;transition:opacity .2s,max-height .2s}
-.kcal-chip.show{opacity:1;visibility:visible;max-height:40px}
+.kcal-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 13px; font-weight: 700; color: var(--gold); background: var(--gold-l); border-radius: 20px; opacity: 0; visibility: hidden; margin-bottom: 16px; transition: all .3s; transform: translateY(10px); }
+.kcal-chip.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
 /* 그리드 */
-.main-grid{display:grid;grid-template-columns:1fr 260px;gap:24px;align-items:start}
+.main-grid { display: grid; grid-template-columns: 1fr 280px; gap: 24px; align-items: start; }
+.left-col { display: flex; flex-direction: column; gap: 24px; }
+
+/* 카드 공통 */
+.ui-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--sh); overflow: hidden; }
 
 /* 메뉴 */
-.menu-list{background:var(--surface);border-top:2px solid var(--accent);border-bottom:1px solid var(--border);min-height:320px}
-.menu-row{border-bottom:1px solid var(--border)}
-.menu-row:last-child{border-bottom:none}
-.menu-row.warn{background:var(--red-l)}
-.menu-row-main{display:flex;align-items:center;padding:14px 16px;gap:10px;cursor:pointer;transition:background .1s}
-.menu-row-main:hover{background:var(--surface2)}
-.menu-row.warn .menu-row-main:hover{background:rgba(239,68,68,.08)}
-.dish-name{flex:1;font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.01em}
-.dish-name.main-dish{color:var(--accent);font-weight:800;font-size:15px}
+.menu-list { min-height: 320px; }
+.menu-row { border-bottom: 1px solid var(--border); transition: background .2s; }
+.menu-row:last-child { border-bottom: none; }
+.menu-row.warn { background: var(--red-l); }
+.menu-row-main { display: flex; align-items: center; padding: 16px 20px; gap: 12px; cursor: pointer; }
+.menu-row-main:hover { background: var(--surface2); }
+.menu-row.warn .menu-row-main:hover { background: rgba(239, 68, 68, 0.08); }
+.dish-name { flex: 1; font-size: 15px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; line-height: 1.4; }
+.dish-name.main-dish { color: var(--accent); font-weight: 700; font-size: 16px; }
 
 /* 별점 미리보기 */
-.star-preview{display:flex;flex-direction:column;align-items:flex-end;gap:1px;min-width:60px}
-.sp-stars{font-size:11px;line-height:1;letter-spacing:1px}
-.sp-stars .f{color:var(--gold)}
-.sp-stars .e{color:var(--border2)}
-.sp-bottom{display:flex;align-items:baseline;gap:3px}
-.sp-val{font-size:12px;font-weight:800;color:var(--text)}
-.sp-count{font-size:10px;color:var(--text3)}
-.sp-none{font-size:11px;color:var(--border2);letter-spacing:1px}
+.star-preview { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 65px; }
+.sp-stars { font-size: 12px; line-height: 1; letter-spacing: 1px; color: var(--border2); }
+.sp-stars .f { color: var(--gold); }
+.sp-bottom { display: flex; align-items: baseline; gap: 4px; }
+.sp-val { font-size: 13px; font-weight: 700; color: var(--text); }
+.sp-count { font-size: 11px; color: var(--text3); }
+.sp-none { font-size: 12px; color: var(--border2); letter-spacing: 1px; }
 
-/* 모달 */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;align-items:flex-end;justify-content:center}
-.modal-overlay.show{display:flex}
-.modal-sheet{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:0 0 32px;animation:slideUp .25s ease;box-shadow:0 -4px 32px rgba(0,0,0,.2)}
-@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0}
-.modal-head{padding:18px 20px 16px;border-bottom:1px solid var(--border)}
-.modal-dish-name{font-size:18px;font-weight:900;letter-spacing:-.03em}
-.modal-stat{display:flex;align-items:center;gap:12px;margin-top:10px}
-.modal-stat-score{display:flex;flex-direction:column;align-items:center;padding-right:12px;border-right:1px solid var(--border)}
-.modal-avg{font-size:34px;font-weight:900;color:var(--text);letter-spacing:-.04em;line-height:1}
-.modal-avg-max{font-size:12px;color:var(--text3);margin-top:2px}
-.modal-stat-detail{display:flex;flex-direction:column;gap:3px}
-.modal-stars-big{font-size:18px;letter-spacing:2px}
-.modal-stars-big .f{color:var(--gold)}
-.modal-stars-big .e{color:var(--border2)}
-.modal-count-txt{font-size:12px;color:var(--text3)}
-.modal-no-rating{font-size:13px;color:var(--text3)}
-.modal-input-area{padding:16px 20px;border-bottom:1px solid var(--border)}
-.modal-input-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.star-row{display:flex;gap:4px;margin-bottom:12px}
-.si-star{font-size:32px;cursor:pointer;color:var(--border2);transition:all .1s;user-select:none;line-height:1}
-.si-star.on{color:var(--gold);transform:scale(1.15)}
-
-/* 리뷰 입력 폼 (닉네임 추가) */
-.review-input, .review-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:inherit;font-size:13px;padding:10px 12px;outline:none;transition:border-color .15s;margin-bottom:8px}
-.review-input:focus, .review-textarea:focus{border-color:var(--accent)}
-.review-textarea{resize:none;}
-
-.modal-submit-row{display:flex;gap:8px;margin-top:4px}
-.btn-submit{flex:1;font-family:inherit;font-size:13px;font-weight:800;background:var(--accent);color:#fff;border:none;padding:11px 0;cursor:pointer;transition:opacity .15s;border-radius:4px}
-.btn-submit:hover{opacity:.88}
-.btn-cancel{font-family:inherit;font-size:13px;font-weight:700;background:none;color:var(--text2);border:1px solid var(--border);padding:11px 18px;cursor:pointer;border-radius:4px}
-.modal-reviews{padding:0 20px}
-.reviews-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:16px 0 10px}
-.rv-item{border-bottom:1px solid var(--border);padding:12px 0}
-.rv-item:last-child{border-bottom:none}
-.rv-top{display:flex;align-items:center;gap:6px;margin-bottom:5px}
-.rv-name{font-size:12px;font-weight:800;color:var(--text);background:var(--surface2);padding:2px 6px;border-radius:4px;}
-.rv-stars{font-size:13px;letter-spacing:1px}
-.rv-stars .f{color:var(--gold)}
-.rv-stars .e{color:var(--border2)}
-.rv-score{font-size:12px;font-weight:700;color:var(--text)}
-.rv-comment{font-size:13px;color:var(--text2);line-height:1.5;margin-top:4px}
-.rv-empty{font-size:13px;color:var(--text3);padding:16px 0;text-align:center}
+/* 모달 (바텀 시트 & 블러) */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 2000; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity .3s; }
+.modal-overlay.show { display: flex; opacity: 1; }
+.modal-sheet { background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; padding: 0 0 32px; transform: translateY(100%); transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.15); }
+.modal-overlay.show .modal-sheet { transform: translateY(0); }
+.modal-handle { width: 48px; height: 5px; background: var(--border2); border-radius: 3px; margin: 16px auto; }
+.modal-head { padding: 8px 24px 24px; border-bottom: 1px solid var(--border); }
+.modal-dish-name { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
+.modal-stat { display: flex; align-items: center; gap: 16px; background: var(--surface2); padding: 16px; border-radius: var(--radius-md); }
+.modal-stat-score { display: flex; flex-direction: column; align-items: center; padding-right: 16px; border-right: 1px solid var(--border2); }
+.modal-avg { font-size: 36px; font-weight: 800; color: var(--text); letter-spacing: -0.04em; line-height: 1; }
+.modal-avg-max { font-size: 12px; color: var(--text3); margin-top: 4px; font-weight: 500; }
+.modal-stat-detail { display: flex; flex-direction: column; gap: 4px; }
+.modal-stars-big { font-size: 20px; letter-spacing: 2px; color: var(--border2); }
+.modal-stars-big .f { color: var(--gold); }
+.modal-count-txt { font-size: 13px; color: var(--text2); }
+.modal-no-rating { font-size: 14px; color: var(--text3); padding: 8px 0; }
+.modal-input-area { padding: 24px; border-bottom: 1px solid var(--border); }
+.modal-input-label { font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 12px; }
+.star-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.si-star { font-size: 36px; cursor: pointer; color: var(--border2); transition: all .2s cubic-bezier(0.4, 0, 0.2, 1); user-select: none; line-height: 1; }
+.si-star.on { color: var(--gold); transform: scale(1.1); }
+.review-input, .review-textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: inherit; font-size: 14px; padding: 14px 16px; outline: none; transition: all .2s; margin-bottom: 12px; }
+.review-input:focus, .review-textarea:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-l); }
+.review-textarea { resize: none; }
+.modal-submit-row { display: flex; gap: 12px; margin-top: 8px; }
+.btn-submit { flex: 1; font-family: inherit; font-size: 14px; font-weight: 600; background: var(--accent); color: #fff; border: none; padding: 14px 0; cursor: pointer; transition: all .2s; border-radius: var(--radius-sm); }
+.btn-submit:hover { background: var(--accent-d); }
+.btn-cancel { font-family: inherit; font-size: 14px; font-weight: 600; background: var(--surface2); color: var(--text2); border: none; padding: 14px 24px; cursor: pointer; border-radius: var(--radius-sm); transition: background .2s; }
+.btn-cancel:hover { background: var(--border); color: var(--text); }
+.modal-reviews { padding: 24px; }
+.reviews-label { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+.rv-item { padding: 16px; background: var(--surface2); border-radius: var(--radius-md); margin-bottom: 12px; }
+.rv-item:last-child { margin-bottom: 0; }
+.rv-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.rv-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.rv-stars { font-size: 13px; letter-spacing: 1px; color: var(--border2); }
+.rv-stars .f { color: var(--gold); }
+.rv-score { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-l); padding: 2px 6px; border-radius: 4px; }
+.rv-comment { font-size: 14px; color: var(--text); line-height: 1.5; word-break: break-all; }
+.rv-empty { font-size: 14px; color: var(--text3); padding: 24px 0; text-align: center; background: var(--surface2); border-radius: var(--radius-md); }
 
 /* 주간 패널 */
-.week-panel{background:var(--surface);border-top:2px solid var(--border2);border-bottom:1px solid var(--border)}
-.week-panel-title{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:13px 16px 10px;border-bottom:1px solid var(--border)}
-.week-day{padding:12px 16px;border-bottom:1px solid var(--border);transition:background .12s}
-.week-day:last-child{border-bottom:none}
-.week-day.clickable{cursor:pointer}
-.week-day.clickable:hover{background:var(--surface2)}
-.week-day.no-meal{opacity:.45}
-.week-day.wd-today{background:var(--accent-l)}
-.week-day.wd-sel{background:var(--accent)}
-.week-day.wd-sel .wd-date,.week-day.wd-sel .wd-dayname,.week-day.wd-sel .wd-items,.week-day.wd-sel .wd-badge{color:#fff!important;background:rgba(255,255,255,.25)!important;opacity:1!important}
-.wd-top{display:flex;align-items:baseline;gap:5px;margin-bottom:4px}
-.wd-date{font-size:17px;font-weight:900;letter-spacing:-.03em}
-.wd-dayname{font-size:11px;color:var(--text3);font-weight:600}
-.wd-badge{font-size:10px;font-weight:700;background:var(--accent);color:#fff;border-radius:3px;padding:1px 6px;margin-left:auto}
-.wd-items{font-size:11px;color:var(--text2);line-height:1.5}
-.wd-none{font-size:11px;color:var(--text3)}
-.wd-loading{font-size:11px;color:var(--text3);padding:13px 16px;text-align:center}
+.week-panel-title { font-size: 14px; font-weight: 700; color: var(--text); padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
+.week-day { padding: 16px 20px; border-bottom: 1px solid var(--border); transition: background .2s; }
+.week-day:last-child { border-bottom: none; }
+.week-day.clickable { cursor: pointer; }
+.week-day.clickable:hover { background: var(--surface2); }
+.week-day.no-meal { opacity: 0.5; }
+.week-day.wd-today { background: var(--accent-l); border-left: 3px solid var(--accent); padding-left: 17px; }
+.week-day.wd-sel { background: var(--surface2); }
+.wd-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.wd-date { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.wd-dayname { font-size: 12px; color: var(--text2); font-weight: 600; }
+.wd-badge { font-size: 11px; font-weight: 700; background: var(--accent); color: #fff; border-radius: 4px; padding: 2px 8px; margin-left: auto; }
+.wd-items { font-size: 13px; color: var(--text); line-height: 1.6; }
+.wd-none { font-size: 13px; color: var(--text3); }
+.wd-loading { font-size: 13px; color: var(--text3); padding: 24px; text-align: center; }
 
 /* 알레르기 설정 패널 */
-.allergy-wrap{margin-top:20px;background:var(--surface);border-top:2px solid var(--border2);border-bottom:1px solid var(--border);padding:14px 16px}
-.allergy-hdr{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
-.a-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
-.a-item{display:flex;align-items:center;gap:4px;padding:6px 7px;border-bottom:2px solid transparent;background:var(--surface2);cursor:pointer;transition:all .1s;user-select:none}
-.a-item.on{background:var(--red-l);border-bottom-color:var(--red)}
-.a-num{font-size:10px;font-weight:800;color:var(--text3);min-width:12px}
-.a-item.on .a-num{color:var(--red)}
-.a-lbl{font-size:11px;font-weight:500;color:var(--text2)}
-.a-item.on .a-lbl{color:var(--red);font-weight:700}
+.allergy-hdr { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding: 20px 20px 0; }
+.a-desc { font-size: 12px; color: var(--text3); padding: 0 20px 16px; }
+.a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; padding: 0 20px 20px; }
+.a-item { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: all .2s; user-select: none; }
+.a-item:hover { border-color: var(--border2); }
+.a-item.on { background: var(--red-l); border-color: var(--red); color: var(--red); }
+.a-num { font-size: 11px; font-weight: 700; color: var(--text3); }
+.a-item.on .a-num { color: var(--red); }
+.a-lbl { font-size: 13px; font-weight: 600; color: var(--text2); }
+.a-item.on .a-lbl { color: var(--red); }
 
-/* 상태/토스트 */
-.state-box{padding:36px 0;text-align:center;font-size:13px;color:var(--text3)}
-.skeleton{display:flex;flex-direction:column;gap:0}
-.sk-row{display:flex;align-items:center;padding:14px 16px;gap:10px;border-bottom:1px solid var(--border)}
-.sk-row:last-child{border-bottom:none}
-.sk-name{height:14px;border-radius:3px;background:linear-gradient(90deg,var(--surface2) 25%,var(--border) 50%,var(--surface2) 75%);background-size:200% 100%;animation:sk 1.2s infinite;flex:1}
-.sk-star{height:11px;width:60px;border-radius:3px;background:linear-gradient(90deg,var(--surface2) 25%,var(--border) 50%,var(--surface2) 75%);background-size:200% 100%;animation:sk 1.2s infinite}
-@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--text);color:var(--bg);border-radius:20px;padding:9px 22px;font-size:13px;font-weight:600;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* 상태/토스트/스켈레톤 */
+.state-box { padding: 60px 0; text-align: center; font-size: 15px; color: var(--text2); font-weight: 500; }
+.skeleton { display: flex; flex-direction: column; }
+.sk-row { display: flex; align-items: center; padding: 20px; gap: 16px; border-bottom: 1px solid var(--border); }
+.sk-name { height: 18px; border-radius: 4px; background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; flex: 1; }
+.sk-star { height: 14px; width: 80px; border-radius: 4px; background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; }
+@keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: #222; color: #fff; border-radius: 30px; padding: 12px 24px; font-size: 14px; font-weight: 600; opacity: 0; transition: all .3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 9999; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-@media(max-width:700px){.main-grid{grid-template-columns:1fr}.a-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width: 768px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .a-grid { grid-template-columns: repeat(4, 1fr); }
+  .modal-sheet { border-radius: 20px 20px 0 0; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="hdr">
-    <div class="logo">영천고등학교 <em>급식</em></div>
+    <div class="logo">영천고 <em>급식</em></div>
     <div class="hdr-right">
       <div class="date-nav">
         <button class="nav-btn" id="prev">‹</button>
@@ -199,15 +203,15 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
         <button class="today-btn" id="todayBtn">오늘</button>
         <div class="cal-popup" id="calPopup">
           <div class="cal-top">
-            <button id="calPrev">‹</button>
+            <button id="calPrev">이전</button>
             <span id="calMonth"></span>
-            <button id="calNext">›</button>
+            <button id="calNext">다음</button>
           </div>
           <div class="cal-dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
           <div class="cal-grid" id="calGrid"></div>
         </div>
       </div>
-      <div class="theme-btn" id="themeBtn">🌙</div>
+      <button class="theme-btn" id="themeBtn" aria-label="테마 변경">🌙</button>
     </div>
   </div>
 
@@ -221,15 +225,16 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 
   <div class="main-grid">
     <div class="left-col">
-      <div class="menu-list" id="menuList"><div class="state-box">불러오는 중...</div></div>
-      <div class="allergy-wrap">
-        <div class="allergy-hdr">알레르기 설정 (클릭 시 해당 메뉴 강조)</div>
+      <div class="ui-card menu-list" id="menuList"><div class="state-box">불러오는 중...</div></div>
+      <div class="ui-card allergy-wrap">
+        <div class="allergy-hdr">알레르기 필터</div>
+        <div class="a-desc">선택한 알레르기 유발 물질이 포함된 메뉴가 붉게 표시됩니다.</div>
         <div class="a-grid" id="allergyGrid"></div>
       </div>
     </div>
-    <div class="week-panel" id="weekPanel">
-      <div class="week-panel-title">이번 주 급식</div>
-      <div id="weekContent"><div class="wd-loading">불러오는 중...</div></div>
+    <div class="ui-card week-panel" id="weekPanel">
+      <div class="week-panel-title">이번 주 메뉴 미리보기</div>
+      <div id="weekContent"><div class="wd-loading">식단을 불러오고 있습니다</div></div>
     </div>
   </div>
 </div>
@@ -242,7 +247,7 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
       <div class="modal-stat" id="modalStat"></div>
     </div>
     <div class="modal-input-area">
-      <div class="modal-input-label">별점 남기기</div>
+      <div class="modal-input-label">이 메뉴 어땠나요?</div>
       <div class="star-row" id="starRow">
         <span class="si-star" data-v="1">★</span>
         <span class="si-star" data-v="2">★</span>
@@ -251,14 +256,14 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
         <span class="si-star" data-v="5">★</span>
       </div>
       <input type="text" class="review-input" id="reviewName" placeholder="닉네임 (미입력 시 '익명')" maxlength="15">
-      <textarea class="review-textarea" id="reviewText" rows="2" placeholder="한 줄 후기 (선택)"></textarea>
+      <textarea class="review-textarea" id="reviewText" rows="2" placeholder="솔직한 평가를 남겨주세요 (선택)"></textarea>
       <div class="modal-submit-row">
-        <button class="btn-submit" id="btnSubmit">등록하기</button>
         <button class="btn-cancel" id="btnCancel">닫기</button>
+        <button class="btn-submit" id="btnSubmit">리뷰 등록</button>
       </div>
     </div>
     <div class="modal-reviews">
-      <div class="reviews-label">리뷰</div>
+      <div class="reviews-label">학우들의 리뷰</div>
       <div id="reviewList"></div>
     </div>
   </div>
@@ -293,7 +298,6 @@ const AL   = [
   ['18','조개류'],['19','잣']
 ];
 
-/* ── 상태 ── */
 let cur       = today(); fixWE(cur);
 let calView    = new Date(cur);
 let mt        = 2;
@@ -304,7 +308,6 @@ let lastParsed= [];
 let modalScore= 0;
 let modalKey  = '';
 
-/* ── 유틸 ── */
 function lsGet(k)     { try{return localStorage.getItem(k)}catch{return null} }
 function lsSet(k,v)   { try{localStorage.setItem(k,v)}catch{} }
 const $  = id => document.getElementById(id);
@@ -317,52 +320,53 @@ function fixWE(d){
 }
 function showToast(msg){
   const t=$('toast'); t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 function dishKey(dateStr, mealType, name){ return `${dateStr}_${mealType}_${name}`; }
 
-/* ── 별 HTML ── */
+/* 보안 강화를 위한 HTML 이스케이프 함수 */
+function escapeHtml(unsafe) {
+  if(!unsafe) return '';
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function starsHtml(score, max=5){
   return Array.from({length:max},(_,i)=>
     `<span class="${i<Math.round(score)?'f':'e'}">★</span>`
   ).join('');
 }
 
-/* ── 테마 ── */
 function applyTheme(){
   document.body.className = isDark?'dark':'';
   $('themeBtn').textContent = isDark?'☀️':'🌙';
 }
+const savedTheme = lsGet('yc_theme');
+if (savedTheme === 'dark') isDark = true;
 $('themeBtn').onclick=()=>{ isDark=!isDark; lsSet('yc_theme',isDark?'dark':'light'); applyTheme(); };
 applyTheme();
 
-/* ── 날짜 표시 ── */
 function drawDate(){
   $('dateMain').textContent=`${cur.getFullYear()}.${pad(cur.getMonth()+1)}.${pad(cur.getDate())}`;
   $('dateSub').textContent=DAYS[cur.getDay()]+'요일';
 }
 
-/* ── 💡 파싱 함수 수정 완료 ── */
 function parseItems(raw){
   return raw.split(/<br\s*\/>/i).map(s=>s.trim()).filter(Boolean).map(s=>{
     let name = s;
     let nums = [];
-    
-    // 1. 순서 상관없이 모든 괄호 덩어리를 찾아서 내부 문자 확인
     const bracketRegex = /\(([^)]+)\)/g;
     let match;
     while ((match = bracketRegex.exec(s)) !== null) {
       const inside = match[1];
-      // 괄호 안에 숫자가 있다면 마침표(.)를 기준으로 쪼개서 알레르기 배열 생성
       const extracted = inside.split('.').map(x => x.trim()).filter(x => x && !isNaN(x));
-      if (extracted.length > 0) {
-        nums.push(...extracted);
-      }
+      if (extracted.length > 0) nums.push(...extracted);
     }
-    
-    // 2. 글자 내 모든 괄호와 그 내용물((중식), (완), (1.2.3) 등)을 완전히 삭제 처리
     name = name.replace(/\([^)]*\)/g, '').trim();
-    
     return {name, nums};
   });
 }
@@ -385,7 +389,6 @@ function findMain(list){
   return (max<0&&list.length>2)?2:idx;
 }
 
-/* ── 알레르기 ── */
 function buildAllergy(){
   const g=$('allergyGrid'); g.innerHTML='';
   AL.forEach(([n,l])=>{
@@ -402,12 +405,11 @@ function buildAllergy(){
   });
 }
 
-/* ── 메뉴 렌더 ── */
 function renderMenu(parsed, dateStr, mealType){
   lastParsed=parsed;
   const list=$('menuList');
   if(!parsed||!parsed.length){
-    list.innerHTML='<div class="state-box">급식 정보가 없습니다</div>'; return;
+    list.innerHTML='<div class="state-box">식단 정보가 없습니다</div>'; return;
   }
   const mainIdx=findMain(parsed);
   list.innerHTML='';
@@ -418,17 +420,17 @@ function renderMenu(parsed, dateStr, mealType){
     const row=document.createElement('div');
     row.className='menu-row'+(hasA?' warn':'');
 
-    let dishNameHtml = item.name;
+    let dishNameHtml = escapeHtml(item.name);
     if(hasA && item.nums.length > 0) {
-      dishNameHtml += ` <span style="font-size:12px; color:var(--text2); font-weight:700; margin-left:4px;">${item.nums.join('.')}</span>`;
+      dishNameHtml += ` <span style="font-size:11px; color:var(--text3); font-weight:700; margin-left:6px; background:var(--surface); padding:2px 4px; border-radius:4px; border:1px solid var(--border);">${item.nums.join(', ')}</span>`;
     }
 
     const spHtml=stat
       ?`<div class="star-preview">
           <div class="sp-stars">${starsHtml(stat.avg)}</div>
-          <div class="sp-bottom"><span class="sp-val">${stat.avg.toFixed(1)}</span><span class="sp-count">(${stat.count}명)</span></div>
+          <div class="sp-bottom"><span class="sp-val">${stat.avg.toFixed(1)}</span><span class="sp-count">(${stat.count})</span></div>
         </div>`
-      :`<div class="star-preview"><div class="sp-none">★★★★★</div></div>`;
+      :`<div class="star-preview"><div class="sp-none">미평가</div></div>`;
 
     row.innerHTML=`<div class="menu-row-main">
       <span class="dish-name${i===mainIdx?' main-dish':''}">${dishNameHtml}</span>
@@ -438,13 +440,13 @@ function renderMenu(parsed, dateStr, mealType){
     list.appendChild(row);
   });
 }
+
 function avgStat(key){
   const r=ratings[key];
   if(!r||!r.count) return null;
   return {avg:r.total/r.count, count:r.count};
 }
 
-/* ── 모달 ── */
 let modalDateStr='', modalMealType=0;
 function openModal(name, dateStr, mealType){
   modalKey=dishKey(dateStr, mealType, name);
@@ -456,14 +458,20 @@ function openModal(name, dateStr, mealType){
   updateStarUI(0);
   renderModalStat();
   renderReviewList();
-  $('modalOverlay').classList.add('show');
+  
+  $('modalOverlay').style.display = 'flex';
+  setTimeout(() => $('modalOverlay').classList.add('show'), 10);
   document.body.style.overflow='hidden';
 }
 function closeModal(){
   $('modalOverlay').classList.remove('show');
-  document.body.style.overflow='';
+  setTimeout(() => {
+    $('modalOverlay').style.display = 'none';
+    document.body.style.overflow='';
+  }, 300);
   renderMenu(lastParsed, toStr(cur), mt);
 }
+
 function renderModalStat(){
   const stat=avgStat(modalKey);
   const el=$('modalStat');
@@ -471,32 +479,38 @@ function renderModalStat(){
     el.innerHTML=`
       <div class="modal-stat-score">
         <span class="modal-avg">${stat.avg.toFixed(1)}</span>
-        <span class="modal-avg-max">/ 5</span>
+        <span class="modal-avg-max">/ 5.0</span>
       </div>
       <div class="modal-stat-detail">
         <div class="modal-stars-big">${starsHtml(stat.avg)}</div>
-        <span class="modal-count-txt">${stat.count}명이 평가했어요</span>
+        <span class="modal-count-txt">${stat.count}명의 학우가 평가했습니다</span>
       </div>`;
   } else {
-    el.innerHTML=`<span class="modal-no-rating">아직 평가가 없어요. 첫 번째로 평가해보세요!</span>`;
+    el.innerHTML=`<span class="modal-no-rating">아직 평가가 없어요. 첫 번째 별점을 남겨주세요!</span>`;
   }
 }
+
 function renderReviewList(){
   const rl=$('reviewList');
   const r=ratings[modalKey];
   if(!r||!r.reviews||!r.reviews.length){
-    rl.innerHTML='<div class="rv-empty">첫 번째 리뷰를 남겨보세요!</div>'; return;
+    rl.innerHTML='<div class="rv-empty">아직 등록된 리뷰가 없습니다.</div>'; return;
   }
-  rl.innerHTML=r.reviews.map(rv=>`
+  rl.innerHTML=r.reviews.map(rv=>{
+    const safeName = escapeHtml(rv.nickname || '익명');
+    const safeComment = escapeHtml(rv.comment);
+    return `
     <div class="rv-item">
       <div class="rv-top">
-        <span class="rv-name">${rv.nickname || '익명'}</span>
+        <span class="rv-name">${safeName}</span>
         <span class="rv-stars">${starsHtml(rv.score)}</span>
-        <span class="rv-score">${rv.score}점</span>
+        <span class="rv-score">${rv.score}</span>
       </div>
-      ${rv.comment?`<div class="rv-comment">${rv.comment}</div>`:''}
-    </div>`).join('');
+      ${safeComment ? `<div class="rv-comment">${safeComment}</div>` : ''}
+    </div>`
+  }).join('');
 }
+
 function updateStarUI(v){
   document.querySelectorAll('.si-star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));
 }
@@ -507,7 +521,7 @@ document.querySelectorAll('.si-star').forEach(s=>{
 $('starRow').onmouseleave=()=>updateStarUI(modalScore);
 
 $('btnSubmit').onclick=async ()=>{
-  if(!modalScore){ showToast('별점을 선택해주세요!'); return; }
+  if(!modalScore){ showToast('별점을 먼저 선택해주세요.'); return; }
    
   const nickname = $('reviewName').value.trim() || '익명';
   const comment = $('reviewText').value.trim();
@@ -521,6 +535,8 @@ $('btnSubmit').onclick=async ()=>{
   };
 
   try {
+    $('btnSubmit').disabled = true;
+    $('btnSubmit').textContent = '등록 중...';
     await addDoc(collection(db, "ratings"), newReview);
 
     if(!ratings[modalKey]) ratings[modalKey]={total:0,count:0,reviews:[]};
@@ -528,82 +544,69 @@ $('btnSubmit').onclick=async ()=>{
     ratings[modalKey].count+=1;
     ratings[modalKey].reviews.unshift(newReview);
 
-    showToast(`★ ${modalScore}점 등록 완료!`);
+    showToast(`리뷰가 등록되었습니다.`);
     modalScore=0; updateStarUI(0); $('reviewText').value=''; $('reviewName').value='';
     renderModalStat(); renderReviewList();
     renderMenu(lastParsed, toStr(cur), mt);
   } catch(e) {
-    showToast('서버 저장 실패!');
+    showToast('네트워크 오류로 저장하지 못했습니다.');
     console.error(e);
+  } finally {
+    $('btnSubmit').disabled = false;
+    $('btnSubmit').textContent = '리뷰 등록';
   }
 };
 $('btnCancel').onclick=closeModal;
 $('modalOverlay').onclick=e=>{ if(e.target===$('modalOverlay')) closeModal(); };
 
-/* ── 파이어베이스 데이터 호출 ── */
 async function fetchFirebaseRatings(parsed, dateStr, mealType){
   try {
     const promises = parsed.map(async (item) => {
       const key = dishKey(dateStr, mealType, item.name);
-       
       const q = query(collection(db, "ratings"), where("dishKey", "==", key));
       const querySnapshot = await getDocs(q);
        
-      let total = 0;
-      let count = 0;
-      let reviews = [];
-       
+      let total = 0, count = 0, reviews = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         total += data.score;
         count += 1;
         reviews.push(data);
       });
-
       reviews.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-      if (count > 0) {
-        ratings[key] = { total, count, reviews };
-      }
+      if (count > 0) ratings[key] = { total, count, reviews };
     });
     await Promise.all(promises);
-  } catch(e) {
-    console.error("Firebase 로드 실패:", e);
-  }
+  } catch(e) { console.error("Firebase 로드 실패:", e); }
 }
 
-/* ── API ── */
 async function fetchMeal(snapDate, snapMt, silent){
   const dateStr = toStr(snapDate);
   const url=`${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${SC}&MLSV_YMD=${dateStr}&MMEAL_SC_CODE=${snapMt}`;
   try{
     const res=await fetch(url);
     const json=await res.json();
-
     if(!json.mealServiceDietInfo || json.RESULT){
-      if(!silent) $('menuList').innerHTML='<div class="state-box">급식 정보가 없습니다<br><small style="font-size:11px;color:var(--text3);display:block;margin-top:4px">아직 등록되지 않았거나 휴무일입니다</small></div>';
+      if(!silent) $('menuList').innerHTML='<div class="state-box">해당 날짜의 식단 정보가 없습니다.</div>';
       return null;
     }
-
     const info = json.mealServiceDietInfo;
     const rowBlock = info.find(b => b && Array.isArray(b.row));
     if(!rowBlock || !rowBlock.row.length){
-      if(!silent) $('menuList').innerHTML='<div class="state-box">급식 정보가 없습니다</div>';
+      if(!silent) $('menuList').innerHTML='<div class="state-box">식단 정보가 없습니다.</div>';
       return null;
     }
     const meal = rowBlock.row[0];
-
     if(!silent){
       if(meal.CAL_INFO){ $('kcalVal').textContent=meal.CAL_INFO.trim(); $('kcalChip').classList.add('show'); }
       else { $('kcalChip').classList.remove('show'); }
       const parsed = parseItems(meal.DDISH_NM||'');
-       
       await fetchFirebaseRatings(parsed, dateStr, snapMt);
       renderMenu(parsed, dateStr, snapMt);
     }
     return meal;
   }catch(e){
-    if(!silent) $('menuList').innerHTML='<div class="state-box">불러올 수 없습니다</div>';
+    if(!silent) $('menuList').innerHTML='<div class="state-box">서버와 연결할 수 없습니다.</div>';
     return null;
   }
 }
@@ -612,32 +615,26 @@ function loadCurrent(){
   const snapDate = new Date(cur);
   const snapMt   = mt;
   $('menuList').innerHTML=`<div class="skeleton">
-    ${Array(7).fill('<div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div>').join('')}
+    ${Array(6).fill('<div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div>').join('')}
   </div>`;
   $('kcalChip').classList.remove('show');
   lastParsed=[];
   fetchMeal(snapDate, snapMt, false);
 }
 
-/* ── 주간 패널 ── */
 async function renderWeekPanel(){
-  const snapCurStr = toStr(cur);
-  const snapMt     = mt;
+  const snapCurStr = toStr(cur), snapMt = mt;
   const wc=$('weekContent');
-  wc.innerHTML='<div class="wd-loading">불러오는 중...</div>';
-
+  wc.innerHTML='<div class="wd-loading">식단을 불러오고 있습니다...</div>';
   const monday=new Date(cur);
   const dow=cur.getDay();
   monday.setDate(cur.getDate()+(dow===0?-6:1-dow));
-
   const todayStr=toStr(today());
   const days=Array.from({length:5},(_,i)=>{
     const d=new Date(monday); d.setDate(monday.getDate()+i); return d;
   });
-
   wc.innerHTML=days.map(d=>{
-    const ds=toStr(d);
-    const isToday=ds===todayStr, isSel=ds===snapCurStr;
+    const ds=toStr(d), isToday=ds===todayStr, isSel=ds===snapCurStr;
     return `<div class="week-day${isToday?' wd-today':''}${isSel?' wd-sel':''}" id="wd_${ds}">
       <div class="wd-top">
         <span class="wd-date">${d.getDate()}</span>
@@ -647,28 +644,21 @@ async function renderWeekPanel(){
       <div class="wd-items" id="wdi_${ds}">…</div>
     </div>`;
   }).join('');
-
   await Promise.all(days.map(async d=>{
     const ds=toStr(d);
     const meal=await fetchMeal(d, snapMt, true);
-    const card=$(`wd_${ds}`);
-    const el=$(`wdi_${ds}`);
+    const card=$(`wd_${ds}`), el=$(`wdi_${ds}`);
     if(!card||!el) return;
     if(meal){
       el.textContent=parseItems(meal.DDISH_NM||'').slice(0,3).map(x=>x.name).join(' · ')||'-';
       card.classList.add('clickable');
-      card.onclick=()=>{
-        cur=new Date(d.getFullYear(),d.getMonth(),d.getDate());
-        drawDate(); loadCurrent(); renderWeekPanel();
-      };
+      card.onclick=()=>{ cur=new Date(d.getFullYear(),d.getMonth(),d.getDate()); drawDate(); loadCurrent(); renderWeekPanel(); };
     } else {
-      el.className='wd-none'; el.textContent='급식 없음';
-      card.classList.add('no-meal');
+      el.className='wd-none'; el.textContent='식단 없음'; card.classList.add('no-meal');
     }
   }));
 }
 
-/* ── 달력 ── */
 function drawCal(){
   const y=calView.getFullYear(), m=calView.getMonth();
   $('calMonth').textContent=`${y}.${pad(m+1)}`;
@@ -693,7 +683,6 @@ function drawCal(){
   });
 }
 
-/* ── 이벤트 ── */
 $('prev').onclick=()=>{
   const d=new Date(cur); d.setDate(d.getDate()-1);
   if(d.getDay()===0) d.setDate(d.getDate()-2);
@@ -719,7 +708,6 @@ document.querySelectorAll('.meal-tab').forEach(tab=>{
   };
 });
 
-/* ── 초기화 ── */
 buildAllergy();
 drawDate();
 loadCurrent();
@@ -727,3 +715,4 @@ renderWeekPanel();
 </script>
 </body>
 </html>
+
