@@ -1,4 +1,4 @@
-## FILP VER.1.0 HAS RELEASED!
+## 영고급식 VER.1.0 HAS RELEASED!
 
 ### UI/UX 개선
 - Bento UI 스타일 적용: 모듈화된 레이아웃으로 정보 구조 개선
