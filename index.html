@@ -29,7 +29,6 @@
   --radius-md: 18px; 
   --radius-sm: 12px;
   
-  /* 글래스모피즘 효과 극대화 */
   --glass-bg: rgba(255, 255, 255, 0.65);
   --glass-border: rgba(255, 255, 255, 0.6);
   --glass-sh: 0 8px 32px rgba(31, 38, 135, 0.05);
@@ -77,46 +76,32 @@ body {
   overflow-x: hidden;
 }
 
-/* 메쉬 배경 (글래스모피즘을 돋보이게 하는 요소) */
 body::before {
-  content: '';
-  position: fixed;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: 
-    radial-gradient(circle at 30% 40%, var(--grad-1) 0%, transparent 40%),
-    radial-gradient(circle at 70% 60%, var(--grad-2) 0%, transparent 40%);
-  z-index: -1;
-  pointer-events: none;
+  content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 40%, var(--grad-1) 0%, transparent 40%),
+              radial-gradient(circle at 70% 60%, var(--grad-2) 0%, transparent 40%);
+  z-index: -1; pointer-events: none;
 }
 
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
 
-/* SVG 공통 */
 svg { flex-shrink: 0; }
 .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Bento UI 글래스 패널 공통 */
 .bento-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-sh);
-  overflow: hidden;
-  transition: var(--transition);
+  background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+  box-shadow: var(--glass-sh); overflow: hidden; transition: var(--transition);
 }
 .bento-card:hover { box-shadow: var(--sh-lg); transform: translateY(-2px); }
 
-/* 헤더 */
-.hdr { padding: 32px 0 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; position: sticky; top: 0; z-index: 100; }
+/* 헤더 (고정 속성 제거) */
+.hdr { padding: 32px 0 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
 .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; }
 .logo svg { width: 26px; height: 26px; color: var(--accent); }
 .logo em { color: var(--accent); font-style: normal; }
 .hdr-right { display: flex; align-items: center; gap: 12px; }
 
-/* 날짜 네비게이션 */
 .date-nav { display: flex; align-items: center; gap: 4px; position: relative; padding: 6px 12px; }
 .nav-btn { background: var(--surface2); border: none; color: var(--text2); width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); border-radius: var(--radius-sm); }
 .nav-btn:hover { color: var(--accent); background: var(--accent-l); }
@@ -128,7 +113,6 @@ svg { flex-shrink: 0; }
 .theme-btn { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: var(--radius-md); border: 1px solid var(--glass-border); transition: var(--transition); background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--text); }
 .theme-btn:hover { background: var(--surface2); transform: rotate(15deg); }
 
-/* 달력 팝업 */
 .cal-popup { display: none; position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: 320px; padding: 20px; z-index: 999; }
 .cal-popup.show { display: block; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes popIn { from { opacity: 0; transform: translate(-50%, -10px) scale(0.95); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
@@ -145,7 +129,6 @@ svg { flex-shrink: 0; }
 .cal-d.sel { background: var(--text) !important; color: var(--bg) !important; box-shadow: var(--sh); }
 .cal-d.off { color: var(--border2); cursor: default; }
 
-/* 상단 컨트롤 영역 (탭, 검색, 칼로리) */
 .ctrl-area { display: flex; gap: 16px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; }
 .meal-tabs { display: flex; padding: 6px; border-radius: var(--radius-md); flex: 1; min-width: 300px; }
 .meal-tab { flex: 1; padding: 14px 0; border: none; background: transparent; font-family: inherit; font-size: 15px; font-weight: 700; color: var(--text3); cursor: pointer; border-radius: calc(var(--radius-md) - 6px); transition: var(--transition); }
@@ -156,15 +139,12 @@ svg { flex-shrink: 0; }
 .search-input:focus { box-shadow: 0 0 0 2px var(--accent); background: var(--surface); }
 .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text3); }
 .kcal-chip { display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; font-size: 14px; font-weight: 800; color: var(--accent); background: var(--accent-l); border-radius: var(--radius-md); opacity: 0; visibility: hidden; transition: var(--transition); }
-.kcal-chip svg { color: var(--accent); }
 .kcal-chip.show { opacity: 1; visibility: visible; }
 
-/* Bento 레이아웃 */
 .bento-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .left-col { display: flex; flex-direction: column; gap: 24px; }
-.right-col { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 110px; }
+.right-col { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 24px; }
 
-/* 메뉴 리스트 */
 .menu-list { min-height: 400px; padding: 8px; }
 .menu-row { transition: var(--transition); border-radius: var(--radius-sm); margin-bottom: 4px; }
 .menu-row.warn { background: var(--red-l); }
@@ -173,13 +153,7 @@ svg { flex-shrink: 0; }
 .menu-row.warn .menu-row-main:hover { background: rgba(239, 68, 68, 0.1); }
 .dish-name { flex: 1; font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; line-height: 1.5; }
 .dish-name.main-dish { font-size: 18px; font-weight: 800; color: var(--accent); }
-.fav-btn { background: none; border: none; color: var(--border2); cursor: pointer; transition: var(--transition); padding: 4px; display: flex; align-items: center; }
-.fav-btn svg { width: 22px; height: 22px; }
-.fav-btn:hover { transform: scale(1.15); color: var(--red); }
-.fav-btn.active { color: var(--red); }
-.fav-btn.active svg { fill: currentColor; }
 
-/* 별점 표시기 */
 .star-preview { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 80px; }
 .sp-stars { font-size: 14px; letter-spacing: 2px; color: var(--border2); display: flex; }
 .sp-stars .f { color: var(--gold); }
@@ -188,7 +162,7 @@ svg { flex-shrink: 0; }
 .sp-count { font-size: 12px; font-weight: 600; color: var(--text3); }
 .sp-none { font-size: 13px; font-weight: 600; color: var(--border2); }
 
-/* 알레르기 설정 패널 */
+/* 알레르기 설정 최적화 (글자 줄바꿈 방지) */
 .allergy-wrap { padding: 0; }
 .allergy-hdr { font-size: 16px; font-weight: 800; padding: 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: var(--transition); }
 .allergy-hdr-title { display: flex; align-items: center; gap: 10px; }
@@ -196,17 +170,16 @@ svg { flex-shrink: 0; }
 .allergy-toggle { color: var(--text3); transition: var(--transition); width: 20px; height: 20px; }
 .allergy-hdr.collapsed .allergy-toggle { transform: rotate(-90deg); }
 .a-desc { font-size: 13px; font-weight: 500; color: var(--text3); padding: 0 24px 16px; }
-.a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; padding: 0 24px 24px; transition: var(--transition); }
+.a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; padding: 0 24px 24px; transition: var(--transition); }
 .a-grid.collapsed { display: none; }
 .a-item { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; cursor: pointer; transition: var(--transition); user-select: none; }
 .a-item:hover { background: var(--surface2); }
 .a-item.on { background: var(--red); border-color: var(--red); }
 .a-num { font-size: 12px; font-weight: 800; color: var(--text3); }
 .a-item.on .a-num { color: rgba(255,255,255,0.8); }
-.a-lbl { font-size: 14px; font-weight: 600; color: var(--text2); }
+.a-lbl { font-size: 14px; font-weight: 600; color: var(--text2); white-space: nowrap; word-break: keep-all; }
 .a-item.on .a-lbl { color: #fff; }
 
-/* 주간 패널 */
 .panel-title { font-size: 17px; font-weight: 800; padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
 .panel-title svg { color: var(--accent); }
 .week-day { padding: 20px 24px; border-bottom: 1px solid var(--border); transition: var(--transition); }
@@ -224,7 +197,6 @@ svg { flex-shrink: 0; }
 .wd-none { font-size: 14px; font-weight: 600; color: var(--text3); }
 .wd-loading { font-size: 14px; font-weight: 600; color: var(--text3); padding: 32px; text-align: center; }
 
-/* 인기 메뉴 패널 */
 .popular-item { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: var(--transition); cursor: pointer; }
 .popular-item:last-child { border-bottom: none; }
 .popular-item:hover { background: var(--surface2); padding-left: 30px; }
@@ -236,7 +208,6 @@ svg { flex-shrink: 0; }
 .popular-score { font-size: 14px; font-weight: 800; color: var(--text2); display: flex; align-items: center; gap: 4px; }
 .popular-score::before { content: '★'; color: var(--gold); font-size: 16px; }
 
-/* 상태 / 스켈레톤 */
 .state-box { padding: 80px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .state-box svg { width: 48px; height: 48px; color: var(--border2); }
 .state-box p { font-size: 16px; font-weight: 600; color: var(--text2); }
@@ -246,11 +217,9 @@ svg { flex-shrink: 0; }
 .sk-star { height: 16px; width: 90px; border-radius: 8px; background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; }
 @keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-/* 토스트 알림 */
 .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--text); color: var(--bg); border-radius: 30px; padding: 16px 32px; font-size: 15px; font-weight: 700; opacity: 0; transition: var(--transition); pointer-events: none; z-index: 9999; box-shadow: var(--sh-lg); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* 모달 - 데스크톱 중앙, 모바일 바텀시트 */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s; }
 .modal-overlay.show { display: flex; opacity: 1; }
 .modal-sheet { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 540px; max-height: 85vh; overflow-y: auto; transform: scale(0.95); transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--sh-lg); display: flex; flex-direction: column; }
@@ -271,7 +240,6 @@ svg { flex-shrink: 0; }
 .modal-count-txt { font-size: 14px; font-weight: 600; color: var(--text2); }
 .modal-no-rating { font-size: 15px; font-weight: 600; color: var(--text3); }
 
-/* 리뷰 입력 */
 .modal-input-area { padding: 32px; border-bottom: 1px solid var(--border); background: var(--glass-bg); }
 .modal-input-label { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 16px; }
 .star-row { display: flex; gap: 12px; margin-bottom: 24px; }
@@ -288,7 +256,6 @@ svg { flex-shrink: 0; }
 .btn-cancel { font-family: inherit; font-size: 15px; font-weight: 700; background: var(--surface2); color: var(--text2); border: none; padding: 16px 32px; cursor: pointer; border-radius: var(--radius-sm); transition: var(--transition); }
 .btn-cancel:hover { background: var(--border2); color: var(--text); }
 
-/* 리뷰 목록 */
 .modal-reviews { padding: 32px; }
 .reviews-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
 .reviews-label { font-size: 17px; font-weight: 800; color: var(--text); }
@@ -310,7 +277,6 @@ svg { flex-shrink: 0; }
 .rv-action-btn.liked svg { fill: currentColor; }
 .rv-empty { font-size: 15px; font-weight: 600; color: var(--text3); padding: 40px 0; text-align: center; background: var(--surface2); border-radius: var(--radius-md); }
 
-/* 모바일 반응형 */
 @media(max-width: 768px) {
   .bento-grid { grid-template-columns: 1fr; }
   .right-col { position: static; }
@@ -434,9 +400,6 @@ svg { flex-shrink: 0; }
       <div class="modal-dish-name" id="modalDishName">
         <span id="modalDishText"></span>
         <div class="modal-actions">
-          <button class="modal-action-btn" id="modalFavBtn" aria-label="즐겨찾기">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
           <button class="modal-action-btn" id="modalShareBtn" aria-label="공유">
             <svg class="icon" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
           </button>
@@ -481,7 +444,7 @@ svg { flex-shrink: 0; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPcpn_YncmqIxDx3EX_dpwCGK26hrOVlk",
@@ -507,13 +470,13 @@ let calView   = new Date(cur);
 let mt        = 2;
 let isDark    = false;
 let myA       = new Set(JSON.parse(lsGet('yc_a') || '[]'));
-let favorites = new Set(JSON.parse(lsGet('yc_fav') || '[]'));
 let ratings   = {}; 
 let lastParsed= [];
 let modalScore= 0;
 let modalKey  = '';
 let currentSort = 'latest';
 let searchQuery = '';
+let currentFetchId = 0; 
 
 function lsGet(k){try{return localStorage.getItem(k)}catch{return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch{}}
@@ -527,7 +490,6 @@ function dishKey(dateStr, mt, name){ return `${dateStr}_${mt}_${name}`; }
 function escapeHtml(str) { return String(str||'').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 function starsHtml(score, max=5){ return Array.from({length:max},(_,i)=>`<span class="${i<Math.round(score)?'f':'e'}">★</span>`).join(''); }
 
-// 테마 아이콘 설정
 const sunIcon = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>`;
 const moonIcon = `<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
 
@@ -546,7 +508,6 @@ function drawDate(){
   $('dateSub').textContent=DAYS[cur.getDay()]+'요일';
 }
 
-// API 파싱 (오류 수정 핵심: 모든 줄바꿈 패턴 매칭)
 function parseItems(raw){
   if(!raw) return [];
   return raw.split(/<br\s*\/?>|\n/i).map(s=>s.trim()).filter(Boolean).map(s=>{
@@ -561,22 +522,37 @@ function parseItems(raw){
   });
 }
 
+// 최적화: innerHTML로 한 번에 그리기
 function buildAllergy(){
-  const g=$('allergyGrid'); g.innerHTML='';
-  AL.forEach(([n,l])=>{
-    const el=document.createElement('div');
-    el.className='a-item'+(myA.has(n)?' on':'');
-    el.innerHTML=`<span class="a-num">${n}</span><span class="a-lbl">${l}</span>`;
-    el.onclick=()=>{
-      myA.has(n)?myA.delete(n):myA.add(n); el.classList.toggle('on');
-      lsSet('yc_a',JSON.stringify([...myA])); renderMenu(lastParsed, toStr(cur), mt);
+  const g = $('allergyGrid');
+  g.innerHTML = AL.map(([n, l]) => `
+    <div class="a-item ${myA.has(n) ? 'on' : ''}" data-n="${n}">
+      <span class="a-num">${n}</span><span class="a-lbl">${l}</span>
+    </div>
+  `).join('');
+  
+  g.querySelectorAll('.a-item').forEach(el => {
+    el.onclick = () => {
+      const n = el.dataset.n;
+      myA.has(n) ? myA.delete(n) : myA.add(n); 
+      el.classList.toggle('on');
+      lsSet('yc_a', JSON.stringify([...myA])); 
+      renderMenu(lastParsed, toStr(cur), mt);
     };
-    g.appendChild(el);
   });
 }
 
 $('allergyHdr').onclick = () => { $('allergyGrid').classList.toggle('collapsed'); $('allergyHdr').classList.toggle('collapsed'); };
-$('searchInput').oninput = (e) => { searchQuery = e.target.value.toLowerCase(); renderMenu(lastParsed, toStr(cur), mt); };
+
+// 최적화: Debounce 적용 (빠른 타이핑 시 성능 부하 방지)
+let searchTimeout;
+$('searchInput').oninput = (e) => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    searchQuery = e.target.value.toLowerCase(); 
+    renderMenu(lastParsed, toStr(cur), mt);
+  }, 300);
+};
 
 function renderMenu(parsed, dateStr, mealType){
   lastParsed = parsed; const list = $('menuList');
@@ -591,15 +567,11 @@ function renderMenu(parsed, dateStr, mealType){
     list.innerHTML=`<div class="state-box"><p>검색 결과가 없습니다.</p></div>`; return;
   }
   
-  list.innerHTML='';
-  filtered.forEach((item,i)=>{
+  let html = '';
+  filtered.forEach((item, i) => {
     const key = dishKey(dateStr, mealType, item.name);
     const hasA = item.nums.some(n=>myA.has(n));
     const stat = ratings[key] && ratings[key].count ? {avg:ratings[key].total/ratings[key].count, count:ratings[key].count} : null;
-    const isFav = favorites.has(item.name);
-    
-    const row = document.createElement('div');
-    row.className='menu-row'+(hasA?' warn':'');
     
     let dishNameHtml = escapeHtml(item.name);
     if(hasA && item.nums.length>0) dishNameHtml += ` <span style="font-size:12px; color:var(--text3); margin-left:8px; border:1px solid var(--border); padding:2px 6px; border-radius:6px; background:var(--surface);">${item.nums.join(', ')}</span>`;
@@ -608,36 +580,29 @@ function renderMenu(parsed, dateStr, mealType){
       ? `<div class="star-preview"><div class="sp-stars">${starsHtml(stat.avg)}</div><div class="sp-bottom"><span class="sp-val">${stat.avg.toFixed(1)}</span><span class="sp-count">(${stat.count})</span></div></div>`
       : `<div class="star-preview"><div class="sp-none">미평가</div></div>`;
 
-    row.innerHTML=`<div class="menu-row-main">
-      <button class="fav-btn ${isFav?'active':''}" data-name="${escapeHtml(item.name)}">
-        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </button>
-      <span class="dish-name${i===0?' main-dish':''}">${dishNameHtml}</span>
-      ${spHtml}
-    </div>`;
-    
-    row.querySelector('.fav-btn').onclick = (e) => {
-      e.stopPropagation(); const n = e.target.closest('.fav-btn').dataset.name;
-      if (favorites.has(n)) { favorites.delete(n); e.target.closest('.fav-btn').classList.remove('active'); }
-      else { favorites.add(n); e.target.closest('.fav-btn').classList.add('active'); }
-      lsSet('yc_fav', JSON.stringify([...favorites]));
-    };
-    row.querySelector('.menu-row-main').onclick=()=>openModal(item.name, dateStr, mealType);
-    list.appendChild(row);
+    html += `
+      <div class="menu-row ${hasA ? 'warn' : ''}">
+        <div class="menu-row-main" onclick="openModal('${escapeHtml(item.name)}', '${dateStr}', ${mealType})">
+          <span class="dish-name ${i===0 ? 'main-dish' : ''}">${dishNameHtml}</span>
+          ${spHtml}
+        </div>
+      </div>
+    `;
   });
+  
+  list.innerHTML = html;
 }
 
-let modalDateStr='', modalMealType=0;
-function openModal(name, dateStr, mealType){
+// openModal 함수를 전역에서 접근할 수 있도록 window 객체에 할당 (HTML 문자열 내 이벤트 바인딩용)
+window.openModal = function(name, dateStr, mealType) {
   modalKey=dishKey(dateStr, mealType, name); modalDateStr=dateStr; modalMealType=mealType; modalScore=0;
   $('modalDishText').textContent=name; $('reviewName').value=''; $('reviewText').value='';
   updateStarUI(0); renderModalStat(); renderReviewList();
   
-  const isFav = favorites.has(name);
-  $('modalFavBtn').innerHTML = isFav ? `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>` : `<svg class="icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
   $('modalOverlay').style.display = 'flex'; setTimeout(() => $('modalOverlay').classList.add('show'), 10);
   document.body.style.overflow='hidden';
-}
+};
+
 function closeModal(){
   $('modalOverlay').classList.remove('show');
   setTimeout(() => { $('modalOverlay').style.display='none'; document.body.style.overflow=''; }, 300);
@@ -673,6 +638,27 @@ function renderReviewList(){
         </button>
       </div>
     </div>`).join('');
+
+  rl.querySelectorAll('.like-btn').forEach(btn => {
+    btn.onclick = async (e) => {
+      const rvId = btn.dataset.id;
+      const review = r.reviews.find(x => x.id === rvId);
+      if(!review) return;
+
+      review.likedByMe = !review.likedByMe;
+      review.likes += review.likedByMe ? 1 : -1;
+      renderReviewList(); 
+
+      try {
+        await updateDoc(doc(db, "ratings", rvId), { likes: review.likes });
+      } catch (err) {
+        showToast('좋아요 반영 실패');
+        review.likedByMe = !review.likedByMe;
+        review.likes += review.likedByMe ? 1 : -1;
+        renderReviewList(); 
+      }
+    };
+  });
 }
 
 function updateStarUI(v){ document.querySelectorAll('.si-star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v)); }
@@ -682,13 +668,6 @@ document.querySelectorAll('.si-star').forEach(s=>{
 });
 $('starRow').onmouseleave=()=>updateStarUI(modalScore);
 $('sortSelect').onchange=(e)=>{ currentSort=e.target.value; renderReviewList(); };
-
-$('modalFavBtn').onclick = () => {
-  const n = $('modalDishText').textContent;
-  if (favorites.has(n)) { favorites.delete(n); showToast('즐겨찾기 해제'); }
-  else { favorites.add(n); showToast('즐겨찾기 추가'); }
-  lsSet('yc_fav', JSON.stringify([...favorites])); openModal(n, modalDateStr, modalMealType);
-};
 
 $('modalShareBtn').onclick = () => {
   const text = `[영천고 급식] ${toStr(cur)} ${['','조식','중식','석식'][mt]} - ${$('modalDishText').textContent}`;
@@ -717,9 +696,13 @@ document.addEventListener('keydown', e => { if (e.key==='Escape' && $('modalOver
 
 async function fetchMeal(snapDate, snapMt, silent){
   const ds = toStr(snapDate);
+  const fetchId = ++currentFetchId; 
   const url = `${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${SC}&MLSV_YMD=${ds}&MMEAL_SC_CODE=${snapMt}`;
+  
   try {
     const res = await fetch(url); const json = await res.json();
+    if(fetchId !== currentFetchId && !silent) return null;
+    
     if(!json.mealServiceDietInfo || json.RESULT) {
       if(!silent) renderMenu([], ds, snapMt);
       return null;
@@ -732,11 +715,11 @@ async function fetchMeal(snapDate, snapMt, silent){
       if(meal.CAL_INFO) { $('kcalVal').textContent=meal.CAL_INFO.trim(); $('kcalChip').classList.add('show'); }
       else $('kcalChip').classList.remove('show');
       const parsed = parseItems(meal.DDISH_NM||'');
-      // Firebase Data Loading Placeholder
       renderMenu(parsed, ds, snapMt);
     }
     return meal;
   } catch(e) {
+    if(fetchId !== currentFetchId && !silent) return null;
     if(!silent) $('menuList').innerHTML=`<div class="state-box"><p>서버와 연결할 수 없습니다.</p></div>`;
     return null;
   }
@@ -768,12 +751,29 @@ async function renderWeekPanel(){
   });
 }
 
-async function renderPopularPanel() {
-  $('popularContent').innerHTML = '<div class="wd-loading">데이터 분석 중...</div>';
-  // Note: Firebase ranking logic goes here. Replaced with empty state for visual completion.
-  setTimeout(() => {
-    $('popularContent').innerHTML = '<div class="rv-empty">이번 주 데이터가 아직 부족합니다.</div>';
-  }, 1000);
+function renderPopularPanel() {
+  const wc = $('popularContent');
+  const ranked = Object.entries(ratings)
+    .map(([key, data]) => {
+      const name = key.split('_')[2]; 
+      return { name, avg: data.total / data.count, count: data.count };
+    })
+    .filter(item => item.count > 0)
+    .sort((a, b) => b.avg - a.avg || b.count - a.count)
+    .slice(0, 3); 
+
+  if(ranked.length === 0) {
+    wc.innerHTML = '<div class="rv-empty">아직 평가된 메뉴가 없습니다.</div>';
+    return;
+  }
+
+  wc.innerHTML = ranked.map((item, idx) => `
+    <div class="popular-item" onclick="showToast('${escapeHtml(item.name)} 메뉴는 현재 평균 ${item.avg.toFixed(1)}점입니다!')">
+      <div class="popular-rank">${idx + 1}</div>
+      <div class="popular-name">${escapeHtml(item.name)}</div>
+      <div class="popular-score">${item.avg.toFixed(1)} <span style="font-size:12px; font-weight:normal; color:var(--text3);">(${item.count})</span></div>
+    </div>
+  `).join('');
 }
 
 function drawCal(){
@@ -805,7 +805,29 @@ document.querySelectorAll('.meal-tab').forEach(tab=>{
   };
 });
 
-buildAllergy(); drawDate(); loadCurrent(); renderWeekPanel(); renderPopularPanel();
+async function initApp() {
+  try {
+    const q = query(collection(db, "ratings"));
+    const snap = await getDocs(q);
+    snap.forEach(doc => {
+      const data = doc.data();
+      const key = data.dishKey;
+      if (!ratings[key]) ratings[key] = { total: 0, count: 0, reviews: [] };
+      ratings[key].total += data.score;
+      ratings[key].count += 1;
+      data.id = doc.id;
+      ratings[key].reviews.push(data);
+    });
+  } catch (error) {
+    console.error("Firebase 로드 실패:", error);
+    showToast("일부 별점 데이터를 불러오지 못했습니다.");
+  } finally {
+    buildAllergy(); drawDate(); loadCurrent(); renderWeekPanel(); renderPopularPanel();
+  }
+}
+
+initApp();
 </script>
 </body>
 </html>
+
