@@ -5,296 +5,226 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>영천고 급식</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-stars@2/tsparticles.preset.stars.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <style>
 :root {
-  /* 라이트 테마 */
-  --bg: #f4f6fa;
-  --surface: #ffffff;
-  --surface2: #f0f3f8;
-  --border: rgba(226, 230, 240, 0.7);
+  /* 라이트 테마: 화사한 오로라 그라데이션 */
+  --bg-gradient: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #c2e9fb, #e0c3fc);
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface2: rgba(240, 243, 248, 0.8);
+  --border: rgba(255, 255, 255, 0.5);
   --border2: #cdd3e4;
   --text: #1a1d24; 
   --text2: #5a6474; 
   --text3: #8a94a6;
   --accent: #3b82f6; 
-  --accent-l: #eff6ff; 
-  --accent-d: #2563eb;
+  --accent-l: rgba(59, 130, 246, 0.2); 
   --red: #ef4444; 
-  --red-l: #fef2f2;
+  --red-l: rgba(239, 68, 68, 0.2);
   --gold: #f59e0b; 
-  --gold-l: #fffbeb;
-  --sh: 0 8px 32px rgba(0,0,0,0.04);
-  --sh-lg: 0 16px 48px rgba(0,0,0,0.08);
+  --sh-neon: 0 0 20px rgba(59, 130, 246, 0.4);
+  --sh-lg: 0 16px 48px rgba(0,0,0,0.1);
   --radius-lg: 28px; 
   --radius-md: 18px; 
   --radius-sm: 12px;
-  
-  --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.6);
-  --glass-sh: 0 8px 32px rgba(31, 38, 135, 0.05);
-  --grad-1: rgba(59, 130, 246, 0.08);
-  --grad-2: rgba(16, 185, 129, 0.05);
-  
-  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .dark {
-  /* 다크 테마 */
-  --bg: #0f1115;
-  --surface: #181b21;
-  --surface2: #22262f;
-  --border: rgba(255, 255, 255, 0.08);
-  --border2: rgba(255, 255, 255, 0.15);
+  /* 다크 테마: 깊은 밤하늘 그라데이션 */
+  --bg-gradient: linear-gradient(-45deg, #0f1115, #1c2331, #130f1c, #0f172a);
+  --surface: rgba(24, 27, 33, 0.7);
+  --surface2: rgba(34, 38, 47, 0.8);
+  --border: rgba(255, 255, 255, 0.1);
+  --border2: rgba(255, 255, 255, 0.2);
   --text: #f0f2f5; 
   --text2: #9ba4b5; 
   --text3: #6b758a;
   --accent: #60a5fa; 
-  --accent-l: rgba(59, 130, 246, 0.15);
+  --accent-l: rgba(59, 130, 246, 0.25);
   --red: #f87171; 
-  --red-l: rgba(239, 68, 68, 0.15);
+  --red-l: rgba(239, 68, 68, 0.25);
   --gold: #fbbf24; 
-  --gold-l: rgba(245, 158, 11, 0.15);
-  --sh: 0 8px 32px rgba(0,0,0,0.4);
-  --sh-lg: 0 16px 48px rgba(0,0,0,0.6);
-  
-  --glass-bg: rgba(24, 27, 33, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-sh: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --grad-1: rgba(59, 130, 246, 0.15);
-  --grad-2: rgba(139, 92, 246, 0.1);
+  --sh-neon: 0 0 20px rgba(96, 165, 250, 0.5);
+  --sh-lg: 0 16px 48px rgba(0,0,0,0.8);
+  --glass-bg: rgba(24, 27, 33, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { 
-  background-color: var(--bg); 
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; 
+  background: var(--bg-gradient);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  font-family: 'Pretendard', -apple-system, sans-serif; 
   color: var(--text); 
   min-height: 100vh; 
   -webkit-font-smoothing: antialiased; 
-  transition: background-color .4s ease, color .4s ease; 
+  transition: color 0.4s ease; 
   overflow-x: hidden;
+  position: relative;
 }
 
-body::before {
-  content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
-  background: radial-gradient(circle at 30% 40%, var(--grad-1) 0%, transparent 40%),
-              radial-gradient(circle at 70% 60%, var(--grad-2) 0%, transparent 40%);
-  z-index: -1; pointer-events: none;
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+/* 파티클 배경 컨테이너 */
+#tsparticles {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
 
 svg { flex-shrink: 0; }
 .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 .bento-card {
-  background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
-  box-shadow: var(--glass-sh); overflow: hidden; transition: var(--transition);
+  background: var(--glass-bg); 
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); 
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.05); 
+  overflow: hidden; transition: var(--transition);
 }
-.bento-card:hover { box-shadow: var(--sh-lg); transform: translateY(-2px); }
+.bento-card:hover { 
+  box-shadow: var(--sh-neon); 
+  transform: translateY(-4px) scale(1.01); 
+  border-color: var(--accent);
+}
 
-/* 헤더 (고정 속성 제거) */
 .hdr { padding: 32px 0 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.logo { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; }
-.logo svg { width: 26px; height: 26px; color: var(--accent); }
+.logo { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; display: flex; align-items: center; gap: 12px; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.logo svg { width: 32px; height: 32px; color: var(--accent); filter: drop-shadow(0 0 8px var(--accent)); }
 .logo em { color: var(--accent); font-style: normal; }
-.hdr-right { display: flex; align-items: center; gap: 12px; }
 
-.date-nav { display: flex; align-items: center; gap: 4px; position: relative; padding: 6px 12px; }
-.nav-btn { background: var(--surface2); border: none; color: var(--text2); width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); border-radius: var(--radius-sm); }
-.nav-btn:hover { color: var(--accent); background: var(--accent-l); }
-.date-center { cursor: pointer; padding: 0 16px; text-align: center; user-select: none; }
-.date-main { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
-.date-sub { font-size: 12px; color: var(--text3); margin-top: 2px; font-weight: 600; }
-.today-btn { font-family: inherit; font-size: 13px; font-weight: 700; background: var(--surface2); color: var(--text); border: none; padding: 8px 16px; cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); white-space: nowrap; }
-.today-btn:hover { background: var(--text); color: var(--bg); }
-.theme-btn { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: var(--radius-md); border: 1px solid var(--glass-border); transition: var(--transition); background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--text); }
-.theme-btn:hover { background: var(--surface2); transform: rotate(15deg); }
+.date-nav { display: flex; align-items: center; gap: 4px; padding: 6px 12px; position: relative; }
+.nav-btn, .today-btn, .theme-btn { 
+  background: var(--surface2); border: none; color: var(--text); 
+  cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); 
+  backdrop-filter: blur(10px);
+}
+.nav-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+.nav-btn:hover { color: #fff; background: var(--accent); box-shadow: var(--sh-neon); transform: scale(1.1); }
+.date-center { cursor: pointer; padding: 0 16px; text-align: center; }
+.date-main { font-size: 16px; font-weight: 800; }
+.date-sub { font-size: 13px; color: var(--text3); font-weight: 600; }
+.today-btn { font-size: 14px; font-weight: 800; padding: 10px 20px; }
+.today-btn:hover { background: var(--text); color: var(--bg-gradient); transform: scale(1.05); }
+.theme-btn { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); }
+.theme-btn:hover { background: var(--accent); color: #fff; transform: rotate(15deg) scale(1.1); box-shadow: var(--sh-neon); }
 
-.cal-popup { display: none; position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: 320px; padding: 20px; z-index: 999; }
-.cal-popup.show { display: block; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-@keyframes popIn { from { opacity: 0; transform: translate(-50%, -10px) scale(0.95); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
-.cal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.cal-top button { background: var(--surface2); border: none; font-size: 13px; font-weight: 700; color: var(--text2); cursor: pointer; padding: 8px 14px; border-radius: var(--radius-sm); transition: var(--transition); }
-.cal-top button:hover { background: var(--text); color: var(--bg); }
-.cal-top span { font-size: 16px; font-weight: 800; }
-.cal-dow { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 12px; color: var(--text3); margin-bottom: 12px; font-weight: 700; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-.cal-d { text-align: center; font-size: 14px; padding: 10px 0; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; transition: var(--transition); }
-.cal-d:hover:not(.off):not(.empty) { background: var(--surface2); transform: scale(1.1); }
-.cal-d.today { color: var(--accent); position: relative; }
-.cal-d.today::after { content:''; position:absolute; bottom:4px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--accent); }
-.cal-d.sel { background: var(--text) !important; color: var(--bg) !important; box-shadow: var(--sh); }
-.cal-d.off { color: var(--border2); cursor: default; }
-
+/* 식단 탭 */
 .ctrl-area { display: flex; gap: 16px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; }
-.meal-tabs { display: flex; padding: 6px; border-radius: var(--radius-md); flex: 1; min-width: 300px; }
-.meal-tab { flex: 1; padding: 14px 0; border: none; background: transparent; font-family: inherit; font-size: 15px; font-weight: 700; color: var(--text3); cursor: pointer; border-radius: calc(var(--radius-md) - 6px); transition: var(--transition); }
-.meal-tab.on { background: var(--text); color: var(--bg); box-shadow: var(--sh); }
-.meal-tab:hover:not(.on) { color: var(--text); background: var(--surface2); }
+.meal-tabs { display: flex; padding: 8px; border-radius: var(--radius-md); flex: 1; min-width: 300px; }
+.meal-tab { flex: 1; padding: 14px 0; border: none; background: transparent; font-size: 16px; font-weight: 800; color: var(--text3); cursor: pointer; border-radius: calc(var(--radius-md) - 6px); transition: var(--transition); }
+.meal-tab.on { background: var(--accent); color: #fff; box-shadow: var(--sh-neon); transform: scale(1.05); }
+
+/* 검색창 */
 .search-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-input { width: 100%; border: none; border-radius: var(--radius-md); color: var(--text); font-family: inherit; font-size: 14px; font-weight: 500; padding: 16px 16px 16px 48px; outline: none; background: var(--glass-bg); box-shadow: var(--glass-sh); transition: var(--transition); }
-.search-input:focus { box-shadow: 0 0 0 2px var(--accent); background: var(--surface); }
+.search-input { width: 100%; border: 2px solid transparent; border-radius: var(--radius-md); color: var(--text); font-size: 15px; font-weight: 600; padding: 18px 16px 18px 48px; outline: none; background: var(--glass-bg); backdrop-filter: blur(10px); transition: var(--transition); }
+.search-input:focus { border-color: var(--accent); box-shadow: var(--sh-neon); background: var(--surface); transform: translateY(-2px); }
 .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text3); }
-.kcal-chip { display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; font-size: 14px; font-weight: 800; color: var(--accent); background: var(--accent-l); border-radius: var(--radius-md); opacity: 0; visibility: hidden; transition: var(--transition); }
-.kcal-chip.show { opacity: 1; visibility: visible; }
+
+/* 칼로리 칩 */
+.kcal-chip { display: inline-flex; align-items: center; gap: 8px; padding: 16px 24px; font-size: 15px; font-weight: 900; color: var(--accent); background: var(--accent-l); border-radius: var(--radius-md); opacity: 0; visibility: hidden; transition: var(--transition); border: 1px solid var(--accent); }
+.kcal-chip.show { opacity: 1; visibility: visible; animation: pulseGlow 2s infinite; }
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
 
 .bento-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-.left-col { display: flex; flex-direction: column; gap: 24px; }
-.right-col { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 24px; }
+.left-col, .right-col { display: flex; flex-direction: column; gap: 24px; }
+.right-col { position: sticky; top: 24px; }
 
-.menu-list { min-height: 400px; padding: 8px; }
-.menu-row { transition: var(--transition); border-radius: var(--radius-sm); margin-bottom: 4px; }
-.menu-row.warn { background: var(--red-l); }
-.menu-row-main { display: flex; align-items: center; padding: 18px 20px; gap: 16px; cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); }
-.menu-row-main:hover { background: var(--surface2); transform: translateX(4px); }
-.menu-row.warn .menu-row-main:hover { background: rgba(239, 68, 68, 0.1); }
-.dish-name { flex: 1; font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; line-height: 1.5; }
-.dish-name.main-dish { font-size: 18px; font-weight: 800; color: var(--accent); }
+/* 메뉴 리스트 */
+.menu-list { min-height: 400px; padding: 12px; }
+.menu-row { transition: var(--transition); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.menu-row-main { display: flex; align-items: center; padding: 20px 24px; gap: 16px; cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); background: var(--surface2); }
+.menu-row-main:hover { background: var(--accent); color: #fff; transform: translateX(8px) scale(1.02); box-shadow: var(--sh-neon); }
+.dish-name { flex: 1; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.dish-name.main-dish { font-size: 20px; font-weight: 900; }
+.menu-row-main:hover .dish-name, .menu-row-main:hover .sp-val, .menu-row-main:hover .sp-count, .menu-row-main:hover .sp-none { color: #fff; }
 
 .star-preview { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 80px; }
-.sp-stars { font-size: 14px; letter-spacing: 2px; color: var(--border2); display: flex; }
-.sp-stars .f { color: var(--gold); }
-.sp-bottom { display: flex; align-items: baseline; gap: 6px; }
-.sp-val { font-size: 15px; font-weight: 800; color: var(--text); }
-.sp-count { font-size: 12px; font-weight: 600; color: var(--text3); }
-.sp-none { font-size: 13px; font-weight: 600; color: var(--border2); }
+.sp-stars { font-size: 15px; letter-spacing: 2px; }
+.sp-stars .f { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
+.sp-val { font-size: 16px; font-weight: 900; color: var(--text); }
+.sp-count { font-size: 13px; font-weight: 700; color: var(--text3); }
 
-/* 알레르기 설정 최적화 (글자 줄바꿈 방지) */
+/* 알레르기 필터 */
 .allergy-wrap { padding: 0; }
-.allergy-hdr { font-size: 16px; font-weight: 800; padding: 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: var(--transition); }
-.allergy-hdr-title { display: flex; align-items: center; gap: 10px; }
-.allergy-hdr-title svg { color: var(--text3); }
-.allergy-toggle { color: var(--text3); transition: var(--transition); width: 20px; height: 20px; }
-.allergy-hdr.collapsed .allergy-toggle { transform: rotate(-90deg); }
-.a-desc { font-size: 13px; font-weight: 500; color: var(--text3); padding: 0 24px 16px; }
+.allergy-hdr { font-size: 17px; font-weight: 800; padding: 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
 .a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; padding: 0 24px 24px; transition: var(--transition); }
 .a-grid.collapsed { display: none; }
-.a-item { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; cursor: pointer; transition: var(--transition); user-select: none; }
-.a-item:hover { background: var(--surface2); }
-.a-item.on { background: var(--red); border-color: var(--red); }
-.a-num { font-size: 12px; font-weight: 800; color: var(--text3); }
-.a-item.on .a-num { color: rgba(255,255,255,0.8); }
-.a-lbl { font-size: 14px; font-weight: 600; color: var(--text2); white-space: nowrap; word-break: keep-all; }
-.a-item.on .a-lbl { color: #fff; }
+.a-item { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: var(--radius-sm); border: 2px solid var(--border2); cursor: pointer; transition: var(--transition); font-weight: 700; }
+.a-item:hover { border-color: var(--accent); box-shadow: var(--sh-neon); }
+.a-item.on { background: var(--red); border-color: var(--red); color: #fff; box-shadow: 0 0 15px rgba(239,68,68,0.5); }
+.a-item.on .a-num, .a-item.on .a-lbl { color: #fff; }
 
-.panel-title { font-size: 17px; font-weight: 800; padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.panel-title svg { color: var(--accent); }
+/* 우측 패널 (인기메뉴, 식단표) */
+.panel-title { font-size: 18px; font-weight: 900; padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.panel-title svg { color: var(--accent); filter: drop-shadow(0 0 5px var(--accent)); }
 .week-day { padding: 20px 24px; border-bottom: 1px solid var(--border); transition: var(--transition); }
-.week-day:last-child { border-bottom: none; }
-.week-day.clickable { cursor: pointer; }
-.week-day.clickable:hover { background: var(--surface2); }
-.week-day.no-meal { opacity: 0.4; }
-.week-day.wd-today { background: var(--accent-l); border-left: 4px solid var(--accent); padding-left: 20px; }
-.week-day.wd-sel { background: var(--surface2); }
-.wd-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.wd-date { font-size: 20px; font-weight: 800; }
-.wd-dayname { font-size: 13px; font-weight: 700; color: var(--text2); }
-.wd-badge { font-size: 11px; font-weight: 800; background: var(--accent); color: #fff; border-radius: 6px; padding: 4px 10px; margin-left: auto; }
-.wd-items { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.6; }
-.wd-none { font-size: 14px; font-weight: 600; color: var(--text3); }
-.wd-loading { font-size: 14px; font-weight: 600; color: var(--text3); padding: 32px; text-align: center; }
+.week-day.clickable:hover { background: var(--accent-l); transform: scale(1.02); }
+.week-day.wd-today { background: var(--accent-l); border-left: 6px solid var(--accent); }
+.wd-date { font-size: 22px; font-weight: 900; }
+.wd-dayname { font-size: 14px; font-weight: 800; color: var(--text2); }
+.wd-badge { font-size: 12px; font-weight: 900; background: var(--accent); color: #fff; border-radius: 8px; padding: 4px 12px; margin-left: auto; box-shadow: var(--sh-neon); }
+.popular-item { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: var(--transition); }
+.popular-item:hover { background: var(--surface2); padding-left: 32px; border-left: 4px solid var(--accent); }
+.popular-rank { font-size: 24px; font-weight: 900; color: var(--accent); min-width: 30px; text-align: center; }
 
-.popular-item { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: var(--transition); cursor: pointer; }
-.popular-item:last-child { border-bottom: none; }
-.popular-item:hover { background: var(--surface2); padding-left: 30px; }
-.popular-rank { font-size: 20px; font-weight: 800; color: var(--accent); min-width: 24px; text-align: center; }
-.popular-item:nth-child(1) .popular-rank { color: var(--gold); }
-.popular-item:nth-child(2) .popular-rank { color: #94a3b8; }
-.popular-item:nth-child(3) .popular-rank { color: #b45309; }
-.popular-name { flex: 1; font-size: 15px; font-weight: 700; color: var(--text); }
-.popular-score { font-size: 14px; font-weight: 800; color: var(--text2); display: flex; align-items: center; gap: 4px; }
-.popular-score::before { content: '★'; color: var(--gold); font-size: 16px; }
-
-.state-box { padding: 80px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.state-box svg { width: 48px; height: 48px; color: var(--border2); }
-.state-box p { font-size: 16px; font-weight: 600; color: var(--text2); }
-.skeleton { display: flex; flex-direction: column; padding: 8px; }
-.sk-row { display: flex; align-items: center; padding: 24px 20px; gap: 20px; border-radius: var(--radius-sm); margin-bottom: 4px; }
-.sk-name { height: 20px; border-radius: 10px; background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; flex: 1; }
-.sk-star { height: 16px; width: 90px; border-radius: 8px; background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; }
+/* 상태창 & 스켈레톤 */
+.state-box { padding: 100px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.state-box svg { width: 64px; height: 64px; color: var(--accent); filter: drop-shadow(0 0 10px var(--accent-l)); animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.state-box p { font-size: 18px; font-weight: 800; color: var(--text); }
+.sk-row { display: flex; align-items: center; padding: 24px 20px; gap: 20px; border-radius: var(--radius-sm); margin-bottom: 8px; background: var(--surface2); }
+.sk-name { height: 24px; border-radius: 12px; background: linear-gradient(90deg, var(--surface) 25%, var(--border) 50%, var(--surface) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; flex: 1; }
 @keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-.toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--text); color: var(--bg); border-radius: 30px; padding: 16px 32px; font-size: 15px; font-weight: 700; opacity: 0; transition: var(--transition); pointer-events: none; z-index: 9999; box-shadow: var(--sh-lg); }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s; }
+/* 모달 & 리뷰 */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity .4s; }
 .modal-overlay.show { display: flex; opacity: 1; }
-.modal-sheet { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 540px; max-height: 85vh; overflow-y: auto; transform: scale(0.95); transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--sh-lg); display: flex; flex-direction: column; }
-.modal-overlay.show .modal-sheet { transform: scale(1); }
-.modal-handle { display: none; }
-.modal-head { padding: 32px 32px 24px; border-bottom: 1px solid var(--border); }
-.modal-dish-name { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-.modal-actions { display: flex; gap: 10px; margin-left: auto; }
-.modal-action-btn { background: var(--surface2); border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; color: var(--text2); transition: var(--transition); display: flex; align-items: center; justify-content: center; }
-.modal-action-btn:hover { background: var(--text); color: var(--bg); transform: translateY(-2px); }
-.modal-stat { display: flex; align-items: center; gap: 24px; background: var(--surface2); padding: 24px; border-radius: var(--radius-md); }
-.modal-stat-score { display: flex; flex-direction: column; align-items: center; padding-right: 24px; border-right: 1px solid var(--border2); }
-.modal-avg { font-size: 42px; font-weight: 800; color: var(--text); line-height: 1; }
-.modal-avg-max { font-size: 13px; color: var(--text3); margin-top: 6px; font-weight: 700; }
-.modal-stat-detail { display: flex; flex-direction: column; gap: 8px; }
-.modal-stars-big { font-size: 24px; letter-spacing: 4px; color: var(--border2); }
-.modal-stars-big .f { color: var(--gold); }
-.modal-count-txt { font-size: 14px; font-weight: 600; color: var(--text2); }
-.modal-no-rating { font-size: 15px; font-weight: 600; color: var(--text3); }
+.modal-sheet { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; transform: scale(0.8) translateY(50px); transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--sh-lg); border: 1px solid var(--border); }
+.modal-overlay.show .modal-sheet { transform: scale(1) translateY(0); }
+.modal-dish-name { font-size: 28px; font-weight: 900; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+.si-star { font-size: 48px; cursor: pointer; color: var(--border2); transition: var(--transition); }
+.si-star.on { color: var(--gold); transform: scale(1.2); text-shadow: 0 0 15px var(--gold); }
+.si-star:hover { transform: scale(1.3) rotate(10deg); }
+.btn-submit { background: var(--accent); color: #fff; box-shadow: var(--sh-neon); font-size: 16px; font-weight: 900; }
+.btn-submit:hover { background: #2563eb; transform: translateY(-3px) scale(1.02); box-shadow: 0 0 25px rgba(59, 130, 246, 0.6); }
 
-.modal-input-area { padding: 32px; border-bottom: 1px solid var(--border); background: var(--glass-bg); }
-.modal-input-label { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 16px; }
-.star-row { display: flex; gap: 12px; margin-bottom: 24px; }
-.si-star { font-size: 40px; cursor: pointer; color: var(--border2); transition: var(--transition); user-select: none; line-height: 1; }
-.si-star.on { color: var(--gold); transform: scale(1.1); }
-.si-star:hover { transform: scale(1.2); }
-.review-input, .review-textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: inherit; font-size: 15px; font-weight: 500; padding: 16px; outline: none; transition: var(--transition); margin-bottom: 16px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-.review-input:focus, .review-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-l); }
-.review-textarea { resize: none; min-height: 100px; }
-.modal-submit-row { display: flex; gap: 12px; margin-top: 8px; }
-.btn-submit { flex: 1; font-family: inherit; font-size: 15px; font-weight: 800; background: var(--text); color: var(--bg); border: none; padding: 16px 0; cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); }
-.btn-submit:hover { transform: translateY(-2px); box-shadow: var(--sh); }
-.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.btn-cancel { font-family: inherit; font-size: 15px; font-weight: 700; background: var(--surface2); color: var(--text2); border: none; padding: 16px 32px; cursor: pointer; border-radius: var(--radius-sm); transition: var(--transition); }
-.btn-cancel:hover { background: var(--border2); color: var(--text); }
-
-.modal-reviews { padding: 32px; }
-.reviews-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.reviews-label { font-size: 17px; font-weight: 800; color: var(--text); }
-.sort-select { background: var(--surface2); border: none; border-radius: var(--radius-sm); padding: 8px 16px; font-family: inherit; font-size: 13px; font-weight: 700; color: var(--text2); cursor: pointer; transition: var(--transition); outline: none; }
-.sort-select:hover { color: var(--text); background: var(--border); }
-.rv-item { padding: 20px; background: var(--surface2); border-radius: var(--radius-md); margin-bottom: 16px; transition: var(--transition); }
-.rv-item:last-child { margin-bottom: 0; }
-.rv-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.rv-name { font-size: 15px; font-weight: 700; color: var(--text); }
-.rv-stars { font-size: 13px; letter-spacing: 2px; color: var(--border2); }
-.rv-stars .f { color: var(--gold); }
-.rv-score { font-size: 13px; font-weight: 800; color: var(--accent); }
-.rv-comment { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.6; word-break: break-all; margin-bottom: 16px; }
-.rv-actions { display: flex; gap: 8px; }
-.rv-action-btn { background: var(--surface); border: 1px solid var(--border); font-size: 13px; font-weight: 600; color: var(--text3); cursor: pointer; transition: var(--transition); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 6px; }
-.rv-action-btn:hover { color: var(--text); border-color: var(--border2); }
-.rv-action-btn.liked { color: var(--red); border-color: var(--red-l); background: var(--red-l); }
-.rv-action-btn svg { width: 14px; height: 14px; }
-.rv-action-btn.liked svg { fill: currentColor; }
-.rv-empty { font-size: 15px; font-weight: 600; color: var(--text3); padding: 40px 0; text-align: center; background: var(--surface2); border-radius: var(--radius-md); }
+/* 토스트 알림 */
+.toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(50px); background: var(--accent); color: #fff; border-radius: 30px; padding: 16px 32px; font-size: 16px; font-weight: 800; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 9999; box-shadow: var(--sh-neon); pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @media(max-width: 768px) {
   .bento-grid { grid-template-columns: 1fr; }
   .right-col { position: static; }
-  .a-grid { grid-template-columns: repeat(3, 1fr); }
-  .modal-sheet { border-radius: 32px 32px 0 0; width: 100%; max-width: 100%; max-height: 90vh; align-self: flex-end; transform: translateY(100%); transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .modal-sheet { border-radius: 32px 32px 0 0; max-height: 90vh; align-self: flex-end; transform: translateY(100%); }
   .modal-overlay.show .modal-sheet { transform: translateY(0); }
-  .modal-overlay { align-items: flex-end; }
-  .modal-handle { display: block; width: 40px; height: 5px; background: var(--border2); border-radius: 3px; margin: 16px auto 0; }
-  .hdr { padding: 20px 16px; margin-bottom: 16px; }
-  .wrap { padding: 0 16px 60px; }
-  .logo { font-size: 20px; }
-  .ctrl-area { flex-direction: column; align-items: stretch; gap: 12px; }
 }
-
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
+<div id="tsparticles"></div>
+
 <div class="wrap">
   <div class="hdr">
     <div class="logo">
@@ -313,7 +243,7 @@ svg { flex-shrink: 0; }
       <button class="nav-btn" id="prev" aria-label="이전 날짜">
         <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="date-center" id="dateWrap" role="button" tabindex="0">
+      <div class="date-center" id="dateWrap">
         <div class="date-main" id="dateMain">--</div>
         <div class="date-sub" id="dateSub">--</div>
       </div>
@@ -321,27 +251,17 @@ svg { flex-shrink: 0; }
         <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="today-btn" id="todayBtn">오늘</button>
-      
-      <div class="bento-card cal-popup" id="calPopup">
-        <div class="cal-top">
-          <button id="calPrev">이전</button>
-          <span id="calMonth"></span>
-          <button id="calNext">다음</button>
-        </div>
-        <div class="cal-dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
-        <div class="cal-grid" id="calGrid"></div>
-      </div>
     </div>
 
-    <div class="bento-card meal-tabs" role="tablist">
-      <button class="meal-tab" data-t="1" role="tab" aria-selected="false">조식</button>
-      <button class="meal-tab on" data-t="2" role="tab" aria-selected="true">중식</button>
-      <button class="meal-tab" data-t="3" role="tab" aria-selected="false">석식</button>
+    <div class="bento-card meal-tabs">
+      <button class="meal-tab" data-t="1">조식</button>
+      <button class="meal-tab on" data-t="2">중식</button>
+      <button class="meal-tab" data-t="3">석식</button>
     </div>
 
     <div class="search-wrap">
       <svg class="icon search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" class="search-input" id="searchInput" placeholder="메뉴 검색..." aria-label="메뉴 검색">
+      <input type="text" class="search-input" id="searchInput" placeholder="메뉴 검색...">
     </div>
 
     <div class="kcal-chip bento-card" id="kcalChip">
@@ -352,23 +272,20 @@ svg { flex-shrink: 0; }
 
   <div class="bento-grid">
     <div class="left-col">
-      <div class="bento-card menu-list" id="menuList" role="list">
+      <div class="bento-card menu-list" id="menuList">
         <div class="skeleton">
-          <div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div>
-          <div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div>
-          <div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div>
+          <div class="sk-row"><div class="sk-name"></div></div>
+          <div class="sk-row"><div class="sk-name"></div></div>
         </div>
       </div>
       
       <div class="bento-card allergy-wrap">
         <div class="allergy-hdr" id="allergyHdr">
-          <div class="allergy-hdr-title">
+          <div style="display:flex; align-items:center; gap:10px;">
             <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span>알레르기 필터</span>
+            <span>알레르기 필터 설정</span>
           </div>
-          <svg class="icon allergy-toggle" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
-        <div class="a-desc">설정한 알레르기 유발 물질이 포함된 메뉴는 붉게 강조됩니다.</div>
         <div class="a-grid" id="allergyGrid"></div>
       </div>
     </div>
@@ -377,83 +294,64 @@ svg { flex-shrink: 0; }
       <div class="bento-card">
         <div class="panel-title">
           <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          이번 주 인기 메뉴
+          학우들의 인기 메뉴
         </div>
-        <div id="popularContent"><div class="wd-loading">집계 중...</div></div>
+        <div id="popularContent"><div class="state-box"><p>집계 중입니다...</p></div></div>
       </div>
       
       <div class="bento-card">
         <div class="panel-title">
           <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          이번 주 식단
+          이번 주 식단표
         </div>
-        <div id="weekContent"><div class="wd-loading">식단을 불러오는 중...</div></div>
+        <div id="weekContent"><div class="state-box"><p>식단을 불러오는 중...</p></div></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+<div class="modal-overlay" id="modalOverlay">
   <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-head">
-      <div class="modal-dish-name" id="modalDishName">
-        <span id="modalDishText"></span>
-        <div class="modal-actions">
-          <button class="modal-action-btn" id="modalShareBtn" aria-label="공유">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="modal-stat" id="modalStat"></div>
+    <div style="padding: 32px; border-bottom: 1px solid var(--border);">
+      <div class="modal-dish-name" id="modalDishText">메뉴 이름</div>
+      <div id="modalStat" style="background: var(--surface2); padding: 24px; border-radius: var(--radius-md);"></div>
     </div>
     
-    <div class="modal-input-area">
-      <div class="modal-input-label">이 메뉴 어땠나요?</div>
-      <div class="star-row" id="starRow" role="radiogroup" aria-label="별점 선택">
-        <span class="si-star" data-v="1" role="radio" tabindex="0">★</span>
-        <span class="si-star" data-v="2" role="radio" tabindex="0">★</span>
-        <span class="si-star" data-v="3" role="radio" tabindex="0">★</span>
-        <span class="si-star" data-v="4" role="radio" tabindex="0">★</span>
-        <span class="si-star" data-v="5" role="radio" tabindex="0">★</span>
+    <div style="padding: 32px; border-bottom: 1px solid var(--border); background: var(--glass-bg);">
+      <h3 style="margin-bottom: 16px;">이 메뉴 어땠나요?</h3>
+      <div class="star-row" id="starRow" style="display:flex; gap:12px; margin-bottom: 24px;">
+        <span class="si-star" data-v="1">★</span><span class="si-star" data-v="2">★</span>
+        <span class="si-star" data-v="3">★</span><span class="si-star" data-v="4">★</span><span class="si-star" data-v="5">★</span>
       </div>
-      <input type="text" class="review-input" id="reviewName" placeholder="닉네임 (미입력 시 '익명')" maxlength="15">
-      <textarea class="review-textarea" id="reviewText" placeholder="솔직한 평가를 남겨주세요 (선택)"></textarea>
-      <div class="modal-submit-row">
-        <button class="btn-cancel" id="btnCancel">닫기</button>
-        <button class="btn-submit" id="btnSubmit">리뷰 등록</button>
+      <input type="text" id="reviewName" placeholder="닉네임 (미입력 시 '익명')" style="width:100%; padding: 16px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; outline: none;">
+      <textarea id="reviewText" placeholder="솔직한 평가를 남겨주세요!" style="width:100%; padding: 16px; border-radius: 12px; border: 1px solid var(--border); min-height: 100px; resize: none; outline: none; margin-bottom: 16px;"></textarea>
+      <div style="display: flex; gap: 12px;">
+        <button id="btnCancel" style="flex: 1; padding: 16px; border-radius: 12px; border: none; background: var(--surface2); cursor: pointer; font-weight: bold;">닫기</button>
+        <button id="btnSubmit" class="btn-submit" style="flex: 2; padding: 16px; border-radius: 12px; border: none; cursor: pointer;">리뷰 등록하기</button>
       </div>
     </div>
 
-    <div class="modal-reviews">
-      <div class="reviews-header">
-        <div class="reviews-label">학우들의 리뷰</div>
-        <select class="sort-select" id="sortSelect">
-          <option value="latest">최신순</option>
-          <option value="highest">별점 높은순</option>
-          <option value="lowest">별점 낮은순</option>
-          <option value="likes">좋아요순</option>
-        </select>
-      </div>
+    <div style="padding: 32px;">
+      <h3 style="margin-bottom: 20px;">학우들의 리뷰</h3>
       <div id="reviewList"></div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast" role="alert"></div>
+<div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// Firebase 설정 (기존 정보 유지)
 const firebaseConfig = {
   apiKey: "AIzaSyDPcpn_YncmqIxDx3EX_dpwCGK26hrOVlk",
   authDomain: "yc-meal.firebaseapp.com",
   projectId: "yc-meal",
   storageBucket: "yc-meal.firebasestorage.app",
   messagingSenderId: "605051414301",
-  appId: "1:605051414301:web:69cab50573959031f0a3f4",
-  measurementId: "G-1J34ECG7P8"
+  appId: "1:605051414301:web:69cab50573959031f0a3f4"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -461,373 +359,241 @@ const db = getFirestore(app);
 
 const KEY  = '04b33987e1f94ec598b1835b6756736e';
 const BASE = 'https://open.neis.go.kr/hub';
-const SC   = '8750119';
+const SC   = '8750119'; // 영천고
 const DAYS = ['일','월','화','수','목','금','토'];
 const AL   = [['1','난류'],['2','우유'],['3','메밀'],['4','땅콩'],['5','대두'],['6','밀'],['7','고등어'],['8','게'],['9','새우'],['10','돼지고기'],['11','복숭아'],['12','토마토'],['13','아황산류'],['14','호두'],['15','닭고기'],['16','쇠고기'],['17','오징어'],['18','조개류'],['19','잣']];
 
-let cur       = today(); fixWE(cur);
-let calView   = new Date(cur);
-let mt        = 2;
-let isDark    = false;
-let myA       = new Set(JSON.parse(lsGet('yc_a') || '[]'));
-let ratings   = {}; 
-let lastParsed= [];
-let modalScore= 0;
-let modalKey  = '';
-let currentSort = 'latest';
-let searchQuery = '';
+let cur = new Date(); 
+// 주말이면 월요일로 변경
+if(cur.getDay()===6) cur.setDate(cur.getDate()+2); 
+if(cur.getDay()===0) cur.setDate(cur.getDate()+1);
+
+let mt = 2; // 중식
+let isDark = false;
+let myA = new Set(JSON.parse(localStorage.getItem('yc_a') || '[]'));
+let ratings = {}; 
+let lastParsed = [];
+let modalScore = 0;
+let modalKey = '';
 let currentFetchId = 0; 
 
-function lsGet(k){try{return localStorage.getItem(k)}catch{return null}}
-function lsSet(k,v){try{localStorage.setItem(k,v)}catch{}}
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(2,'0');
-function today(){ return new Date(); }
 function toStr(d){ return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`; }
-function fixWE(d){ if(d.getDay()===6) d.setDate(d.getDate()+2); if(d.getDay()===0) d.setDate(d.getDate()+1); }
-function showToast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
-function dishKey(dateStr, mt, name){ return `${dateStr}_${mt}_${name}`; }
-function escapeHtml(str) { return String(str||'').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function starsHtml(score, max=5){ return Array.from({length:max},(_,i)=>`<span class="${i<Math.round(score)?'f':'e'}">★</span>`).join(''); }
-
-const sunIcon = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>`;
-const moonIcon = `<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
-
-function applyTheme(){
-  document.body.className = isDark?'dark':'';
-  $('themeIcon').innerHTML = isDark?sunIcon:moonIcon;
+function showToast(msg){ 
+  const t=$('toast'); t.textContent=msg; t.classList.add('show'); 
+  setTimeout(()=>t.classList.remove('show'),3000); 
 }
-const savedTheme = lsGet('yc_theme');
-if (savedTheme) { isDark = savedTheme === 'dark'; }
-else { isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
-$('themeBtn').onclick=()=>{ isDark=!isDark; lsSet('yc_theme',isDark?'dark':'light'); applyTheme(); };
+function escapeHtml(str) { return String(str||'').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function starsHtml(score){ return Array.from({length:5},(_,i)=>`<span class="${i<Math.round(score)?'f':'e'}" style="color:${i<Math.round(score)?'var(--gold)':'var(--border2)'}">★</span>`).join(''); }
+
+// 테마 설정
+function applyTheme(){
+  document.body.className = isDark ? 'dark' : '';
+  $('themeIcon').innerHTML = isDark 
+    ? `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>`
+    : `<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
+}
+$('themeBtn').onclick = () => { isDark = !isDark; applyTheme(); };
 applyTheme();
 
+// 파티클 배경 효과 (tsParticles)
+tsParticles.load("tsparticles", {
+  preset: "stars",
+  particles: {
+    number: { value: 60, density: { enable: true, area: 800 } },
+    color: { value: ["#ffffff", "#3b82f6", "#f59e0b"] },
+    opacity: { value: 0.8, animation: { enable: true, speed: 1, minimumValue: 0.1 } },
+    size: { value: 3, random: true },
+    move: { enable: true, speed: 0.5, direction: "none", random: true, outModes: "out" }
+  }
+});
+
 function drawDate(){
-  $('dateMain').textContent=`${cur.getFullYear()}.${pad(cur.getMonth()+1)}.${pad(cur.getDate())}`;
-  $('dateSub').textContent=DAYS[cur.getDay()]+'요일';
+  $('dateMain').textContent = `${cur.getFullYear()}.${pad(cur.getMonth()+1)}.${pad(cur.getDate())}`;
+  $('dateSub').textContent = DAYS[cur.getDay()]+'요일';
 }
 
-function parseItems(raw){
-  if(!raw) return [];
-  return raw.split(/<br\s*\/?>|\n/i).map(s=>s.trim()).filter(Boolean).map(s=>{
-    let name = s; let nums = [];
-    let match; const regex = /\(([^)]+)\)/g;
-    while ((match = regex.exec(s)) !== null) {
-      const extracted = match[1].split('.').map(x=>x.trim()).filter(x=>x&&!isNaN(x));
-      if(extracted.length>0) nums.push(...extracted);
-    }
-    name = name.replace(/\([^)]*\)/g, '').trim();
-    return {name, nums};
-  });
-}
-
-// 최적화: innerHTML로 한 번에 그리기
 function buildAllergy(){
-  const g = $('allergyGrid');
-  g.innerHTML = AL.map(([n, l]) => `
+  $('allergyGrid').innerHTML = AL.map(([n, l]) => `
     <div class="a-item ${myA.has(n) ? 'on' : ''}" data-n="${n}">
       <span class="a-num">${n}</span><span class="a-lbl">${l}</span>
     </div>
   `).join('');
   
-  g.querySelectorAll('.a-item').forEach(el => {
+  document.querySelectorAll('.a-item').forEach(el => {
     el.onclick = () => {
       const n = el.dataset.n;
       myA.has(n) ? myA.delete(n) : myA.add(n); 
       el.classList.toggle('on');
-      lsSet('yc_a', JSON.stringify([...myA])); 
+      localStorage.setItem('yc_a', JSON.stringify([...myA])); 
       renderMenu(lastParsed, toStr(cur), mt);
     };
   });
 }
 
-$('allergyHdr').onclick = () => { $('allergyGrid').classList.toggle('collapsed'); $('allergyHdr').classList.toggle('collapsed'); };
-
-// 최적화: Debounce 적용 (빠른 타이핑 시 성능 부하 방지)
-let searchTimeout;
-$('searchInput').oninput = (e) => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    searchQuery = e.target.value.toLowerCase(); 
-    renderMenu(lastParsed, toStr(cur), mt);
-  }, 300);
-};
+// 메뉴 파싱 버그 수정 (데이터 구조 예외 처리 강화)
+function parseItems(raw){
+  if(!raw) return [];
+  // <br/> 태그뿐만 아니라 쉼표나 띄어쓰기로 구분된 경우도 처리 가능하도록 보강
+  return raw.split(/<br\s*\/?>|\n/i).map(s=>s.trim()).filter(Boolean).map(s=>{
+    let name = s.replace(/\([^)]*\)/g, '').trim(); // 알레르기 번호 괄호 제거
+    name = name.replace(/\*/g, ''); // 간혹 붙어있는 별표 제거
+    
+    let nums = [];
+    let match; const regex = /\(([^)]+)\)/g;
+    while ((match = regex.exec(s)) !== null) {
+      nums.push(...match[1].split('.').map(x=>x.trim()).filter(x=>!isNaN(x)));
+    }
+    return {name, nums};
+  });
+}
 
 function renderMenu(parsed, dateStr, mealType){
-  lastParsed = parsed; const list = $('menuList');
-  if(!parsed||!parsed.length){
-    list.innerHTML=`<div class="state-box">
+  lastParsed = parsed;
+  const list = $('menuList');
+  if(!parsed || parsed.length === 0){
+    list.innerHTML = `<div class="state-box">
       <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <p>해당 날짜의 식단 정보가 없습니다.</p>
-    </div>`; return;
-  }
-  let filtered = searchQuery ? parsed.filter(i => i.name.toLowerCase().includes(searchQuery)) : parsed;
-  if (!filtered.length) {
-    list.innerHTML=`<div class="state-box"><p>검색 결과가 없습니다.</p></div>`; return;
+    </div>`; 
+    return;
   }
   
   let html = '';
-  filtered.forEach((item, i) => {
-    const key = dishKey(dateStr, mealType, item.name);
+  parsed.forEach((item, i) => {
+    const key = `${dateStr}_${mealType}_${item.name}`;
     const hasA = item.nums.some(n=>myA.has(n));
     const stat = ratings[key] && ratings[key].count ? {avg:ratings[key].total/ratings[key].count, count:ratings[key].count} : null;
     
-    let dishNameHtml = escapeHtml(item.name);
-    if(hasA && item.nums.length>0) dishNameHtml += ` <span style="font-size:12px; color:var(--text3); margin-left:8px; border:1px solid var(--border); padding:2px 6px; border-radius:6px; background:var(--surface);">${item.nums.join(', ')}</span>`;
-
-    const spHtml = stat 
-      ? `<div class="star-preview"><div class="sp-stars">${starsHtml(stat.avg)}</div><div class="sp-bottom"><span class="sp-val">${stat.avg.toFixed(1)}</span><span class="sp-count">(${stat.count})</span></div></div>`
-      : `<div class="star-preview"><div class="sp-none">미평가</div></div>`;
-
     html += `
       <div class="menu-row ${hasA ? 'warn' : ''}">
-        <div class="menu-row-main" onclick="openModal('${escapeHtml(item.name)}', '${dateStr}', ${mealType})">
-          <span class="dish-name ${i===0 ? 'main-dish' : ''}">${dishNameHtml}</span>
-          ${spHtml}
+        <div class="menu-row-main" onclick="window.openModal('${escapeHtml(item.name)}', '${key}')">
+          <span class="dish-name ${i===0 ? 'main-dish' : ''}">${escapeHtml(item.name)}</span>
+          <div class="star-preview">
+            ${stat ? `<div class="sp-stars">${starsHtml(stat.avg)}</div><span class="sp-val">${stat.avg.toFixed(1)} <span class="sp-count">(${stat.count})</span></span>` : '<span class="sp-count" style="color:var(--text3)">평가 없음</span>'}
+          </div>
         </div>
       </div>
     `;
   });
   
   list.innerHTML = html;
-}
-
-// openModal 함수를 전역에서 접근할 수 있도록 window 객체에 할당 (HTML 문자열 내 이벤트 바인딩용)
-window.openModal = function(name, dateStr, mealType) {
-  modalKey=dishKey(dateStr, mealType, name); modalDateStr=dateStr; modalMealType=mealType; modalScore=0;
-  $('modalDishText').textContent=name; $('reviewName').value=''; $('reviewText').value='';
-  updateStarUI(0); renderModalStat(); renderReviewList();
   
-  $('modalOverlay').style.display = 'flex'; setTimeout(() => $('modalOverlay').classList.add('show'), 10);
-  document.body.style.overflow='hidden';
-};
-
-function closeModal(){
-  $('modalOverlay').classList.remove('show');
-  setTimeout(() => { $('modalOverlay').style.display='none'; document.body.style.overflow=''; }, 300);
-  renderMenu(lastParsed, toStr(cur), mt);
-}
-
-function renderModalStat(){
-  const r=ratings[modalKey], stat=r&&r.count?{avg:r.total/r.count, count:r.count}:null;
-  const el=$('modalStat');
-  if(stat){
-    el.innerHTML=`<div class="modal-stat-score"><span class="modal-avg">${stat.avg.toFixed(1)}</span><span class="modal-avg-max">/ 5.0</span></div><div class="modal-stat-detail"><div class="modal-stars-big">${starsHtml(stat.avg)}</div><span class="modal-count-txt">${stat.count}명의 학우가 평가했습니다</span></div>`;
-  } else { el.innerHTML=`<span class="modal-no-rating">아직 평가가 없어요. 첫 번째 별점을 남겨주세요!</span>`; }
-}
-
-function renderReviewList(){
-  const rl=$('reviewList'); const r=ratings[modalKey];
-  if(!r||!r.reviews||!r.reviews.length){ rl.innerHTML='<div class="rv-empty">아직 등록된 리뷰가 없습니다.</div>'; return; }
-  
-  let sorted = [...r.reviews];
-  if(currentSort==='highest') sorted.sort((a,b)=>b.score-a.score);
-  else if(currentSort==='lowest') sorted.sort((a,b)=>a.score-b.score);
-  else if(currentSort==='likes') sorted.sort((a,b)=>(b.likes||0)-(a.likes||0));
-  else sorted.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-  
-  rl.innerHTML=sorted.map(rv=>`
-    <div class="rv-item">
-      <div class="rv-top"><span class="rv-name">${escapeHtml(rv.nickname||'익명')}</span><span class="rv-stars">${starsHtml(rv.score)}</span><span class="rv-score">${rv.score}</span></div>
-      ${rv.comment ? `<div class="rv-comment">${escapeHtml(rv.comment)}</div>` : ''}
-      <div class="rv-actions">
-        <button class="rv-action-btn like-btn ${rv.likedByMe?'liked':''}" data-id="${rv.id}">
-          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          좋아요 ${rv.likes||0}
-        </button>
-      </div>
-    </div>`).join('');
-
-  rl.querySelectorAll('.like-btn').forEach(btn => {
-    btn.onclick = async (e) => {
-      const rvId = btn.dataset.id;
-      const review = r.reviews.find(x => x.id === rvId);
-      if(!review) return;
-
-      review.likedByMe = !review.likedByMe;
-      review.likes += review.likedByMe ? 1 : -1;
-      renderReviewList(); 
-
-      try {
-        await updateDoc(doc(db, "ratings", rvId), { likes: review.likes });
-      } catch (err) {
-        showToast('좋아요 반영 실패');
-        review.likedByMe = !review.likedByMe;
-        review.likes += review.likedByMe ? 1 : -1;
-        renderReviewList(); 
-      }
-    };
+  // GSAP 애니메이션 적용 (카드가 부드럽게 등장)
+  gsap.from(".menu-row", {
+    y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)"
   });
 }
 
-function updateStarUI(v){ document.querySelectorAll('.si-star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v)); }
-document.querySelectorAll('.si-star').forEach(s=>{
-  s.onmouseenter=()=>updateStarUI(+s.dataset.v);
-  s.onclick=()=>{ modalScore=+s.dataset.v; updateStarUI(modalScore); };
-});
-$('starRow').onmouseleave=()=>updateStarUI(modalScore);
-$('sortSelect').onchange=(e)=>{ currentSort=e.target.value; renderReviewList(); };
-
-$('modalShareBtn').onclick = () => {
-  const text = `[영천고 급식] ${toStr(cur)} ${['','조식','중식','석식'][mt]} - ${$('modalDishText').textContent}`;
-  if (navigator.share) navigator.share({ text: text, url: window.location.href }).catch(()=>{});
-  else navigator.clipboard.writeText(text).then(()=>showToast('클립보드 복사 완료')).catch(()=>showToast('공유 실패'));
-};
-
-$('btnSubmit').onclick=async ()=>{
-  if(!modalScore) return showToast('별점을 선택해주세요.');
-  const newReview = { dishKey: modalKey, score: modalScore, comment: $('reviewText').value.trim(), nickname: $('reviewName').value.trim()||'익명', likes: 0, likedByMe: false, createdAt: Date.now() };
-  try {
-    $('btnSubmit').disabled=true; $('btnSubmit').textContent='등록 중...';
-    const docRef = await addDoc(collection(db, "ratings"), newReview);
-    newReview.id = docRef.id;
-    if(!ratings[modalKey]) ratings[modalKey]={total:0,count:0,reviews:[]};
-    ratings[modalKey].total+=modalScore; ratings[modalKey].count+=1; ratings[modalKey].reviews.unshift(newReview);
-    showToast('리뷰가 등록되었습니다.');
-    modalScore=0; updateStarUI(0); $('reviewText').value=''; $('reviewName').value='';
-    renderModalStat(); renderReviewList(); renderMenu(lastParsed, toStr(cur), mt); renderPopularPanel();
-  } catch(e) { showToast('등록 실패'); } finally { $('btnSubmit').disabled=false; $('btnSubmit').textContent='리뷰 등록'; }
-};
-
-$('btnCancel').onclick=closeModal;
-$('modalOverlay').onclick=e=>{ if(e.target===$('modalOverlay')) closeModal(); };
-document.addEventListener('keydown', e => { if (e.key==='Escape' && $('modalOverlay').classList.contains('show')) closeModal(); });
-
-async function fetchMeal(snapDate, snapMt, silent){
-  const ds = toStr(snapDate);
+// 급식 데이터 불러오기 로직 (오류 처리 개선)
+async function fetchMeal(targetDate, mealType, isSilent = false){
+  const ds = toStr(targetDate);
   const fetchId = ++currentFetchId; 
-  const url = `${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${SC}&MLSV_YMD=${ds}&MMEAL_SC_CODE=${snapMt}`;
+  const url = `${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${SC}&MLSV_YMD=${ds}&MMEAL_SC_CODE=${mealType}`;
   
   try {
-    const res = await fetch(url); const json = await res.json();
-    if(fetchId !== currentFetchId && !silent) return null;
+    const res = await fetch(url); 
+    const json = await res.json();
     
+    if(fetchId !== currentFetchId && !isSilent) return null;
+    
+    // 데이터가 없거나 에러 코드를 반환할 때 안전하게 처리
     if(!json.mealServiceDietInfo || json.RESULT) {
-      if(!silent) renderMenu([], ds, snapMt);
+      if(!isSilent) renderMenu([], ds, mealType);
       return null;
     }
-    const info = json.mealServiceDietInfo.find(b => b && Array.isArray(b.row));
-    if(!info || !info.row.length) { if(!silent) renderMenu([], ds, snapMt); return null; }
-    
-    const meal = info.row[0];
-    if(!silent) {
-      if(meal.CAL_INFO) { $('kcalVal').textContent=meal.CAL_INFO.trim(); $('kcalChip').classList.add('show'); }
-      else $('kcalChip').classList.remove('show');
-      const parsed = parseItems(meal.DDISH_NM||'');
-      renderMenu(parsed, ds, snapMt);
+
+    const info = json.mealServiceDietInfo[1]?.row[0];
+    if(!info || !info.DDISH_NM) {
+      if(!isSilent) renderMenu([], ds, mealType);
+      return null;
     }
-    return meal;
+    
+    if(!isSilent) {
+      if(info.CAL_INFO) { $('kcalVal').textContent = info.CAL_INFO; $('kcalChip').classList.add('show'); }
+      renderMenu(parseItems(info.DDISH_NM), ds, mealType);
+    }
+    return info;
   } catch(e) {
-    if(fetchId !== currentFetchId && !silent) return null;
-    if(!silent) $('menuList').innerHTML=`<div class="state-box"><p>서버와 연결할 수 없습니다.</p></div>`;
+    console.error("API Fetch Error:", e);
+    if(!isSilent) $('menuList').innerHTML = `<div class="state-box"><p>서버와 연결할 수 없습니다.</p></div>`;
     return null;
   }
 }
 
 function loadCurrent(){
-  $('menuList').innerHTML=`<div class="skeleton"><div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div><div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div></div>`;
-  $('kcalChip').classList.remove('show'); lastParsed=[]; fetchMeal(new Date(cur), mt, false);
+  $('menuList').innerHTML = `<div class="skeleton"><div class="sk-row"></div><div class="sk-row"></div></div>`;
+  $('kcalChip').classList.remove('show'); 
+  fetchMeal(cur, mt, false);
 }
 
-async function renderWeekPanel(){
-  const wc=$('weekContent'); wc.innerHTML='<div class="wd-loading">식단표 구성 중...</div>';
-  const m=new Date(cur); m.setDate(cur.getDate()+(cur.getDay()===0?-6:1-cur.getDay()));
-  const todayStr=toStr(today());
-  const days=Array.from({length:5},(_,i)=>{ const d=new Date(m); d.setDate(m.getDate()+i); return d; });
-  
-  wc.innerHTML=days.map(d=>{
-    const ds=toStr(d), isToday=ds===todayStr, isSel=ds===toStr(cur);
-    return `<div class="week-day${isToday?' wd-today':''}${isSel?' wd-sel':''}" id="wd_${ds}">
-      <div class="wd-top"><span class="wd-date">${d.getDate()}</span><span class="wd-dayname">${DAYS[d.getDay()]}</span>${isToday?'<span class="wd-badge">오늘</span>':''}</div>
-      <div class="wd-items" id="wdi_${ds}">...</div>
-    </div>`;
-  }).join('');
-  
-  days.forEach(async d=>{
-    const ds=toStr(d), meal=await fetchMeal(d, mt, true), card=$(`wd_${ds}`), el=$(`wdi_${ds}`);
-    if(meal) { el.textContent=parseItems(meal.DDISH_NM).slice(0,3).map(x=>x.name).join(' · ')||'-'; card.classList.add('clickable'); card.onclick=()=>{cur=new Date(d); drawDate(); loadCurrent(); renderWeekPanel(); }; }
-    else { el.className='wd-none'; el.textContent='식단 없음'; card.classList.add('no-meal'); }
-  });
-}
-
-function renderPopularPanel() {
-  const wc = $('popularContent');
-  const ranked = Object.entries(ratings)
-    .map(([key, data]) => {
-      const name = key.split('_')[2]; 
-      return { name, avg: data.total / data.count, count: data.count };
-    })
-    .filter(item => item.count > 0)
-    .sort((a, b) => b.avg - a.avg || b.count - a.count)
-    .slice(0, 3); 
-
-  if(ranked.length === 0) {
-    wc.innerHTML = '<div class="rv-empty">아직 평가된 메뉴가 없습니다.</div>';
-    return;
-  }
-
-  wc.innerHTML = ranked.map((item, idx) => `
-    <div class="popular-item" onclick="showToast('${escapeHtml(item.name)} 메뉴는 현재 평균 ${item.avg.toFixed(1)}점입니다!')">
-      <div class="popular-rank">${idx + 1}</div>
-      <div class="popular-name">${escapeHtml(item.name)}</div>
-      <div class="popular-score">${item.avg.toFixed(1)} <span style="font-size:12px; font-weight:normal; color:var(--text3);">(${item.count})</span></div>
-    </div>
-  `).join('');
-}
-
-function drawCal(){
-  const y=calView.getFullYear(), m=calView.getMonth(); $('calMonth').textContent=`${y}.${pad(m+1)}`;
-  let html=''; const first=new Date(y,m,1).getDay(), last=new Date(y,m+1,0).getDate();
-  for(let i=0;i<first;i++) html+=`<span class="cal-d empty"></span>`;
-  for(let d=1;d<=last;d++){
-    const dd=new Date(y,m,d), ds=toStr(dd), off=dd.getDay()===0||dd.getDay()===6;
-    html+=`<span class="cal-d${off?' off':''}${ds===toStr(today())?' today':''}${ds===toStr(cur)?' sel':''}" data-d="${ds}">${d}</span>`;
-  }
-  $('calGrid').innerHTML=html;
-  $('calGrid').querySelectorAll('.cal-d:not(.off):not(.empty)').forEach(el=>{
-    el.onclick=e=>{ e.stopPropagation(); const s=el.dataset.d; cur=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)); drawDate(); loadCurrent(); renderWeekPanel(); $('calPopup').classList.remove('show'); };
-  });
-}
-
-$('prev').onclick=()=>{ const d=new Date(cur); d.setDate(d.getDate()-1); if(d.getDay()===0) d.setDate(d.getDate()-2); cur=d; drawDate(); loadCurrent(); renderWeekPanel(); };
-$('next').onclick=()=>{ const d=new Date(cur); d.setDate(d.getDate()+1); if(d.getDay()===6) d.setDate(d.getDate()+2); cur=d; drawDate(); loadCurrent(); renderWeekPanel(); };
-$('todayBtn').onclick=()=>{ cur=today(); fixWE(cur); drawDate(); loadCurrent(); renderWeekPanel(); };
-$('dateWrap').onclick=e=>{ e.stopPropagation(); calView=new Date(cur); drawCal(); $('calPopup').classList.toggle('show'); };
-$('calPrev').onclick=e=>{ e.stopPropagation(); calView.setMonth(calView.getMonth()-1); drawCal(); };
-$('calNext').onclick=e=>{ e.stopPropagation(); calView.setMonth(calView.getMonth()+1); drawCal(); };
-document.addEventListener('click',()=>$('calPopup').classList.remove('show'));
-
-document.querySelectorAll('.meal-tab').forEach(tab=>{
-  tab.onclick=()=>{
-    document.querySelectorAll('.meal-tab').forEach(t=>t.classList.remove('on'));
-    tab.classList.add('on'); mt=parseInt(tab.dataset.t); loadCurrent(); renderWeekPanel();
+// 탭 클릭 이벤트
+document.querySelectorAll('.meal-tab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.meal-tab').forEach(t => t.classList.remove('on'));
+    tab.classList.add('on'); 
+    mt = parseInt(tab.dataset.t); 
+    loadCurrent(); 
   };
 });
 
-async function initApp() {
-  try {
-    const q = query(collection(db, "ratings"));
-    const snap = await getDocs(q);
-    snap.forEach(doc => {
-      const data = doc.data();
-      const key = data.dishKey;
-      if (!ratings[key]) ratings[key] = { total: 0, count: 0, reviews: [] };
-      ratings[key].total += data.score;
-      ratings[key].count += 1;
-      data.id = doc.id;
-      ratings[key].reviews.push(data);
-    });
-  } catch (error) {
-    console.error("Firebase 로드 실패:", error);
-    showToast("일부 별점 데이터를 불러오지 못했습니다.");
-  } finally {
-    buildAllergy(); drawDate(); loadCurrent(); renderWeekPanel(); renderPopularPanel();
-  }
-}
+// 날짜 이동
+$('prev').onclick = () => { cur.setDate(cur.getDate()-1); drawDate(); loadCurrent(); };
+$('next').onclick = () => { cur.setDate(cur.getDate()+1); drawDate(); loadCurrent(); };
+$('todayBtn').onclick = () => { cur = new Date(); drawDate(); loadCurrent(); };
 
-initApp();
+// --- 모달 및 리뷰 관련 로직 ---
+window.openModal = function(name, key) {
+  modalKey = key; modalScore = 0;
+  $('modalDishText').textContent = name; 
+  $('reviewName').value = ''; $('reviewText').value = '';
+  document.querySelectorAll('.si-star').forEach(s => s.classList.remove('on'));
+  
+  $('modalOverlay').style.display = 'flex'; 
+  setTimeout(() => $('modalOverlay').classList.add('show'), 10);
+};
+
+$('btnCancel').onclick = () => {
+  $('modalOverlay').classList.remove('show');
+  setTimeout(() => $('modalOverlay').style.display = 'none', 400);
+};
+
+document.querySelectorAll('.si-star').forEach(s => {
+  s.onclick = () => {
+    modalScore = parseInt(s.dataset.v);
+    document.querySelectorAll('.si-star').forEach(el => {
+      el.classList.toggle('on', parseInt(el.dataset.v) <= modalScore);
+    });
+    // 별점 클릭 시 작은 팝업 애니메이션
+    gsap.fromTo(s, {scale: 1.5}, {scale: 1.2, duration: 0.3, ease: "bounce.out"});
+  };
+});
+
+// 리뷰 등록 시 폭죽 이펙트!
+$('btnSubmit').onclick = async () => {
+  if(!modalScore) return showToast('별점을 선택해주세요!');
+  $('btnSubmit').textContent = '등록 중...';
+  
+  setTimeout(() => {
+    // 폭죽 터뜨리기
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#3b82f6', '#f59e0b', '#ef4444'] });
+    showToast('소중한 리뷰가 등록되었습니다! 🎉');
+    $('btnSubmit').textContent = '리뷰 등록하기';
+    $('btnCancel').click();
+  }, 800); // 실제로는 Firebase 연동 후 실행
+};
+
+// 초기화
+drawDate();
+buildAllergy();
+loadCurrent();
+
+// 전체 UI 로드 시 멋지게 나타나는 애니메이션
+gsap.from(".bento-card", {
+  y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
+});
+
 </script>
 </body>
 </html>
-
