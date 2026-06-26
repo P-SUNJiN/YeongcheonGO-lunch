@@ -4,361 +4,273 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>영천고 급식</title>
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-stars@2/tsparticles.preset.stars.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-stars@2/tsparticles.preset.stars.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-stars@2/tsparticles.preset.stars.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* 라이트 테마: 화사한 오로라 그라데이션 */
-  --bg-gradient: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #c2e9fb, #e0c3fc);
-  --surface: rgba(255, 255, 255, 0.7);
-  --surface2: rgba(240, 243, 248, 0.8);
-  --border: rgba(255, 255, 255, 0.5);
-  --border2: #cdd3e4;
-  --text: #1a1d24; 
-  --text2: #5a6474; 
-  --text3: #8a94a6;
-  --accent: #3b82f6; 
-  --accent-l: rgba(59, 130, 246, 0.2); 
-  --red: #ef4444; 
-  --red-l: rgba(239, 68, 68, 0.2);
-  --gold: #f59e0b; 
-  --sh-neon: 0 0 20px rgba(59, 130, 246, 0.4);
-  --sh-lg: 0 16px 48px rgba(0,0,0,0.1);
-  --radius-lg: 28px; 
-  --radius-md: 18px; 
-  --radius-sm: 12px;
-  --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.8);
-  --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --bg:#f4f6fb; --surface:#fff; --surface2:#f0f2f7;
+  --border:#e2e6f0; --border2:#cdd3e4;
+  --text:#18202e; --text2:#52617a; --text3:#9aa3bc;
+  --accent:#2563eb; --accent-l:#dbeafe; --accent-d:#1d4ed8;
+  --red:#ef4444; --red-l:#fee2e2;
+  --gold:#f59e0b; --gold-l:#fef3c7;
+  --sh:0 2px 12px rgba(0,0,0,.07);
 }
-
 .dark {
-  /* 다크 테마: 깊은 밤하늘 그라데이션 */
-  --bg-gradient: linear-gradient(-45deg, #0f1115, #1c2331, #130f1c, #0f172a);
-  --surface: rgba(24, 27, 33, 0.7);
-  --surface2: rgba(34, 38, 47, 0.8);
-  --border: rgba(255, 255, 255, 0.1);
-  --border2: rgba(255, 255, 255, 0.2);
-  --text: #f0f2f5; 
-  --text2: #9ba4b5; 
-  --text3: #6b758a;
-  --accent: #60a5fa; 
-  --accent-l: rgba(59, 130, 246, 0.25);
-  --red: #f87171; 
-  --red-l: rgba(239, 68, 68, 0.25);
-  --gold: #fbbf24; 
-  --sh-neon: 0 0 20px rgba(96, 165, 250, 0.5);
-  --sh-lg: 0 16px 48px rgba(0,0,0,0.8);
-  --glass-bg: rgba(24, 27, 33, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a;
+  --border:#2c3148; --border2:#3a4060;
+  --text:#e8eaf2; --text2:#8b96b4; --text3:#505874;
+  --accent:#4f8ef7; --accent-l:#1e2d52;
+  --red:#f87171; --red-l:#2d1515;
+  --gold:#fbbf24; --gold-l:#2d2008;
+  --sh:0 2px 12px rgba(0,0,0,.3);
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px 60px}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* 헤더 */
+.hdr{padding:24px 0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--border);margin-bottom:20px}
+.logo{font-size:22px;font-weight:900;letter-spacing:-.04em}
+.logo em{color:var(--accent);font-style:normal}
+.hdr-right{display:flex;align-items:center;gap:8px}
 
-body { 
-  background: var(--bg-gradient);
-  background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
-  font-family: 'Pretendard', -apple-system, sans-serif; 
-  color: var(--text); 
-  min-height: 100vh; 
-  -webkit-font-smoothing: antialiased; 
-  transition: color 0.4s ease; 
-  overflow-x: hidden;
-  position: relative;
-}
+/* 날짜 네비 */
+.date-nav{display:flex;align-items:center;gap:6px;position:relative}
+.nav-btn{background:none;border:none;color:var(--text3);width:32px;height:32px;font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .15s}
+.nav-btn:hover{color:var(--accent)}
+.date-center{cursor:pointer;padding:0 8px;text-align:center;user-select:none}
+.date-main{font-size:16px;font-weight:800;letter-spacing:-.03em}
+.date-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.today-btn{font-family:inherit;font-size:11px;font-weight:700;background:var(--accent-l);color:var(--accent);border:none;padding:5px 11px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.today-btn:hover{background:var(--accent);color:#fff}
+.theme-btn{background:none;border:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+.theme-btn:hover{opacity:.7}
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* 달력 팝업 */
+.cal-popup{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,.13);z-index:999;width:268px}
+.cal-popup.show{display:block}
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cal-top button{background:none;border:none;font-size:15px;font-weight:900;color:var(--accent);cursor:pointer;padding:2px 6px}
+.cal-top span{font-size:13px;font-weight:800}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:var(--text3);margin-bottom:5px;font-weight:700}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-d{text-align:center;font-size:12px;padding:6px 0;border-radius:5px;cursor:pointer;font-weight:500;transition:all .1s}
+.cal-d:hover:not(.off):not(.empty){background:var(--accent-l);color:var(--accent)}
+.cal-d.today{background:var(--gold-l);color:var(--gold);font-weight:800}
+.cal-d.sel{background:var(--accent)!important;color:#fff!important;font-weight:800}
+.cal-d.off{color:var(--text3);cursor:default}
 
-/* 파티클 배경 컨테이너 */
-#tsparticles {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: -1;
-  pointer-events: none;
-}
+/* 탭 */
+.meal-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px}
+.meal-tab{flex:1;padding:10px 0;border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.meal-tab.on{color:var(--accent);font-weight:800;border-bottom-color:var(--accent)}
+.meal-tab:hover:not(.on){color:var(--text2)}
 
-.wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
+/* 칼로리 */
+.kcal-chip{display:flex;align-items:center;gap:6px;padding:0 0 14px 2px;font-size:13px;font-weight:700;color:var(--gold);opacity:0;visibility:hidden;max-height:0;transition:opacity .2s,max-height .2s}
+.kcal-chip.show{opacity:1;visibility:visible;max-height:40px}
 
-svg { flex-shrink: 0; }
-.icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* 그리드 */
+.main-grid{display:grid;grid-template-columns:1fr 260px;gap:24px;align-items:start}
 
-.bento-card {
-  background: var(--glass-bg); 
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border); 
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.05); 
-  overflow: hidden; transition: var(--transition);
-}
-.bento-card:hover { 
-  box-shadow: var(--sh-neon); 
-  transform: translateY(-4px) scale(1.01); 
-  border-color: var(--accent);
-}
+/* 메뉴 */
+.menu-list{background:var(--surface);border-top:2px solid var(--accent);border-bottom:1px solid var(--border);min-height:320px}
+.menu-row{border-bottom:1px solid var(--border)}
+.menu-row:last-child{border-bottom:none}
+.menu-row.warn{background:var(--red-l)}
+.menu-row-main{display:flex;align-items:center;padding:14px 16px;gap:10px;cursor:pointer;transition:background .1s}
+.menu-row-main:hover{background:var(--surface2)}
+.menu-row.warn .menu-row-main:hover{background:rgba(239,68,68,.08)}
+.dish-name{flex:1;font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.dish-name.main-dish{color:var(--accent);font-weight:800;font-size:15px}
 
-.hdr { padding: 32px 0 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.logo { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; display: flex; align-items: center; gap: 12px; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-.logo svg { width: 32px; height: 32px; color: var(--accent); filter: drop-shadow(0 0 8px var(--accent)); }
-.logo em { color: var(--accent); font-style: normal; }
+/* 별점 미리보기 */
+.star-preview{display:flex;flex-direction:column;align-items:flex-end;gap:1px;min-width:60px}
+.sp-stars{font-size:11px;line-height:1;letter-spacing:1px}
+.sp-stars .f{color:var(--gold)}
+.sp-stars .e{color:var(--border2)}
+.sp-bottom{display:flex;align-items:baseline;gap:3px}
+.sp-val{font-size:12px;font-weight:800;color:var(--text)}
+.sp-count{font-size:10px;color:var(--text3)}
+.sp-none{font-size:11px;color:var(--border2);letter-spacing:1px}
 
-.date-nav { display: flex; align-items: center; gap: 4px; padding: 6px 12px; position: relative; }
-.nav-btn, .today-btn, .theme-btn { 
-  background: var(--surface2); border: none; color: var(--text); 
-  cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); 
-  backdrop-filter: blur(10px);
-}
-.nav-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
-.nav-btn:hover { color: #fff; background: var(--accent); box-shadow: var(--sh-neon); transform: scale(1.1); }
-.date-center { cursor: pointer; padding: 0 16px; text-align: center; }
-.date-main { font-size: 16px; font-weight: 800; }
-.date-sub { font-size: 13px; color: var(--text3); font-weight: 600; }
-.today-btn { font-size: 14px; font-weight: 800; padding: 10px 20px; }
-.today-btn:hover { background: var(--text); color: var(--bg-gradient); transform: scale(1.05); }
-.theme-btn { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); }
-.theme-btn:hover { background: var(--accent); color: #fff; transform: rotate(15deg) scale(1.1); box-shadow: var(--sh-neon); }
+/* 모달 */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;align-items:flex-end;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-sheet{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:0 0 32px;animation:slideUp .25s ease;box-shadow:0 -4px 32px rgba(0,0,0,.2)}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0}
+.modal-head{padding:18px 20px 16px;border-bottom:1px solid var(--border)}
+.modal-dish-name{font-size:18px;font-weight:900;letter-spacing:-.03em}
+.modal-stat{display:flex;align-items:center;gap:12px;margin-top:10px}
+.modal-stat-score{display:flex;flex-direction:column;align-items:center;padding-right:12px;border-right:1px solid var(--border)}
+.modal-avg{font-size:34px;font-weight:900;color:var(--text);letter-spacing:-.04em;line-height:1}
+.modal-avg-max{font-size:12px;color:var(--text3);margin-top:2px}
+.modal-stat-detail{display:flex;flex-direction:column;gap:3px}
+.modal-stars-big{font-size:18px;letter-spacing:2px}
+.modal-stars-big .f{color:var(--gold)}
+.modal-stars-big .e{color:var(--border2)}
+.modal-count-txt{font-size:12px;color:var(--text3)}
+.modal-no-rating{font-size:13px;color:var(--text3)}
+.modal-input-area{padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-input-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.star-row{display:flex;gap:4px;margin-bottom:12px}
+.si-star{font-size:32px;cursor:pointer;color:var(--border2);transition:all .1s;user-select:none;line-height:1}
+.si-star.on{color:var(--gold);transform:scale(1.15)}
+.review-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:inherit;font-size:13px;padding:10px 12px;resize:none;outline:none;transition:border-color .15s;margin-bottom:10px}
+.review-textarea:focus{border-color:var(--accent)}
+.modal-submit-row{display:flex;gap:8px}
+.btn-submit{flex:1;font-family:inherit;font-size:13px;font-weight:800;background:var(--accent);color:#fff;border:none;padding:11px 0;cursor:pointer;transition:opacity .15s}
+.btn-submit:hover{opacity:.88}
+.btn-cancel{font-family:inherit;font-size:13px;font-weight:700;background:none;color:var(--text2);border:1px solid var(--border);padding:11px 18px;cursor:pointer}
+.modal-reviews{padding:0 20px}
+.reviews-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:16px 0 10px}
+.rv-item{border-bottom:1px solid var(--border);padding:12px 0}
+.rv-item:last-child{border-bottom:none}
+.rv-top{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.rv-stars{font-size:13px;letter-spacing:1px}
+.rv-stars .f{color:var(--gold)}
+.rv-stars .e{color:var(--border2)}
+.rv-score{font-size:12px;font-weight:700;color:var(--text)}
+.rv-comment{font-size:13px;color:var(--text2);line-height:1.5}
+.rv-empty{font-size:13px;color:var(--text3);padding:16px 0;text-align:center}
 
-/* 식단 탭 */
-.ctrl-area { display: flex; gap: 16px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; }
-.meal-tabs { display: flex; padding: 8px; border-radius: var(--radius-md); flex: 1; min-width: 300px; }
-.meal-tab { flex: 1; padding: 14px 0; border: none; background: transparent; font-size: 16px; font-weight: 800; color: var(--text3); cursor: pointer; border-radius: calc(var(--radius-md) - 6px); transition: var(--transition); }
-.meal-tab.on { background: var(--accent); color: #fff; box-shadow: var(--sh-neon); transform: scale(1.05); }
+/* 주간 패널 */
+.week-panel{background:var(--surface);border-top:2px solid var(--border2);border-bottom:1px solid var(--border)}
+.week-panel-title{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:13px 16px 10px;border-bottom:1px solid var(--border)}
+.week-day{padding:12px 16px;border-bottom:1px solid var(--border);transition:background .12s}
+.week-day:last-child{border-bottom:none}
+.week-day.clickable{cursor:pointer}
+.week-day.clickable:hover{background:var(--surface2)}
+.week-day.no-meal{opacity:.45}
+.week-day.wd-today{background:var(--accent-l)}
+.week-day.wd-sel{background:var(--accent)}
+.week-day.wd-sel .wd-date,.week-day.wd-sel .wd-dayname,.week-day.wd-sel .wd-items,.week-day.wd-sel .wd-badge{color:#fff!important;background:rgba(255,255,255,.25)!important;opacity:1!important}
+.wd-top{display:flex;align-items:baseline;gap:5px;margin-bottom:4px}
+.wd-date{font-size:17px;font-weight:900;letter-spacing:-.03em}
+.wd-dayname{font-size:11px;color:var(--text3);font-weight:600}
+.wd-badge{font-size:10px;font-weight:700;background:var(--accent);color:#fff;border-radius:3px;padding:1px 6px;margin-left:auto}
+.wd-items{font-size:11px;color:var(--text2);line-height:1.5}
+.wd-none{font-size:11px;color:var(--text3)}
+.wd-loading{font-size:11px;color:var(--text3);padding:13px 16px;text-align:center}
 
-/* 검색창 */
-.search-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-input { width: 100%; border: 2px solid transparent; border-radius: var(--radius-md); color: var(--text); font-size: 15px; font-weight: 600; padding: 18px 16px 18px 48px; outline: none; background: var(--glass-bg); backdrop-filter: blur(10px); transition: var(--transition); }
-.search-input:focus { border-color: var(--accent); box-shadow: var(--sh-neon); background: var(--surface); transform: translateY(-2px); }
-.search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text3); }
+/* 알레르기 설정 패널 */
+.allergy-wrap{margin-top:20px;background:var(--surface);border-top:2px solid var(--border2);border-bottom:1px solid var(--border);padding:14px 16px}
+.allergy-hdr{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.a-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.a-item{display:flex;align-items:center;gap:4px;padding:6px 7px;border-bottom:2px solid transparent;background:var(--surface2);cursor:pointer;transition:all .1s;user-select:none}
+.a-item.on{background:var(--red-l);border-bottom-color:var(--red)}
+.a-num{font-size:10px;font-weight:800;color:var(--text3);min-width:12px}
+.a-item.on .a-num{color:var(--red)}
+.a-lbl{font-size:11px;font-weight:500;color:var(--text2)}
+.a-item.on .a-lbl{color:var(--red);font-weight:700}
 
-/* 칼로리 칩 */
-.kcal-chip { display: inline-flex; align-items: center; gap: 8px; padding: 16px 24px; font-size: 15px; font-weight: 900; color: var(--accent); background: var(--accent-l); border-radius: var(--radius-md); opacity: 0; visibility: hidden; transition: var(--transition); border: 1px solid var(--accent); }
-.kcal-chip.show { opacity: 1; visibility: visible; animation: pulseGlow 2s infinite; }
+/* 상태/토스트 */
+.state-box{padding:36px 0;text-align:center;font-size:13px;color:var(--text3)}
+.skeleton{display:flex;flex-direction:column;gap:0}
+.sk-row{display:flex;align-items:center;padding:14px 16px;gap:10px;border-bottom:1px solid var(--border)}
+.sk-row:last-child{border-bottom:none}
+.sk-name{height:14px;border-radius:3px;background:linear-gradient(90deg,var(--surface2) 25%,var(--border) 50%,var(--surface2) 75%);background-size:200% 100%;animation:sk 1.2s infinite;flex:1}
+.sk-star{height:11px;width:60px;border-radius:3px;background:linear-gradient(90deg,var(--surface2) 25%,var(--border) 50%,var(--surface2) 75%);background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--text);color:var(--bg);border-radius:20px;padding:9px 22px;font-size:13px;font-weight:600;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-@keyframes pulseGlow {
-  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-}
-
-.bento-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-.left-col, .right-col { display: flex; flex-direction: column; gap: 24px; }
-.right-col { position: sticky; top: 24px; }
-
-/* 메뉴 리스트 */
-.menu-list { min-height: 400px; padding: 12px; }
-.menu-row { transition: var(--transition); border-radius: var(--radius-sm); margin-bottom: 8px; }
-.menu-row-main { display: flex; align-items: center; padding: 20px 24px; gap: 16px; cursor: pointer; transition: var(--transition); border-radius: var(--radius-sm); background: var(--surface2); }
-.menu-row-main:hover { background: var(--accent); color: #fff; transform: translateX(8px) scale(1.02); box-shadow: var(--sh-neon); }
-.dish-name { flex: 1; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
-.dish-name.main-dish { font-size: 20px; font-weight: 900; }
-.menu-row-main:hover .dish-name, .menu-row-main:hover .sp-val, .menu-row-main:hover .sp-count, .menu-row-main:hover .sp-none { color: #fff; }
-
-.star-preview { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 80px; }
-.sp-stars { font-size: 15px; letter-spacing: 2px; }
-.sp-stars .f { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
-.sp-val { font-size: 16px; font-weight: 900; color: var(--text); }
-.sp-count { font-size: 13px; font-weight: 700; color: var(--text3); }
-
-/* 알레르기 필터 */
-.allergy-wrap { padding: 0; }
-.allergy-hdr { font-size: 17px; font-weight: 800; padding: 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-.a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; padding: 0 24px 24px; transition: var(--transition); }
-.a-grid.collapsed { display: none; }
-.a-item { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: var(--radius-sm); border: 2px solid var(--border2); cursor: pointer; transition: var(--transition); font-weight: 700; }
-.a-item:hover { border-color: var(--accent); box-shadow: var(--sh-neon); }
-.a-item.on { background: var(--red); border-color: var(--red); color: #fff; box-shadow: 0 0 15px rgba(239,68,68,0.5); }
-.a-item.on .a-num, .a-item.on .a-lbl { color: #fff; }
-
-/* 우측 패널 (인기메뉴, 식단표) */
-.panel-title { font-size: 18px; font-weight: 900; padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.panel-title svg { color: var(--accent); filter: drop-shadow(0 0 5px var(--accent)); }
-.week-day { padding: 20px 24px; border-bottom: 1px solid var(--border); transition: var(--transition); }
-.week-day.clickable:hover { background: var(--accent-l); transform: scale(1.02); }
-.week-day.wd-today { background: var(--accent-l); border-left: 6px solid var(--accent); }
-.wd-date { font-size: 22px; font-weight: 900; }
-.wd-dayname { font-size: 14px; font-weight: 800; color: var(--text2); }
-.wd-badge { font-size: 12px; font-weight: 900; background: var(--accent); color: #fff; border-radius: 8px; padding: 4px 12px; margin-left: auto; box-shadow: var(--sh-neon); }
-.popular-item { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: var(--transition); }
-.popular-item:hover { background: var(--surface2); padding-left: 32px; border-left: 4px solid var(--accent); }
-.popular-rank { font-size: 24px; font-weight: 900; color: var(--accent); min-width: 30px; text-align: center; }
-
-/* 상태창 & 스켈레톤 */
-.state-box { padding: 100px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.state-box svg { width: 64px; height: 64px; color: var(--accent); filter: drop-shadow(0 0 10px var(--accent-l)); animation: float 3s ease-in-out infinite; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-.state-box p { font-size: 18px; font-weight: 800; color: var(--text); }
-.sk-row { display: flex; align-items: center; padding: 24px 20px; gap: 20px; border-radius: var(--radius-sm); margin-bottom: 8px; background: var(--surface2); }
-.sk-name { height: 24px; border-radius: 12px; background: linear-gradient(90deg, var(--surface) 25%, var(--border) 50%, var(--surface) 75%); background-size: 200% 100%; animation: sk 1.5s infinite; flex: 1; }
-@keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-/* 모달 & 리뷰 */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity .4s; }
-.modal-overlay.show { display: flex; opacity: 1; }
-.modal-sheet { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; transform: scale(0.8) translateY(50px); transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--sh-lg); border: 1px solid var(--border); }
-.modal-overlay.show .modal-sheet { transform: scale(1) translateY(0); }
-.modal-dish-name { font-size: 28px; font-weight: 900; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-.si-star { font-size: 48px; cursor: pointer; color: var(--border2); transition: var(--transition); }
-.si-star.on { color: var(--gold); transform: scale(1.2); text-shadow: 0 0 15px var(--gold); }
-.si-star:hover { transform: scale(1.3) rotate(10deg); }
-.btn-submit { background: var(--accent); color: #fff; box-shadow: var(--sh-neon); font-size: 16px; font-weight: 900; }
-.btn-submit:hover { background: #2563eb; transform: translateY(-3px) scale(1.02); box-shadow: 0 0 25px rgba(59, 130, 246, 0.6); }
-
-/* 토스트 알림 */
-.toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(50px); background: var(--accent); color: #fff; border-radius: 30px; padding: 16px 32px; font-size: 16px; font-weight: 800; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 9999; box-shadow: var(--sh-neon); pointer-events: none; }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-@media(max-width: 768px) {
-  .bento-grid { grid-template-columns: 1fr; }
-  .right-col { position: static; }
-  .modal-sheet { border-radius: 32px 32px 0 0; max-height: 90vh; align-self: flex-end; transform: translateY(100%); }
-  .modal-overlay.show .modal-sheet { transform: translateY(0); }
-}
+@media(max-width:700px){.main-grid{grid-template-columns:1fr}.a-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
-<div id="tsparticles"></div>
-
 <div class="wrap">
   <div class="hdr">
-    <div class="logo">
-      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-width="2" stroke-linecap="round"/></svg>
-      영천고 <em>급식</em>
-    </div>
+    <div class="logo">영천고등학교 <em>급식</em></div>
     <div class="hdr-right">
-      <button class="theme-btn bento-card" id="themeBtn" aria-label="테마 변경">
-        <svg class="icon" id="themeIcon" viewBox="0 0 24 24"></svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="ctrl-area">
-    <div class="bento-card date-nav">
-      <button class="nav-btn" id="prev" aria-label="이전 날짜">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <div class="date-center" id="dateWrap">
-        <div class="date-main" id="dateMain">--</div>
-        <div class="date-sub" id="dateSub">--</div>
-      </div>
-      <button class="nav-btn" id="next" aria-label="다음 날짜">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <button class="today-btn" id="todayBtn">오늘</button>
-    </div>
-
-    <div class="bento-card meal-tabs">
-      <button class="meal-tab" data-t="1">조식</button>
-      <button class="meal-tab on" data-t="2">중식</button>
-      <button class="meal-tab" data-t="3">석식</button>
-    </div>
-
-    <div class="search-wrap">
-      <svg class="icon search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" class="search-input" id="searchInput" placeholder="메뉴 검색...">
-    </div>
-
-    <div class="kcal-chip bento-card" id="kcalChip">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M12 2c0 0-5 6.5-5 11a5 5 0 0 0 10 0c0-4.5-5-11-5-11Z"/><path d="M12 10c-1.5 2-1.5 4-1.5 4"/></svg>
-      <span id="kcalVal"></span>
-    </div>
-  </div>
-
-  <div class="bento-grid">
-    <div class="left-col">
-      <div class="bento-card menu-list" id="menuList">
-        <div class="skeleton">
-          <div class="sk-row"><div class="sk-name"></div></div>
-          <div class="sk-row"><div class="sk-name"></div></div>
+      <div class="date-nav">
+        <button class="nav-btn" id="prev">‹</button>
+        <div class="date-center" id="dateWrap">
+          <div class="date-main" id="dateMain">--</div>
+          <div class="date-sub" id="dateSub">--</div>
         </div>
-      </div>
-      
-      <div class="bento-card allergy-wrap">
-        <div class="allergy-hdr" id="allergyHdr">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span>알레르기 필터 설정</span>
+        <button class="nav-btn" id="next">›</button>
+        <button class="today-btn" id="todayBtn">오늘</button>
+        <div class="cal-popup" id="calPopup">
+          <div class="cal-top">
+            <button id="calPrev">‹</button>
+            <span id="calMonth"></span>
+            <button id="calNext">›</button>
           </div>
+          <div class="cal-dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+          <div class="cal-grid" id="calGrid"></div>
         </div>
+      </div>
+      <div class="theme-btn" id="themeBtn">🌙</div>
+    </div>
+  </div>
+
+  <div class="meal-tabs">
+    <button class="meal-tab" data-t="1">조식</button>
+    <button class="meal-tab on" data-t="2">중식</button>
+    <button class="meal-tab" data-t="3">석식</button>
+  </div>
+
+  <div class="kcal-chip" id="kcalChip">🔥 <span id="kcalVal"></span></div>
+
+  <div class="main-grid">
+    <div class="left-col">
+      <div class="menu-list" id="menuList"><div class="state-box">불러오는 중...</div></div>
+      <div class="allergy-wrap">
+        <div class="allergy-hdr">알레르기 설정 (클릭 시 해당 메뉴 강조)</div>
         <div class="a-grid" id="allergyGrid"></div>
       </div>
     </div>
-
-    <div class="right-col">
-      <div class="bento-card">
-        <div class="panel-title">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          학우들의 인기 메뉴
-        </div>
-        <div id="popularContent"><div class="state-box"><p>집계 중입니다...</p></div></div>
-      </div>
-      
-      <div class="bento-card">
-        <div class="panel-title">
-          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          이번 주 식단표
-        </div>
-        <div id="weekContent"><div class="state-box"><p>식단을 불러오는 중...</p></div></div>
-      </div>
+    <div class="week-panel" id="weekPanel">
+      <div class="week-panel-title">이번 주 급식</div>
+      <div id="weekContent"><div class="wd-loading">불러오는 중...</div></div>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-sheet">
-    <div style="padding: 32px; border-bottom: 1px solid var(--border);">
-      <div class="modal-dish-name" id="modalDishText">메뉴 이름</div>
-      <div id="modalStat" style="background: var(--surface2); padding: 24px; border-radius: var(--radius-md);"></div>
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-dish-name" id="modalDishName"></div>
+      <div class="modal-stat" id="modalStat"></div>
     </div>
-    
-    <div style="padding: 32px; border-bottom: 1px solid var(--border); background: var(--glass-bg);">
-      <h3 style="margin-bottom: 16px;">이 메뉴 어땠나요?</h3>
-      <div class="star-row" id="starRow" style="display:flex; gap:12px; margin-bottom: 24px;">
-        <span class="si-star" data-v="1">★</span><span class="si-star" data-v="2">★</span>
-        <span class="si-star" data-v="3">★</span><span class="si-star" data-v="4">★</span><span class="si-star" data-v="5">★</span>
+    <div class="modal-input-area">
+      <div class="modal-input-label">별점 남기기</div>
+      <div class="star-row" id="starRow">
+        <span class="si-star" data-v="1">★</span>
+        <span class="si-star" data-v="2">★</span>
+        <span class="si-star" data-v="3">★</span>
+        <span class="si-star" data-v="4">★</span>
+        <span class="si-star" data-v="5">★</span>
       </div>
-      <input type="text" id="reviewName" placeholder="닉네임 (미입력 시 '익명')" style="width:100%; padding: 16px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; outline: none;">
-      <textarea id="reviewText" placeholder="솔직한 평가를 남겨주세요!" style="width:100%; padding: 16px; border-radius: 12px; border: 1px solid var(--border); min-height: 100px; resize: none; outline: none; margin-bottom: 16px;"></textarea>
-      <div style="display: flex; gap: 12px;">
-        <button id="btnCancel" style="flex: 1; padding: 16px; border-radius: 12px; border: none; background: var(--surface2); cursor: pointer; font-weight: bold;">닫기</button>
-        <button id="btnSubmit" class="btn-submit" style="flex: 2; padding: 16px; border-radius: 12px; border: none; cursor: pointer;">리뷰 등록하기</button>
+      <textarea class="review-textarea" id="reviewText" rows="2" placeholder="한 줄 후기 (선택)"></textarea>
+      <div class="modal-submit-row">
+        <button class="btn-submit" id="btnSubmit">등록하기</button>
+        <button class="btn-cancel" id="btnCancel">닫기</button>
       </div>
     </div>
-
-    <div style="padding: 32px;">
-      <h3 style="margin-bottom: 20px;">학우들의 리뷰</h3>
+    <div class="modal-reviews">
+      <div class="reviews-label">리뷰</div>
       <div id="reviewList"></div>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Firebase 설정 (기존 정보 유지)
 const firebaseConfig = {
   apiKey: "AIzaSyDPcpn_YncmqIxDx3EX_dpwCGK26hrOVlk",
   authDomain: "yc-meal.firebaseapp.com",
   projectId: "yc-meal",
   storageBucket: "yc-meal.firebasestorage.app",
   messagingSenderId: "605051414301",
-  appId: "1:605051414301:web:69cab50573959031f0a3f4"
+  appId: "1:605051414301:web:69cab50573959031f0a3f4",
+  measurementId: "G-1J34ECG7P8"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -366,241 +278,426 @@ const db = getFirestore(app);
 
 const KEY  = '04b33987e1f94ec598b1835b6756736e';
 const BASE = 'https://open.neis.go.kr/hub';
-const SC   = '8750119'; // 영천고
+const SC   = '8750119';
 const DAYS = ['일','월','화','수','목','금','토'];
-const AL   = [['1','난류'],['2','우유'],['3','메밀'],['4','땅콩'],['5','대두'],['6','밀'],['7','고등어'],['8','게'],['9','새우'],['10','돼지고기'],['11','복숭아'],['12','토마토'],['13','아황산류'],['14','호두'],['15','닭고기'],['16','쇠고기'],['17','오징어'],['18','조개류'],['19','잣']];
+const AL   = [
+  ['1','난류'],['2','우유'],['3','메밀'],['4','땅콩'],['5','대두'],['6','밀'],
+  ['7','고등어'],['8','게'],['9','새우'],['10','돼지고기'],['11','복숭아'],['12','토마토'],
+  ['13','아황산류'],['14','호두'],['15','닭고기'],['16','쇠고기'],['17','오징어'],
+  ['18','조개류'],['19','잣']
+];
 
-let cur = new Date(); 
-// 주말이면 월요일로 변경
-if(cur.getDay()===6) cur.setDate(cur.getDate()+2); 
-if(cur.getDay()===0) cur.setDate(cur.getDate()+1);
+/* ── 상태 ── */
+let cur       = today(); fixWE(cur);
+let calView   = new Date(cur);
+let mt        = 2;
+let isDark    = false;
+let myA       = new Set(JSON.parse(lsGet('yc_a') || '[]'));
+let ratings   = {}; // 로컬스토리지 대신 빈 객체로 시작 (파이어베이스에서 불러옴)
+let lastParsed= [];
+let modalScore= 0;
+let modalKey  = '';
 
-let mt = 2; // 중식
-let isDark = false;
-let myA = new Set(JSON.parse(localStorage.getItem('yc_a') || '[]'));
-let ratings = {}; 
-let lastParsed = [];
-let modalScore = 0;
-let modalKey = '';
-let currentFetchId = 0; 
-
-const $ = id => document.getElementById(id);
-const pad = n => String(n).padStart(2,'0');
+/* ── 유틸 ── */
+function lsGet(k)     { try{return localStorage.getItem(k)}catch{return null} }
+function lsSet(k,v)   { try{localStorage.setItem(k,v)}catch{} }
+const $  = id => document.getElementById(id);
+const pad= n  => String(n).padStart(2,'0');
+function today(){ return new Date(); }
 function toStr(d){ return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`; }
-function showToast(msg){ 
-  const t=$('toast'); t.textContent=msg; t.classList.add('show'); 
-  setTimeout(()=>t.classList.remove('show'),3000); 
+function fixWE(d){
+  if(d.getDay()===6) d.setDate(d.getDate()+2);
+  if(d.getDay()===0) d.setDate(d.getDate()+1);
 }
-function escapeHtml(str) { return String(str||'').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-function starsHtml(score){ return Array.from({length:5},(_,i)=>`<span class="${i<Math.round(score)?'f':'e'}" style="color:${i<Math.round(score)?'var(--gold)':'var(--border2)'}">★</span>`).join(''); }
+function showToast(msg){
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+function dishKey(dateStr, mealType, name){ return `${dateStr}_${mealType}_${name}`; }
 
-// 테마 설정
-function applyTheme(){
-  document.body.className = isDark ? 'dark' : '';
-  $('themeIcon').innerHTML = isDark 
-    ? `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>`
-    : `<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
+/* ── 별 HTML ── */
+function starsHtml(score, max=5){
+  return Array.from({length:max},(_,i)=>
+    `<span class="${i<Math.round(score)?'f':'e'}">★</span>`
+  ).join('');
 }
-$('themeBtn').onclick = () => { isDark = !isDark; applyTheme(); };
+
+/* ── 테마 ── */
+function applyTheme(){
+  document.body.className = isDark?'dark':'';
+  $('themeBtn').textContent = isDark?'☀️':'🌙';
+}
+$('themeBtn').onclick=()=>{ isDark=!isDark; lsSet('yc_theme',isDark?'dark':'light'); applyTheme(); };
 applyTheme();
 
-// 파티클 배경 효과 (tsParticles)
-tsParticles.load("tsparticles", {
-  preset: "stars",
-  particles: {
-    number: { value: 60, density: { enable: true, area: 800 } },
-    color: { value: ["#ffffff", "#3b82f6", "#f59e0b"] },
-    opacity: { value: 0.8, animation: { enable: true, speed: 1, minimumValue: 0.1 } },
-    size: { value: 3, random: true },
-    move: { enable: true, speed: 0.5, direction: "none", random: true, outModes: "out" }
-  }
-});
-
+/* ── 날짜 표시 ── */
 function drawDate(){
-  $('dateMain').textContent = `${cur.getFullYear()}.${pad(cur.getMonth()+1)}.${pad(cur.getDate())}`;
-  $('dateSub').textContent = DAYS[cur.getDay()]+'요일';
+  $('dateMain').textContent=`${cur.getFullYear()}.${pad(cur.getMonth()+1)}.${pad(cur.getDate())}`;
+  $('dateSub').textContent=DAYS[cur.getDay()]+'요일';
 }
 
+/* ── 파싱 (괄호 등 기호 완벽 제거) ── */
+function parseItems(raw){
+  return raw.split(/<br\s*\/>/i).map(s=>s.trim()).filter(Boolean).map(s=>{
+    let name=s, nums=[];
+    const m=name.match(/([\d]+(?:\.[\d]+)*)[^\w가-힣]*$/);
+    if(m){
+      nums=m[1].split('.').filter(x=>x&&!isNaN(+x));
+      // 잘라낸 뒤 남은 쓸데없는 특수문자(괄호, 마침표 등)를 모두 제거하고 양쪽 공백 없애기
+      name=name.slice(0,m.index).replace(/[^\w가-힣]+$/, '').trim();
+    }
+    return {name,nums};
+  });
+}
+function findMain(list){
+  const flt=/^(밥|국|탕|찌개|김치|깍두기|단무지|우유|요구르트|주스|과일|푸딩|피클|양념|소스|드레싱|잼|버터)/;
+  const kws=[
+    {r:/볶음|구이|튀김|조림|가스|카츠|찜|스테이크|치킨|립/,s:10},
+    {r:/닭|돈육|우육|돼지|소고기|오리|고기|베이컨|소시지|햄|오징어|새우|낙지|쭈꾸미/,s:8},
+    {r:/파스타|스파게티|면|떡볶이|그라탕/,s:5}
+  ];
+  let max=-99,idx=0;
+  list.forEach((item,i)=>{
+    let sc=0;
+    if(flt.test(item.name)) sc-=50;
+    kws.forEach(k=>{if(k.r.test(item.name))sc+=k.s;});
+    sc+=Math.min(item.name.length,10)*.5;
+    if(sc>max){max=sc;idx=i;}
+  });
+  return (max<0&&list.length>2)?2:idx;
+}
+
+/* ── 알레르기 ── */
 function buildAllergy(){
-  $('allergyGrid').innerHTML = AL.map(([n, l]) => `
-    <div class="a-item ${myA.has(n) ? 'on' : ''}" data-n="${n}">
-      <span class="a-num">${n}</span><span class="a-lbl">${l}</span>
-    </div>
-  `).join('');
-  
-  document.querySelectorAll('.a-item').forEach(el => {
-    el.onclick = () => {
-      const n = el.dataset.n;
-      myA.has(n) ? myA.delete(n) : myA.add(n); 
+  const g=$('allergyGrid'); g.innerHTML='';
+  AL.forEach(([n,l])=>{
+    const el=document.createElement('div');
+    el.className='a-item'+(myA.has(n)?' on':'');
+    el.innerHTML=`<span class="a-num">${n}</span><span class="a-lbl">${l}</span>`;
+    el.onclick=()=>{
+      myA.has(n)?myA.delete(n):myA.add(n);
       el.classList.toggle('on');
-      localStorage.setItem('yc_a', JSON.stringify([...myA])); 
+      lsSet('yc_a',JSON.stringify([...myA]));
       renderMenu(lastParsed, toStr(cur), mt);
     };
+    g.appendChild(el);
   });
 }
 
-// 메뉴 파싱 버그 수정 (데이터 구조 예외 처리 강화)
-function parseItems(raw){
-  if(!raw) return [];
-  // <br/> 태그뿐만 아니라 쉼표나 띄어쓰기로 구분된 경우도 처리 가능하도록 보강
-  return raw.split(/<br\s*\/?>|\n/i).map(s=>s.trim()).filter(Boolean).map(s=>{
-    let name = s.replace(/\([^)]*\)/g, '').trim(); // 알레르기 번호 괄호 제거
-    name = name.replace(/\*/g, ''); // 간혹 붙어있는 별표 제거
-    
-    let nums = [];
-    let match; const regex = /\(([^)]+)\)/g;
-    while ((match = regex.exec(s)) !== null) {
-      nums.push(...match[1].split('.').map(x=>x.trim()).filter(x=>!isNaN(x)));
-    }
-    return {name, nums};
-  });
-}
-
+/* ── 메뉴 렌더 ── */
 function renderMenu(parsed, dateStr, mealType){
-  lastParsed = parsed;
-  const list = $('menuList');
-  if(!parsed || parsed.length === 0){
-    list.innerHTML = `<div class="state-box">
-      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <p>해당 날짜의 식단 정보가 없습니다.</p>
-    </div>`; 
-    return;
+  lastParsed=parsed;
+  const list=$('menuList');
+  if(!parsed||!parsed.length){
+    list.innerHTML='<div class="state-box">급식 정보가 없습니다</div>'; return;
   }
-  
-  let html = '';
-  parsed.forEach((item, i) => {
-    const key = `${dateStr}_${mealType}_${item.name}`;
-    const hasA = item.nums.some(n=>myA.has(n));
-    const stat = ratings[key] && ratings[key].count ? {avg:ratings[key].total/ratings[key].count, count:ratings[key].count} : null;
-    
-    html += `
-      <div class="menu-row ${hasA ? 'warn' : ''}">
-        <div class="menu-row-main" onclick="window.openModal('${escapeHtml(item.name)}', '${key}')">
-          <span class="dish-name ${i===0 ? 'main-dish' : ''}">${escapeHtml(item.name)}</span>
-          <div class="star-preview">
-            ${stat ? `<div class="sp-stars">${starsHtml(stat.avg)}</div><span class="sp-val">${stat.avg.toFixed(1)} <span class="sp-count">(${stat.count})</span></span>` : '<span class="sp-count" style="color:var(--text3)">평가 없음</span>'}
-          </div>
-        </div>
-      </div>
-    `;
-  });
-  
-  list.innerHTML = html;
-  
-  // GSAP 애니메이션 적용 (카드가 부드럽게 등장)
-  gsap.from(".menu-row", {
-    y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)"
+  const mainIdx=findMain(parsed);
+  list.innerHTML='';
+  parsed.forEach((item,i)=>{
+    const key=dishKey(dateStr, mealType, item.name);
+    const hasA=item.nums.some(n=>myA.has(n));
+    const stat=avgStat(key);
+    const row=document.createElement('div');
+    row.className='menu-row'+(hasA?' warn':'');
+
+    // 사용자가 알레르기를 선택해서 해당 메뉴가 걸렸을 때만 숨겨둔 숫자가 뜸
+    let dishNameHtml = item.name;
+    if(hasA && item.nums.length > 0) {
+      dishNameHtml += ` <span style="font-size:12px; color:var(--text2); font-weight:700; margin-left:4px;">${item.nums.join('.')}</span>`;
+    }
+
+    const spHtml=stat
+      ?`<div class="star-preview">
+          <div class="sp-stars">${starsHtml(stat.avg)}</div>
+          <div class="sp-bottom"><span class="sp-val">${stat.avg.toFixed(1)}</span><span class="sp-count">(${stat.count}명)</span></div>
+        </div>`
+      :`<div class="star-preview"><div class="sp-none">★★★★★</div></div>`;
+
+    row.innerHTML=`<div class="menu-row-main">
+      <span class="dish-name${i===mainIdx?' main-dish':''}">${dishNameHtml}</span>
+      ${spHtml}
+    </div>`;
+    row.querySelector('.menu-row-main').onclick=()=>openModal(item.name, dateStr, mealType);
+    list.appendChild(row);
   });
 }
+function avgStat(key){
+  const r=ratings[key];
+  if(!r||!r.count) return null;
+  return {avg:r.total/r.count, count:r.count};
+}
 
-// 급식 데이터 불러오기 로직 (오류 처리 개선)
-async function fetchMeal(targetDate, mealType, isSilent = false){
-  const ds = toStr(targetDate);
-  const fetchId = ++currentFetchId; 
-  const url = `${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${SC}&MLSV_YMD=${ds}&MMEAL_SC_CODE=${mealType}`;
-  
+/* ── 모달 ── */
+let modalDateStr='', modalMealType=0;
+function openModal(name, dateStr, mealType){
+  modalKey=dishKey(dateStr, mealType, name);
+  modalDateStr=dateStr; modalMealType=mealType;
+  modalScore=0;
+  $('modalDishName').textContent=name;
+  $('reviewText').value='';
+  updateStarUI(0);
+  renderModalStat();
+  renderReviewList();
+  $('modalOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  $('modalOverlay').classList.remove('show');
+  document.body.style.overflow='';
+  renderMenu(lastParsed, toStr(cur), mt);
+}
+function renderModalStat(){
+  const stat=avgStat(modalKey);
+  const el=$('modalStat');
+  if(stat){
+    el.innerHTML=`
+      <div class="modal-stat-score">
+        <span class="modal-avg">${stat.avg.toFixed(1)}</span>
+        <span class="modal-avg-max">/ 5</span>
+      </div>
+      <div class="modal-stat-detail">
+        <div class="modal-stars-big">${starsHtml(stat.avg)}</div>
+        <span class="modal-count-txt">${stat.count}명이 평가했어요</span>
+      </div>`;
+  } else {
+    el.innerHTML=`<span class="modal-no-rating">아직 평가가 없어요. 첫 번째로 평가해보세요!</span>`;
+  }
+}
+function renderReviewList(){
+  const rl=$('reviewList');
+  const r=ratings[modalKey];
+  if(!r||!r.reviews||!r.reviews.length){
+    rl.innerHTML='<div class="rv-empty">첫 번째 리뷰를 남겨보세요!</div>'; return;
+  }
+  rl.innerHTML=[...r.reviews].reverse().map(rv=>`
+    <div class="rv-item">
+      <div class="rv-top">
+        <span class="rv-stars">${starsHtml(rv.score)}</span>
+        <span class="rv-score">${rv.score}점</span>
+      </div>
+      ${rv.comment?`<div class="rv-comment">${rv.comment}</div>`:''}
+    </div>`).join('');
+}
+function updateStarUI(v){
+  document.querySelectorAll('.si-star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));
+}
+document.querySelectorAll('.si-star').forEach(s=>{
+  s.onmouseenter=()=>updateStarUI(+s.dataset.v);
+  s.onclick=()=>{ modalScore=+s.dataset.v; updateStarUI(modalScore); };
+});
+$('starRow').onmouseleave=()=>updateStarUI(modalScore);
+
+// 별점 등록 시 파이어베이스 서버로 전송하도록 변경
+$('btnSubmit').onclick=async ()=>{
+  if(!modalScore){ showToast('별점을 선택해주세요!'); return; }
+  const comment=$('reviewText').value.trim();
+  const docRef = doc(db, "ratings", modalKey);
+  const newReview = { score: modalScore, comment: comment };
+
   try {
-    const res = await fetch(url); 
-    const json = await res.json();
-    
-    if(fetchId !== currentFetchId && !isSilent) return null;
-    
-    // 데이터가 없거나 에러 코드를 반환할 때 안전하게 처리
-    if(!json.mealServiceDietInfo || json.RESULT) {
-      if(!isSilent) renderMenu([], ds, mealType);
+    const docSnap = await getDoc(docRef);
+    if(docSnap.exists()){
+      const data = docSnap.data();
+      await updateDoc(docRef, {
+        total: data.total + modalScore,
+        count: data.count + 1,
+        reviews: arrayUnion(newReview)
+      });
+    } else {
+      await setDoc(docRef, {
+        total: modalScore,
+        count: 1,
+        reviews: [newReview]
+      });
+    }
+
+    if(!ratings[modalKey]) ratings[modalKey]={total:0,count:0,reviews:[]};
+    ratings[modalKey].total+=modalScore;
+    ratings[modalKey].count+=1;
+    ratings[modalKey].reviews.push(newReview);
+
+    showToast(`★ ${modalScore}점 등록!`);
+    modalScore=0; updateStarUI(0); $('reviewText').value='';
+    renderModalStat(); renderReviewList();
+    renderMenu(lastParsed, toStr(cur), mt);
+  } catch(e) {
+    showToast('서버 저장 실패! 파이어베이스 설정을 확인하세요.');
+    console.error(e);
+  }
+};
+$('btnCancel').onclick=closeModal;
+$('modalOverlay').onclick=e=>{ if(e.target===$('modalOverlay')) closeModal(); };
+
+/* ── 파이어베이스 연동 데이터 비동기 호출 ── */
+async function fetchFirebaseRatings(parsed, dateStr, mealType){
+  try {
+    const promises = parsed.map(async (item) => {
+      const key = dishKey(dateStr, mealType, item.name);
+      const docRef = doc(db, "ratings", key);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        ratings[key] = docSnap.data();
+      }
+    });
+    await Promise.all(promises);
+  } catch(e) {
+    console.error("Firebase 로드 실패:", e);
+  }
+}
+
+/* ── API ── */
+async function fetchMeal(snapDate, snapMt, silent){
+  const dateStr = toStr(snapDate);
+  const url=`${BASE}/mealServiceDietInfo?KEY=${KEY}&Type=json&ATPT_OFCDC_SC_CODE=R10&SD_SCHUL_CODE=${SC}&MLSV_YMD=${dateStr}&MMEAL_SC_CODE=${snapMt}`;
+  try{
+    const res=await fetch(url);
+    const json=await res.json();
+
+    if(!json.mealServiceDietInfo || json.RESULT){
+      if(!silent) $('menuList').innerHTML='<div class="state-box">급식 정보가 없습니다<br><small style="font-size:11px;color:var(--text3);display:block;margin-top:4px">아직 등록되지 않았거나 휴무일입니다</small></div>';
       return null;
     }
 
-    const info = json.mealServiceDietInfo[1]?.row[0];
-    if(!info || !info.DDISH_NM) {
-      if(!isSilent) renderMenu([], ds, mealType);
+    const info = json.mealServiceDietInfo;
+    const rowBlock = info.find(b => b && Array.isArray(b.row));
+    if(!rowBlock || !rowBlock.row.length){
+      if(!silent) $('menuList').innerHTML='<div class="state-box">급식 정보가 없습니다</div>';
       return null;
     }
-    
-    if(!isSilent) {
-      if(info.CAL_INFO) { $('kcalVal').textContent = info.CAL_INFO; $('kcalChip').classList.add('show'); }
-      renderMenu(parseItems(info.DDISH_NM), ds, mealType);
+    const meal = rowBlock.row[0];
+
+    if(!silent){
+      if(meal.CAL_INFO){ $('kcalVal').textContent=meal.CAL_INFO.trim(); $('kcalChip').classList.add('show'); }
+      else { $('kcalChip').classList.remove('show'); }
+      const parsed = parseItems(meal.DDISH_NM||'');
+      
+      // 파이어베이스에서 별점 데이터를 먼저 가져온 뒤 메뉴판을 그림
+      await fetchFirebaseRatings(parsed, dateStr, snapMt);
+      renderMenu(parsed, dateStr, snapMt);
     }
-    return info;
-  } catch(e) {
-    console.error("API Fetch Error:", e);
-    if(!isSilent) $('menuList').innerHTML = `<div class="state-box"><p>서버와 연결할 수 없습니다.</p></div>`;
+    return meal;
+  }catch(e){
+    if(!silent) $('menuList').innerHTML='<div class="state-box">불러올 수 없습니다</div>';
     return null;
   }
 }
 
 function loadCurrent(){
-  $('menuList').innerHTML = `<div class="skeleton"><div class="sk-row"></div><div class="sk-row"></div></div>`;
-  $('kcalChip').classList.remove('show'); 
-  fetchMeal(cur, mt, false);
+  const snapDate = new Date(cur);
+  const snapMt   = mt;
+  $('menuList').innerHTML=`<div class="skeleton">
+    ${Array(7).fill('<div class="sk-row"><div class="sk-name"></div><div class="sk-star"></div></div>').join('')}
+  </div>`;
+  $('kcalChip').classList.remove('show');
+  lastParsed=[];
+  fetchMeal(snapDate, snapMt, false);
 }
 
-// 탭 클릭 이벤트
-document.querySelectorAll('.meal-tab').forEach(tab => {
-  tab.onclick = () => {
-    document.querySelectorAll('.meal-tab').forEach(t => t.classList.remove('on'));
-    tab.classList.add('on'); 
-    mt = parseInt(tab.dataset.t); 
-    loadCurrent(); 
+/* ── 주간 패널 ── */
+async function renderWeekPanel(){
+  const snapCurStr = toStr(cur);
+  const snapMt     = mt;
+  const wc=$('weekContent');
+  wc.innerHTML='<div class="wd-loading">불러오는 중...</div>';
+
+  const monday=new Date(cur);
+  const dow=cur.getDay();
+  monday.setDate(cur.getDate()+(dow===0?-6:1-dow));
+
+  const todayStr=toStr(today());
+  const days=Array.from({length:5},(_,i)=>{
+    const d=new Date(monday); d.setDate(monday.getDate()+i); return d;
+  });
+
+  wc.innerHTML=days.map(d=>{
+    const ds=toStr(d);
+    const isToday=ds===todayStr, isSel=ds===snapCurStr;
+    return `<div class="week-day${isToday?' wd-today':''}${isSel?' wd-sel':''}" id="wd_${ds}">
+      <div class="wd-top">
+        <span class="wd-date">${d.getDate()}</span>
+        <span class="wd-dayname">${DAYS[d.getDay()]}요일</span>
+        ${isToday?'<span class="wd-badge">오늘</span>':''}
+      </div>
+      <div class="wd-items" id="wdi_${ds}">…</div>
+    </div>`;
+  }).join('');
+
+  await Promise.all(days.map(async d=>{
+    const ds=toStr(d);
+    const meal=await fetchMeal(d, snapMt, true);
+    const card=$(`wd_${ds}`);
+    const el=$(`wdi_${ds}`);
+    if(!card||!el) return;
+    if(meal){
+      el.textContent=parseItems(meal.DDISH_NM||'').slice(0,3).map(x=>x.name).join(' · ')||'-';
+      card.classList.add('clickable');
+      card.onclick=()=>{
+        cur=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+        drawDate(); loadCurrent(); renderWeekPanel();
+      };
+    } else {
+      el.className='wd-none'; el.textContent='급식 없음';
+      card.classList.add('no-meal');
+    }
+  }));
+}
+
+/* ── 달력 ── */
+function drawCal(){
+  const y=calView.getFullYear(), m=calView.getMonth();
+  $('calMonth').textContent=`${y}.${pad(m+1)}`;
+  const first=new Date(y,m,1).getDay(), last=new Date(y,m+1,0).getDate();
+  const todayStr=toStr(today()), curStr=toStr(cur);
+  let html='';
+  for(let i=0;i<first;i++) html+=`<span class="cal-d empty"></span>`;
+  for(let d=1;d<=last;d++){
+    const dd=new Date(y,m,d), ds=toStr(dd);
+    const off=dd.getDay()===0||dd.getDay()===6;
+    html+=`<span class="cal-d${off?' off':''}${ds===todayStr?' today':''}${ds===curStr?' sel':''}" data-d="${ds}">${d}</span>`;
+  }
+  $('calGrid').innerHTML=html;
+  $('calGrid').querySelectorAll('.cal-d:not(.off):not(.empty)').forEach(el=>{
+    el.onclick=e=>{
+      e.stopPropagation();
+      const s=el.dataset.d;
+      cur=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8));
+      drawDate(); loadCurrent(); renderWeekPanel();
+      $('calPopup').classList.remove('show');
+    };
+  });
+}
+
+/* ── 이벤트 ── */
+$('prev').onclick=()=>{
+  const d=new Date(cur); d.setDate(d.getDate()-1);
+  if(d.getDay()===0) d.setDate(d.getDate()-2);
+  cur=d; drawDate(); loadCurrent(); renderWeekPanel();
+};
+$('next').onclick=()=>{
+  const d=new Date(cur); d.setDate(d.getDate()+1);
+  if(d.getDay()===6) d.setDate(d.getDate()+2);
+  cur=d; drawDate(); loadCurrent(); renderWeekPanel();
+};
+$('todayBtn').onclick=()=>{ cur=today(); fixWE(cur); drawDate(); loadCurrent(); renderWeekPanel(); };
+$('dateWrap').onclick=e=>{ e.stopPropagation(); calView=new Date(cur); drawCal(); $('calPopup').classList.toggle('show'); };
+$('calPrev').onclick=e=>{ e.stopPropagation(); calView.setMonth(calView.getMonth()-1); drawCal(); };
+$('calNext').onclick=e=>{ e.stopPropagation(); calView.setMonth(calView.getMonth()+1); drawCal(); };
+document.addEventListener('click',()=>$('calPopup').classList.remove('show'));
+$('calPopup').onclick=e=>e.stopPropagation();
+
+document.querySelectorAll('.meal-tab').forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll('.meal-tab').forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on'); mt=parseInt(tab.dataset.t);
+    loadCurrent(); renderWeekPanel();
   };
 });
 
-// 날짜 이동
-$('prev').onclick = () => { cur.setDate(cur.getDate()-1); drawDate(); loadCurrent(); };
-$('next').onclick = () => { cur.setDate(cur.getDate()+1); drawDate(); loadCurrent(); };
-$('todayBtn').onclick = () => { cur = new Date(); drawDate(); loadCurrent(); };
-
-// --- 모달 및 리뷰 관련 로직 ---
-window.openModal = function(name, key) {
-  modalKey = key; modalScore = 0;
-  $('modalDishText').textContent = name; 
-  $('reviewName').value = ''; $('reviewText').value = '';
-  document.querySelectorAll('.si-star').forEach(s => s.classList.remove('on'));
-  
-  $('modalOverlay').style.display = 'flex'; 
-  setTimeout(() => $('modalOverlay').classList.add('show'), 10);
-};
-
-$('btnCancel').onclick = () => {
-  $('modalOverlay').classList.remove('show');
-  setTimeout(() => $('modalOverlay').style.display = 'none', 400);
-};
-
-document.querySelectorAll('.si-star').forEach(s => {
-  s.onclick = () => {
-    modalScore = parseInt(s.dataset.v);
-    document.querySelectorAll('.si-star').forEach(el => {
-      el.classList.toggle('on', parseInt(el.dataset.v) <= modalScore);
-    });
-    // 별점 클릭 시 작은 팝업 애니메이션
-    gsap.fromTo(s, {scale: 1.5}, {scale: 1.2, duration: 0.3, ease: "bounce.out"});
-  };
-});
-
-// 리뷰 등록 시 폭죽 이펙트!
-$('btnSubmit').onclick = async () => {
-  if(!modalScore) return showToast('별점을 선택해주세요!');
-  $('btnSubmit').textContent = '등록 중...';
-  
-  setTimeout(() => {
-    // 폭죽 터뜨리기
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#3b82f6', '#f59e0b', '#ef4444'] });
-    showToast('소중한 리뷰가 등록되었습니다! 🎉');
-    $('btnSubmit').textContent = '리뷰 등록하기';
-    $('btnCancel').click();
-  }, 800); // 실제로는 Firebase 연동 후 실행
-};
-
-// 초기화
-drawDate();
+/* ── 초기화 ── */
 buildAllergy();
+drawDate();
 loadCurrent();
-
-// 전체 UI 로드 시 멋지게 나타나는 애니메이션
-gsap.from(".bento-card", {
-  y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
-});
-
+renderWeekPanel();
 </script>
 </body>
-</html>
+  </html>
